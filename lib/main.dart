@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rjs_store/core/utils/theme/themes.dart';
 
 void main() {
+  // Todo: add widgets binding
+  // Todo: init local storage
+  // Todo: await native splash
+  // Todo: initailize firebase
+  // Todo: initialize authentication
+
   runApp(const MyApp());
 }
 
