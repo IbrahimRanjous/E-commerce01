@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/theme/themes.dart';
 
 void main() {
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: Scaffold(),
+      home: Scaffold(
+        backgroundColor: TColors.primaryBackground,
+      ),
     );
   }
 }
