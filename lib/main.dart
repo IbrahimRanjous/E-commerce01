@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/core/utils/constants/colors.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/theme/themes.dart';
+
+import 'Features/onBoarding/views/onboarding_view.dart';
 
 void main() {
   // Todo: add widgets binding
@@ -17,13 +19,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: Scaffold(
-        backgroundColor: TColors.primaryBackground,
-      ),
+      home: const OnboardingView(),
     );
   }
 }
