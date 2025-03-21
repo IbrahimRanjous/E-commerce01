@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
@@ -20,10 +19,18 @@ class OnBoardingItem extends StatelessWidget {
       padding: const EdgeInsets.all(TSizes.defaultSpace),
       child: Column(
         children: [
-          Image(
-            image: AssetImage(image),
-            width: THelperFunctions.screenWidth() * 0.8,
-            height: THelperFunctions.screenHeight() * 0.6,
+          const SizedBox(
+            height: TSizes.appBarHeight + 40,
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(TSizes.cardRadiusSm),
+            child: Image(
+              image: AssetImage(image),
+              width: THelperFunctions.screenWidth() * 0.8,
+            ),
+          ),
+          const SizedBox(
+            height: TSizes.spaceBtwItems,
           ),
           Text(
             title,

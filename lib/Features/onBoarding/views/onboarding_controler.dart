@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rjs_store/Features/login/views/login_view.dart';
 
 class OnboardingControler {
   static OnboardingControler get instance => Get.find();
@@ -23,7 +24,7 @@ class OnboardingControler {
   /// Update Current Index & Jump to next page
   void nextPage() {
     if (currentPageIndex.value == 2) {
-      // Get.to(LoginScreen());
+      Get.offAll(const LoginView());
     } else {
       currentPageIndex.value += 1;
       pageController.jumpToPage(currentPageIndex.value);
