@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/constants/colors.dart';
-import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 
-class TDivider extends StatelessWidget {
-  const TDivider({
+class TFormDivider extends StatelessWidget {
+  final String text;
+  const TFormDivider({
     super.key,
+    required this.text,
   });
 
   @override
@@ -25,7 +26,7 @@ class TDivider extends StatelessWidget {
           ),
         ),
         Text(
-          TTexts.orSignInWith,
+          text,
           style: Theme.of(context).textTheme.labelMedium,
         ),
         Flexible(

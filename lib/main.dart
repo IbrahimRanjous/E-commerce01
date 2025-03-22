@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rjs_store/Features/Signin/view/signup_view.dart';
 import 'package:rjs_store/core/utils/theme/themes.dart';
 
 import 'Features/onBoarding/views/onboarding_view.dart';
@@ -27,4 +28,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 

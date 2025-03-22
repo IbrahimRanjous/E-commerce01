@@ -20,6 +20,7 @@ class TTexts {
   // OnBoarding Texts
   static const String submit = "Submit";
   static const String appName = "T-Store";
+  // ignore: constant_identifier_names
   static const String Continue = "Continue";
 
 // Authentication Form Text
@@ -35,12 +36,14 @@ class TTexts {
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";
   static const String orSignInWith = "or sign in with";
+  static const String orSignUpWith = "or sign up with";
   static const String agreeTo = "I agree to";
   static const String privacyPolicy = "Privacy Policy";
   static const String termsOfUse = "Terms of Use";
   static const String verificationCode = "Verification Code";
   static const String resendEmail = "Resend email in";
   static const String resendIn = "Resend in";
+  static const String phoneNu = "Phone Number";
 
 // Authentication Headings
   static const String loginTitle = "Welcome back";

@@ -34,7 +34,7 @@ class TFormatter {
 
     // Add the remaining digits with proper formatting
     final formattedNumber = StringBuffer();
-    formattedNumber.write('${countryCode} ');
+    formattedNumber.write('$countryCode ');
 
     int i = 0;
     while (i < digitsOnly.length) {
