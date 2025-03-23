@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:rjs_store/Features/Signin/view/verify_email.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/widgets/custom_text_form.dart';
-import '../../../login/views/login_view.dart';
 import '../../../login/views/widgets/custom_material_button.dart';
 import 'privace_and_terms_form.dart';
 
@@ -72,9 +72,9 @@ class TSingUpForm extends StatelessWidget {
           // Create Account Button
           CustomMaterialButton(
             onPressed: () {
-              Get.offAll(const LoginView());
+              Get.to(const VerifyEmailView());
             },
-            text: TTexts.createAccount,
+            title: TTexts.createAccount,
           ),
           const SizedBox(height: TSizes.spaceBtwSections),
         ],

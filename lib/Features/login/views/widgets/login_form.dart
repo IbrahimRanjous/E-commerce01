@@ -77,7 +77,7 @@ class TForm extends StatelessWidget {
         ),
         // Sign In
         CustomMaterialButton(
-          text: TTexts.signIn,
+          title: TTexts.signIn,
           onPressed: () {},
         ),
         const SizedBox(

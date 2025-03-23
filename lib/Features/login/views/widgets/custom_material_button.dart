@@ -4,10 +4,10 @@ import 'package:rjs_store/core/utils/constants/colors.dart';
 class CustomMaterialButton extends StatelessWidget {
   const CustomMaterialButton({
     super.key,
-    required this.text,
+    required this.title,
     required this.onPressed,
   });
-  final String text;
+  final String title;
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CustomMaterialButton extends StatelessWidget {
       color: TColors.buttonPrimary,
       textColor: Colors.white,
       child: Text(
-        text,
+        title,
         style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
       ),
     );

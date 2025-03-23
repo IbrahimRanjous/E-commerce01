@@ -21,8 +21,7 @@ class TLoginHeader extends StatelessWidget {
           borderRadius: BorderRadius.circular(TSizes.cardRadiusSm),
           child: Image(
             height: 150,
-            image:
-                AssetImage(dark ? TImages.lightAppLogo : TImages.darkAppLogo),
+            image: AssetImage(dark ? TImages.login : TImages.login),
           ),
         ),
         const SizedBox(
