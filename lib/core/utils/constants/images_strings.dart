@@ -17,4 +17,5 @@ class TImages {
   static const String login = "assets/images/login.png";
   static const String verifyEmail = "assets/images/verifyEmail.png";
   static const String success = "assets/images/success.png";
+  static const String password = "assets/images/password.png";
 }

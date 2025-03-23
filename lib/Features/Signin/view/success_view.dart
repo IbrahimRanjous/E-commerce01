@@ -53,11 +53,7 @@ class SuccessView extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               // Buttons
-              SizedBox(
-                width: double.infinity,
-                child: CustomMaterialButton(
-                    onPressed: onPressed, title: TTexts.signIn),
-              ),
+              CustomMaterialButton(onPressed: onPressed, title: TTexts.signIn),
               const SizedBox(height: TSizes.spaceBtwItems),
             ],
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:rjs_store/Features/Signin/view/verify_email.dart';
+import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/widgets/custom_text_form.dart';

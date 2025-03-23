@@ -22,6 +22,7 @@ class TTexts {
   static const String appName = "T-Store";
   // ignore: constant_identifier_names
   static const String Continue = "Continue";
+  static const String done = "Done";
 
 // Authentication Form Text
   static const String firstName = "First Name";

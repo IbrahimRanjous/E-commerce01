@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/Features/Signin/view/signup_view.dart';
+import 'package:rjs_store/Features/login/views/forget_password_view.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
@@ -64,10 +65,14 @@ class TForm extends StatelessWidget {
             ),
             // Forget Password
             TextButton(
-              onPressed: () {},
+              style: ElevatedButton.styleFrom(overlayColor: TColors.primary),
+              onPressed: () {
+                Get.to(const ForgetPasswordView());
+              },
               child: Text(
                 TTexts.forgetPassword,
-                style: TextStyle(color: dark ? TColors.white : TColors.black),
+                style: TextStyle(
+                    color: dark ? TColors.white : TColors.buttonSecondary),
               ),
             ),
           ],
