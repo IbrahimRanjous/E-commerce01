@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/Features/Signin/view/signup_view.dart';
 import 'package:rjs_store/Features/login/views/forget_password_view.dart';
+import 'package:rjs_store/navigation_menu.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
@@ -83,7 +84,9 @@ class TForm extends StatelessWidget {
         // Sign In
         CustomMaterialButton(
           title: TTexts.signIn,
-          onPressed: () {},
+          onPressed: () {
+            Get.offAll(const NavigationMenu());
+          },
         ),
         const SizedBox(
           height: TSizes.spaceBtwItems,
