@@ -15,7 +15,7 @@ class TTexts {
       "From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!";
   // -- Home
   static const String homeAppbarTitle = "Good day for shopping";
-  static const String homeAppbarSubTitle = "Taimoor Sikander";
+  static const String homeAppbarSubTitle = "Ibrahim Store";
 
   // OnBoarding Texts
   static const String submit = "Submit";
