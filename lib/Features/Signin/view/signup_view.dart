@@ -14,9 +14,10 @@ class SignupView extends StatelessWidget {
       appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(TSizes.defaultSpace),
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           // Form
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Title
               Text(TTexts.signUpTitle,
@@ -25,13 +26,13 @@ class SignupView extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              TSingUpForm(),
+              const TSingUpForm(),
               // Divider
-              TFormDivider(text: TTexts.orSignUpWith),
+              const TFormDivider(text: TTexts.orSignUpWith),
               const SizedBox(height: TSizes.spaceBtwItems),
 
               // Footer
-              TFooter(),
+              const TFooter(),
               const SizedBox(height: TSizes.spaceBtwSections),
             ],
           ),

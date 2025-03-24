@@ -32,7 +32,7 @@ class ForgetPasswordView extends StatelessWidget {
 
               const SizedBox(height: TSizes.spaceBtwSections),
               // Text Field
-              CustomTextForm(
+              const CustomTextForm(
                 prefixicon: Icon(Iconsax.direct_right),
                 hintText: TTexts.email,
               ),
@@ -42,7 +42,7 @@ class ForgetPasswordView extends StatelessWidget {
               CustomMaterialButton(
                   title: TTexts.submit,
                   onPressed: () {
-                    Get.to(PasswordResetView());
+                    Get.to(const PasswordResetView());
                   }),
             ],
           ),

@@ -20,8 +20,8 @@ class TSingUpForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // First Name & Last Name
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(
                 child: CustomTextForm(
                     prefixicon: Icon(Iconsax.user), hintText: TTexts.firstName),
@@ -38,18 +38,18 @@ class TSingUpForm extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           // Username
-          CustomTextForm(
+          const CustomTextForm(
               prefixicon: Icon(Iconsax.user_edit), hintText: TTexts.username),
 
           const SizedBox(height: TSizes.spaceBtwInputFields),
           // E-Mail
-          CustomTextForm(
+          const CustomTextForm(
               prefixicon: Icon(Iconsax.direct), hintText: TTexts.email),
 
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           // Phone Number
-          CustomTextForm(
+          const CustomTextForm(
               prefixicon: Icon(Iconsax.call), hintText: TTexts.phoneNu),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
@@ -66,13 +66,13 @@ class TSingUpForm extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwSections),
 
           // Privacy Policy & Terms of use
-          PrivacyPolicyAndTermsofUse(),
+          const PrivacyPolicyAndTermsofUse(),
           const SizedBox(height: TSizes.spaceBtwSections),
 
           // Create Account Button
           CustomMaterialButton(
             onPressed: () {
-              Get.to(const VerifyEmailView());
+              Get.to(() => const VerifyEmailView());
             },
             title: TTexts.createAccount,
           ),

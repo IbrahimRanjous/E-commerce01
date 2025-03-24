@@ -64,9 +64,9 @@ class VerifyEmailView extends StatelessWidget {
               CustomMaterialButton(
                   onPressed: () {
                     Get.to(
-                      SuccessView(
+                      () => SuccessView(
                         onPressed: () {
-                          Get.offAll(const LoginView());
+                          Get.offAll(() => const LoginView());
                         },
                         image: TImages.success,
                         title: TTexts.yourAccountCreatedTitle,

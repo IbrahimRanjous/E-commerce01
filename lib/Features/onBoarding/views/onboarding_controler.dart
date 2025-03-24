@@ -24,7 +24,7 @@ class OnboardingControler {
   /// Update Current Index & Jump to next page
   void nextPage() {
     if (currentPageIndex.value == 2) {
-      Get.offAll(const LoginView());
+      Get.offAll(() => const LoginView());
     } else {
       currentPageIndex.value += 1;
       pageController.jumpToPage(currentPageIndex.value);
@@ -34,7 +34,6 @@ class OnboardingControler {
 
   /// Update current Index & jump to the Last page
   void skipPage() {
-    currentPageIndex.value = 2;
-    pageController.jumpToPage(2);
+    Get.offAll(() => const LoginView());
   }
 }

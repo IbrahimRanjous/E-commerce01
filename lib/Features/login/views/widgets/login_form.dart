@@ -94,7 +94,7 @@ class TForm extends StatelessWidget {
         // Create Account
         CustomElevatedButton(
           onPressed: () {
-            Get.to(const SignupView());
+            Get.to(() => const SignupView());
           },
           title: TTexts.createAccount,
         ),
