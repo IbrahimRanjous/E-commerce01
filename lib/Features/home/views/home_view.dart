@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
-import 'package:rjs_store/core/utils/device/device_utility.dart';
-import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import '../../../core/widgets/section_heading.dart';
 import 'widgets/home_app_bar.dart';
+import 'widgets/home_categories.dart';
 import 'widgets/primary_header_container.dart';
 import 'widgets/search_container.dart';
 
@@ -29,8 +27,26 @@ class HomeView extends StatelessWidget {
                   TSearchContainer(
                     text: 'Search In Store',
                   ),
+                  SizedBox(height: TSizes.defaultSpace),
 
                   // -- Categories
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: TSizes.defaultSpace,
+                    ),
+                    child: Column(
+                      children: [
+                        /// -- Heading
+                        TSectionHeading(
+                          text: 'Popular Categories',
+                        ),
+                        SizedBox(height: TSizes.spaceBtwItems),
+
+                        /// -- Categories
+                        THomeCategories()
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
