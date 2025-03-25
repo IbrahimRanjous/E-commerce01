@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/utils/constants/colors.dart';
-import '../../../../core/utils/constants/images_strings.dart';
-import '../../../../core/utils/constants/sizes.dart';
+import '../../../../core/utils/constants/image_strings.dart';
+ import '../../../../core/utils/constants/sizes.dart';
 
 class TFooter extends StatelessWidget {
   const TFooter({

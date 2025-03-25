@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_elevated_button.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
-import 'package:rjs_store/core/utils/constants/images_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
+import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/widgets/spacing_styles.dart';
 
@@ -36,7 +36,9 @@ class PasswordResetView extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
                   child: Image(
-                    image: const AssetImage(TImages.password),
+                    image: THelperFunctions.isDarkMode(context)
+                        ? const AssetImage(TImages.darkAppLogo)
+                        : const AssetImage(TImages.lightAppLogo),
                     width: THelperFunctions.screenWidth() * 0.6,
                   ),
                 ),

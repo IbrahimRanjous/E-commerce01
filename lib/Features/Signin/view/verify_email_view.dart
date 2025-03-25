@@ -5,9 +5,9 @@ import 'package:rjs_store/Features/Signin/view/success_view.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_elevated_button.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
-import 'package:rjs_store/core/utils/constants/images_strings.dart';
-import 'package:rjs_store/core/utils/constants/sizes.dart';
+ import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
+import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/widgets/spacing_styles.dart';
 
@@ -37,7 +37,7 @@ class VerifyEmailView extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
                   child: Image(
-                    image: const AssetImage(TImages.verifyEmail),
+                    image: const AssetImage(TImages.verifyIllustration),
                     width: THelperFunctions.screenWidth() * 0.6,
                   ),
                 ),
@@ -68,7 +68,7 @@ class VerifyEmailView extends StatelessWidget {
                         onPressed: () {
                           Get.offAll(() => const LoginView());
                         },
-                        image: TImages.success,
+                        image: TImages.staticSuccessIllustration,
                         title: TTexts.yourAccountCreatedTitle,
                         subTitle: TTexts.yourAccountCreatedSubTitle,
                       ),

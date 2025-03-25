@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/Features/onBoarding/views/onboarding_controler.dart';
-import 'package:rjs_store/core/utils/constants/images_strings.dart';
-import 'package:rjs_store/core/utils/constants/texts.dart';
+ import 'package:rjs_store/core/utils/constants/texts.dart';
+import '../../../../core/utils/constants/image_strings.dart';
 import 'onboarding_dot_navigation.dart';
 import 'onboarding_next_button.dart';
 import 'onboarding_item.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/constants/images_strings.dart';
+import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
@@ -21,7 +21,8 @@ class TLoginHeader extends StatelessWidget {
           borderRadius: BorderRadius.circular(TSizes.cardRadiusSm),
           child: Image(
             height: 150,
-            image: AssetImage(dark ? TImages.login : TImages.login),
+            image:
+                AssetImage(dark ? TImages.lightAppLogo : TImages.darkAppLogo),
           ),
         ),
         const SizedBox(
