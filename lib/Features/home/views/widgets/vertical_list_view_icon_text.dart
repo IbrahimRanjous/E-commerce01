@@ -24,7 +24,9 @@ class TVerticalListViewIconText extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(right: TSizes.spaceBtwItems),
+        padding: const EdgeInsets.only(
+          right: TSizes.spaceBtwItems,
+        ),
         child: Column(
           children: [
             /// Circular Icon

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/core/utils/theme/themes.dart';
-import 'Features/onBoarding/views/onboarding_view.dart';
 
 void main() {
   // Todo: add widgets binding
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: const OnboardingView(),
+      home: const LoginView(),
     );
   }
 }
