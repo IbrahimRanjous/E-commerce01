@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rjs_store/Features/home/views/widgets/vertical_list_view_icon_text.dart';
+import 'package:rjs_store/core/utils/device/device_utility.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 
 class THomeCategories extends StatelessWidget {
@@ -9,21 +10,26 @@ class THomeCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Choose a percentage of the total screen height for your list view.
+    // Here, we use 10% of the screen height, but adjust this fraction as needed.
+    final listViewHeight = TDeviceUtils.getScreenHeight() * 0.1;
+
     return SizedBox(
-        height: 80,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: categories.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (_, index) {
-            final category = categories[index];
-            return TVerticalListViewIconText(
-              image: category.icon,
-              title: category.title,
-              onTap: () {},
-            );
-          },
-        ));
+      height: listViewHeight,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: categories.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index) {
+          final category = categories[index];
+          return TVerticalListViewIconText(
+            image: category.icon,
+            title: category.title,
+            onTap: () {},
+          );
+        },
+      ),
+    );
   }
 }
 

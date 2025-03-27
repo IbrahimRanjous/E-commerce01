@@ -21,23 +21,36 @@ class TVerticalListViewIconText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+
+    // Calculate a scaling factor based on a base width of 375.0.
+    // This means on a device with a 375.0 width, the factor will be 1.0.
+    // Adjust this base value to suit your design specifications.
+    final scaleFactor = MediaQuery.of(context).size.width / 375.0;
+
+    // Responsive dimensions determined by the scale factor.
+    final circleDiameter = 56.0 * scaleFactor;
+    final iconPadding = TSizes.sm * scaleFactor;
+    final textContainerWidth = 55.0 * scaleFactor;
+    final spacing = (TSizes.spaceBtwItems / 2) * scaleFactor;
+    final rightPadding = TSizes.spaceBtwItems * scaleFactor;
+
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(
-          right: TSizes.spaceBtwItems,
+        padding: EdgeInsets.only(
+          right: rightPadding,
         ),
         child: Column(
           children: [
-            /// Circular Icon
+            /// Responsive Circular Icon
             Container(
-              width: 56,
-              height: 56,
-              padding: const EdgeInsets.all(TSizes.sm),
+              width: circleDiameter,
+              height: circleDiameter,
+              padding: EdgeInsets.all(iconPadding),
               decoration: BoxDecoration(
                 color:
                     backgroundColor ?? (dark ? TColors.black : TColors.white),
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(circleDiameter / 2),
               ),
               child: Center(
                 child: Image(
@@ -47,11 +60,11 @@ class TVerticalListViewIconText extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwItems / 2),
+            SizedBox(height: spacing),
 
-            /// Text
+            /// Responsive Text
             SizedBox(
-              width: 55,
+              width: textContainerWidth,
               child: Text(
                 title,
                 style: Theme.of(context)
