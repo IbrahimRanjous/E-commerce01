@@ -3,7 +3,9 @@ import 'package:rjs_store/Features/home/views/widgets/custom_carousel_slider.dar
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import '../../../core/widgets/section_heading.dart';
 import 'widgets/home_app_bar.dart';
+import 'widgets/home_body_heading.dart';
 import 'widgets/home_categories.dart';
+import 'widgets/home_grid_view.dart';
 import 'widgets/primary_header_container.dart';
 import 'widgets/search_container.dart';
 
@@ -51,8 +53,17 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
-            //// Body Home Screen ////
+
+///////////////////////////////////////////// Body Home Screen //////////////////////////////////////////////////////
             MySliderImage(),
+            SizedBox(height: TSizes.spaceBtwSections),
+
+            // -- Products
+            THomeBodyHeading(),
+            SizedBox(height: TSizes.spaceBtwSections),
+
+            THomeGridView(),
+////////////////////////////////////////////////////////////////////////////////////////////////////
           ],
         ),
       ),

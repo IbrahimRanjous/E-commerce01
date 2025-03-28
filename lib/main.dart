@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/login/views/login_view.dart';
+import 'package:rjs_store/Features/onBoarding/views/onboarding_view.dart';
 import 'package:rjs_store/core/utils/theme/themes.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: const LoginView(),
+      home: const OnboardingView(),
     );
   }
 }

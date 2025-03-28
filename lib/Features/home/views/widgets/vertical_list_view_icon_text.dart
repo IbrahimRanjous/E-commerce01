@@ -54,9 +54,9 @@ class TVerticalListViewIconText extends StatelessWidget {
               ),
               child: Center(
                 child: Image(
-                  image: AssetImage(image),
+                  image: AssetImage(image), 
                   fit: BoxFit.cover,
-                  color: dark ? TColors.light : TColors.dark,
+                  color: TColors.dark,
                 ),
               ),
             ),
