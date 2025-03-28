@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
-import 'package:rjs_store/core/utils/device/device_utility.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 
 class ProductCard extends StatelessWidget {
@@ -115,25 +114,28 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Display the product title.
-                Text(productTitle,
-                    style: TextStyle(
-                      fontSize: TDeviceUtils.getScreenWidth(context) * 0.038,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(productTitle,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                ),
                 const SizedBox(height: 4),
                 // Display the brand and an optional verified check icon.
                 Row(
                   children: [
-                    Text(brand,
-                        style: TextStyle(
-                          fontSize:
-                              TDeviceUtils.getScreenWidth(context) * 0.035,
-                          color: TColors.darkerGrey,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
+                    FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(brand,
+                          style: const TextStyle(
+                            color: TColors.darkerGrey,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
+                    ),
                     if (isVerified) ...[
                       const SizedBox(width: 4),
                       const Icon(
@@ -149,13 +151,15 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Display the price range.
-                    Text(priceRange,
-                        style: TextStyle(
-                          fontSize: TDeviceUtils.getScreenWidth(context) * 0.03,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
+                    FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(priceRange,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis),
+                    ),
                     // Display the quantity indicator if provided.
                     if (quantity.isNotEmpty)
                       Container(
@@ -166,14 +170,16 @@ class ProductCard extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(TSizes.cardRadiusSm),
                         ),
-                        child: Text(quantity,
-                            style: TextStyle(
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(quantity,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: TDeviceUtils.getScreenWidth(context) *
-                                    0.03),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
+                        ),
                       ),
                   ],
                 )

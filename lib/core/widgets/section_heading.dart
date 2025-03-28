@@ -24,25 +24,31 @@ class TSectionHeading extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          text,
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .apply(color: textColor),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+        FittedBox(
+          fit: BoxFit.contain,
+          child: Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .apply(color: textColor),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         if (showActionButton)
           TextButton(
               onPressed: onPressed,
-              child: Text(
-                buttonText,
-                style: TextStyle(
-                    color: buttonColor,
-                    backgroundColor: changeButtonBackgroundColor
-                        ? buttonBackgroundColor
-                        : Colors.transparent),
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  buttonText,
+                  style: TextStyle(
+                      color: buttonColor,
+                      backgroundColor: changeButtonBackgroundColor
+                          ? buttonBackgroundColor
+                          : Colors.transparent),
+                ),
               ))
       ],
     );

@@ -30,7 +30,6 @@ class TVerticalListViewIconText extends StatelessWidget {
     // Responsive dimensions determined by the scale factor.
     final circleDiameter = 56.0 * scaleFactor;
     final iconPadding = TSizes.sm * scaleFactor;
-    final textContainerWidth = 55.0 * scaleFactor;
     final spacing = (TSizes.spaceBtwItems / 2) * scaleFactor;
     final rightPadding = TSizes.spaceBtwItems * scaleFactor;
 
@@ -54,7 +53,7 @@ class TVerticalListViewIconText extends StatelessWidget {
               ),
               child: Center(
                 child: Image(
-                  image: AssetImage(image), 
+                  image: AssetImage(image),
                   fit: BoxFit.cover,
                   color: TColors.dark,
                 ),
@@ -63,8 +62,8 @@ class TVerticalListViewIconText extends StatelessWidget {
             SizedBox(height: spacing),
 
             /// Responsive Text
-            SizedBox(
-              width: textContainerWidth,
+            FittedBox(
+              fit: BoxFit.contain,
               child: Text(
                 title,
                 style: Theme.of(context)

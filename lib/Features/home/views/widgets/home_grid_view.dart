@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/core/utils/device/device_utility.dart';
-
-import '../../../../core/projucts_list.dart';
+ import '../../../../core/projucts_list.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import 'card_product_item.dart';
 
