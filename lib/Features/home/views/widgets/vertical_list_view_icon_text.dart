@@ -8,8 +8,8 @@ class TVerticalListViewIconText extends StatelessWidget {
     super.key,
     required this.image,
     required this.title,
-    this.textColor = TColors.white,
-    this.backgroundColor = TColors.white,
+    this.textColor = TColors.light,
+    this.backgroundColor = TColors.light,
     this.onTap,
   });
 
@@ -47,8 +47,7 @@ class TVerticalListViewIconText extends StatelessWidget {
               height: circleDiameter,
               padding: EdgeInsets.all(iconPadding),
               decoration: BoxDecoration(
-                color:
-                    backgroundColor ?? (dark ? TColors.black : TColors.white),
+                color: backgroundColor ?? (dark ? TColors.dark : TColors.light),
                 borderRadius: BorderRadius.circular(circleDiameter / 2),
               ),
               child: Center(

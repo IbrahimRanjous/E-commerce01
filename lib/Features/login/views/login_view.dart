@@ -13,29 +13,31 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: TSpacingStyl.paddingWithAppBareHeight,
-          child: Column(
-            children: [
-              // Logo , Title & SubTitle
-              TLoginHeader(),
-
-              // Form
-              TForm(),
-              
-              SizedBox(height: TSizes.spaceBtwSections),
-
-              // Divider
-              TFormDivider(
-                text: TTexts.orSignInWith,
-              ),
-
-              SizedBox(height: TSizes.spaceBtwSections),
-
-              // Footer
-              TFooter(),
-            ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: TSpacingStyl.paddingWithAppBareHeight,
+            child: Column(
+              children: [
+                // Logo , Title & SubTitle
+                TLoginHeader(),
+        
+                // Form
+                TForm(),
+                
+                SizedBox(height: TSizes.spaceBtwSections),
+        
+                // Divider
+                TFormDivider(
+                  text: TTexts.orSignInWith,
+                ),
+        
+                SizedBox(height: TSizes.spaceBtwSections),
+        
+                // Footer
+                TFooter(),
+              ],
+            ),
           ),
         ),
       ),

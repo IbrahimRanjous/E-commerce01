@@ -1,4 +1,4 @@
-import 'utils/constants/image_strings.dart';
+import 'package:rjs_store/core/utils/constants/image_strings.dart';
 
 class ProductsList {
   // Make the constructor private to prevent instantiation

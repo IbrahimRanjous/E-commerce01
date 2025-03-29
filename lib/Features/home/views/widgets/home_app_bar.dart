@@ -31,7 +31,7 @@ class THomeAppBar extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
-                .apply(color: dark ? TColors.grey : TColors.white),
+                .apply(color: dark ? TColors.grey : TColors.light),
             textAlign: TextAlign.start,
           ),
         ],
@@ -39,7 +39,7 @@ class THomeAppBar extends StatelessWidget {
       actions: [
         TCardCounterIcon(
           onPreessed: () {},
-          iconColor: dark ? TColors.darkGrey : TColors.white,
+          iconColor: dark ? TColors.darkGrey : TColors.light,
         ),
       ],
     );

@@ -4,7 +4,10 @@ import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 
-class ProductCard extends StatelessWidget {
+import '../../../../core/widgets/brand_widget.dart';
+import '../../../../core/widgets/text/my_text.dart';
+
+class VerticalProductCard extends StatelessWidget {
   /// URL for the product image.
   final String imageUrl;
 
@@ -32,8 +35,11 @@ class ProductCard extends StatelessWidget {
   /// The quantity indicator (could show available stock, etc.)
   final String quantity;
 
+  /// The Action when you click on the card
+  final void Function()? onTap;
+
   /// Creates a reusable product card widget.
-  const ProductCard({
+  const VerticalProductCard({
     super.key,
     required this.imageUrl,
     this.discountText = '',
@@ -44,149 +50,117 @@ class ProductCard extends StatelessWidget {
     this.isVerified = false,
     required this.priceRange,
     this.quantity = '',
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     // Using Card for material elevation and rounded corners.
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image with overlay elements: discount badge and favorite icon.
-          Stack(
-            children: [
-              // Display the product image.
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(TSizes.cardRadiusMd)),
-                child: CustomImage(
-                  imageUrl: imageUrl,
-                  isNetworkImage: false,
-                ),
-              ),
-              // Discount badge positioned on the top-left.
-              if (discountText.isNotEmpty)
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(discountText,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-              // Favorite button positioned on the top-right.
-              Positioned(
-                top: 4,
-                right: 4,
-                child: IconButton(
-                  color: TColors.buttonPrimary,
-                  icon: Icon(
-                    isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                    color: isFavorite
-                        ? Colors.red
-                        : THelperFunctions.isDarkMode(context)
-                            ? TColors.white
-                            : TColors.black,
-                  ),
-                  onPressed: onFavoriteTap,
-                ),
-              ),
-            ],
-          ),
-          // Product details section.
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image with overlay elements: discount badge and favorite icon.
+            Stack(
               children: [
-                // Display the product title.
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: Text(productTitle,
-                      style: const TextStyle(
+                // Display the product image.
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(TSizes.cardRadiusMd)),
+                  child: CustomImage(
+                    imageUrl: imageUrl,
+                    isNetworkImage: false,
+                  ),
+                ),
+                // Discount badge positioned on the top-left.
+                if (discountText.isNotEmpty)
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: MyText(
+                        text: discountText,
                         fontWeight: FontWeight.bold,
+                        color: TColors.black,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
-                ),
-                const SizedBox(height: 4),
-                // Display the brand and an optional verified check icon.
-                Row(
-                  children: [
-                    FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(brand,
-                          style: const TextStyle(
-                            color: TColors.darkerGrey,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
                     ),
-                    if (isVerified) ...[
-                      const SizedBox(width: 4),
-                      const Icon(
-                        Iconsax.verify5,
-                        color: Colors.blue,
-                        size: TSizes.iconSm,
-                      ),
-                    ],
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Display the price range.
-                    FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(priceRange,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                  ),
+                // Favorite button positioned on the top-right.
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: IconButton(
+                    color: TColors.buttonPrimary,
+                    icon: Icon(
+                      isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                      color: isFavorite
+                          ? Colors.red
+                          : THelperFunctions.isDarkMode(context)
+                              ? TColors.light
+                              : TColors.dark,
                     ),
-                    // Display the quantity indicator if provided.
-                    if (quantity.isNotEmpty)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius:
-                              BorderRadius.circular(TSizes.cardRadiusSm),
-                        ),
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(quantity,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                      ),
-                  ],
-                )
+                    onPressed: onFavoriteTap,
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
+            // Product details section.
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Display the product title.
+                  MyText(
+                    text: productTitle,
+                    fontWeight: FontWeight.bold,
+                  ),
+
+                  const SizedBox(height: 4),
+                  // Display the brand and an optional verified check icon.
+                  BrandWidget(brand: brand, isVerified: isVerified),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Display the price range.
+                      MyText(
+                        text: priceRange,
+                        fontWeight: FontWeight.bold,
+                      ),
+
+                      // Display the quantity indicator if provided.
+                      if (quantity.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius:
+                                BorderRadius.circular(TSizes.cardRadiusSm),
+                          ),
+                          child: MyText(
+                            text: quantity,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

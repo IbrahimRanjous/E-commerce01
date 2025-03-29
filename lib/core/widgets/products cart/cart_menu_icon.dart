@@ -6,11 +6,11 @@ class TCardCounterIcon extends StatelessWidget {
   const TCardCounterIcon({
     super.key,
     required this.onPreessed,
-    required this.iconColor,
+    this.iconColor,
   });
 
   final VoidCallback onPreessed;
-  final Color iconColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class TCardCounterIcon extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
-                    .apply(color: TColors.white, fontSizeFactor: 0.8),
+                    .apply(color: TColors.light, fontSizeFactor: 0.8),
               ),
             ),
           ),

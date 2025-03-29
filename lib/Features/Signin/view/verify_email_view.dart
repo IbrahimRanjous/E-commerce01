@@ -26,59 +26,61 @@ class VerifyEmailView extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: TSpacingStyl.paddingWithAppBareHeight,
-          child: Column(
-            children: [
-              // Image
-              Center(
-                child: ClipRRect(
-                  clipBehavior: Clip.antiAlias,
-                  borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
-                  child: Image(
-                    image: const AssetImage(TImages.verifyIllustration),
-                    width: THelperFunctions.screenWidth() * 0.6,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: TSpacingStyl.paddingWithAppBareHeight,
+            child: Column(
+              children: [
+                // Image
+                Center(
+                  child: ClipRRect(
+                    clipBehavior: Clip.antiAlias,
+                    borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
+                    child: Image(
+                      image: const AssetImage(TImages.verifyIllustration),
+                      width: THelperFunctions.screenWidth() * 0.6,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwSections),
-
-              // Title & SubTitle
-              Text(TTexts.confirmEmailTitle,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              Text("ibrahim.ranjous@gmail.com",
-                  style: Theme.of(context).textTheme.labelLarge,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              Text(TTexts.confirmEmailSubTitle,
-                  style: Theme.of(context).textTheme.labelMedium,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: TSizes.spaceBtwSections),
-
-              // Buttons
-              CustomMaterialButton(
-                  onPressed: () {
-                    Get.to(
-                      () => SuccessView(
-                        onPressed: () {
-                          Get.offAll(() => const LoginView());
-                        },
-                        image: TImages.staticSuccessIllustration,
-                        title: TTexts.yourAccountCreatedTitle,
-                        subTitle: TTexts.yourAccountCreatedSubTitle,
-                      ),
-                    );
-                  },
-                  title: TTexts.Continue),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
-            ],
+                const SizedBox(height: TSizes.spaceBtwSections),
+        
+                // Title & SubTitle
+                Text(TTexts.confirmEmailTitle,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    textAlign: TextAlign.center),
+                const SizedBox(height: TSizes.spaceBtwItems),
+        
+                Text("ibrahim.ranjous@gmail.com",
+                    style: Theme.of(context).textTheme.labelLarge,
+                    textAlign: TextAlign.center),
+                const SizedBox(height: TSizes.spaceBtwItems),
+        
+                Text(TTexts.confirmEmailSubTitle,
+                    style: Theme.of(context).textTheme.labelMedium,
+                    textAlign: TextAlign.center),
+                const SizedBox(height: TSizes.spaceBtwSections),
+        
+                // Buttons
+                CustomMaterialButton(
+                    onPressed: () {
+                      Get.to(
+                        () => SuccessView(
+                          onPressed: () {
+                            Get.offAll(() => const LoginView());
+                          },
+                          image: TImages.staticSuccessIllustration,
+                          title: TTexts.yourAccountCreatedTitle,
+                          subTitle: TTexts.yourAccountCreatedSubTitle,
+                        ),
+                      );
+                    },
+                    title: TTexts.Continue),
+                const SizedBox(height: TSizes.spaceBtwItems),
+        
+                CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
+              ],
+            ),
           ),
         ),
       ),

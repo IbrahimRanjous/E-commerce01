@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/Features/home/views/widgets/custom_carousel_slider.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import '../../../core/widgets/section_heading.dart';
 import 'widgets/home_app_bar.dart';
@@ -54,16 +53,16 @@ class HomeView extends StatelessWidget {
               ),
             ),
 
-///////////////////////////////////////////// Body Home Screen //////////////////////////////////////////////////////
-            MySliderImage(),
+////////////////////////// Body Home Screen ///////////////////////////
             SizedBox(height: TSizes.spaceBtwSections),
 
             // -- Products
             THomeBodyHeading(),
             SizedBox(height: TSizes.spaceBtwSections),
 
-            THomeGridView(),
-////////////////////////////////////////////////////////////////////////////////////////////////////
+            THomeGridViewBody(),
+
+///////////////////////////////////////////////////////////////////////
           ],
         ),
       ),

@@ -38,10 +38,10 @@ class PrivacyPolicyAndTermsofUse extends StatelessWidget {
                   TextSpan(
                     text: TTexts.privacyPolicy,
                     style: Theme.of(context).textTheme.bodyMedium!.apply(
-                        color: dark ? TColors.white : TColors.primary,
+                        color: dark ? TColors.light : TColors.primary,
                         decoration: TextDecoration.underline,
                         decorationColor:
-                            dark ? TColors.white : TColors.primary),
+                            dark ? TColors.light : TColors.primary),
                   ),
                   TextSpan(
                       text: ' and ',
@@ -49,10 +49,10 @@ class PrivacyPolicyAndTermsofUse extends StatelessWidget {
                   TextSpan(
                     text: '${TTexts.termsOfUse} ',
                     style: Theme.of(context).textTheme.bodyMedium!.apply(
-                        color: dark ? TColors.white : TColors.primary,
+                        color: dark ? TColors.light : TColors.primary,
                         decoration: TextDecoration.underline,
                         decorationColor:
-                            dark ? TColors.white : TColors.primary),
+                            dark ? TColors.light : TColors.primary),
                   ),
                 ],
               ),

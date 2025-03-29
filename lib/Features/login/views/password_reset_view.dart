@@ -25,52 +25,54 @@ class PasswordResetView extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: TSpacingStyl.paddingWithAppBareHeight,
-          child: Column(
-            children: [
-              // Image
-              Center(
-                child: ClipRRect(
-                  clipBehavior: Clip.antiAlias,
-                  borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
-                  child: Image(
-                    image: THelperFunctions.isDarkMode(context)
-                        ? const AssetImage(TImages.darkAppLogo)
-                        : const AssetImage(TImages.lightAppLogo),
-                    width: THelperFunctions.screenWidth() * 0.6,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: TSpacingStyl.paddingWithAppBareHeight,
+            child: Column(
+              children: [
+                // Image
+                Center(
+                  child: ClipRRect(
+                    clipBehavior: Clip.antiAlias,
+                    borderRadius: BorderRadius.circular(TSizes.cardRadiusLg),
+                    child: Image(
+                      image: THelperFunctions.isDarkMode(context)
+                          ? const AssetImage(TImages.darkAppLogo)
+                          : const AssetImage(TImages.lightAppLogo),
+                      width: THelperFunctions.screenWidth() * 0.6,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwSections),
-
-              // Title & SubTitle
-              Text(TTexts.resetPasswordTitle,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              Text("ibrahim.ranjous@gmail.com",
-                  style: Theme.of(context).textTheme.labelLarge,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              Text(TTexts.resetPasswordSubTitle,
-                  style: Theme.of(context).textTheme.labelMedium,
-                  textAlign: TextAlign.center),
-              const SizedBox(height: TSizes.spaceBtwSections),
-
-              // Buttons
-              CustomMaterialButton(
-                  onPressed: () {
-                    Get.offAll(const LoginView());
-                  },
-                  title: TTexts.done),
-              const SizedBox(height: TSizes.spaceBtwItems),
-
-              CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
-            ],
+                const SizedBox(height: TSizes.spaceBtwSections),
+        
+                // Title & SubTitle
+                Text(TTexts.resetPasswordTitle,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    textAlign: TextAlign.center),
+                const SizedBox(height: TSizes.spaceBtwItems),
+        
+                Text("ibrahim.ranjous@gmail.com",
+                    style: Theme.of(context).textTheme.labelLarge,
+                    textAlign: TextAlign.center),
+                const SizedBox(height: TSizes.spaceBtwItems),
+        
+                Text(TTexts.resetPasswordSubTitle,
+                    style: Theme.of(context).textTheme.labelMedium,
+                    textAlign: TextAlign.center),
+                const SizedBox(height: TSizes.spaceBtwSections),
+        
+                // Buttons
+                CustomMaterialButton(
+                    onPressed: () {
+                      Get.offAll(const LoginView());
+                    },
+                    title: TTexts.done),
+                const SizedBox(height: TSizes.spaceBtwItems),
+        
+                CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
+              ],
+            ),
           ),
         ),
       ),

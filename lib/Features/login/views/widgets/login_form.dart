@@ -73,7 +73,7 @@ class TForm extends StatelessWidget {
               child: Text(
                 TTexts.forgetPassword,
                 style: TextStyle(
-                    color: dark ? TColors.white : TColors.buttonSecondary),
+                    color: dark ? TColors.light : TColors.buttonSecondary),
               ),
             ),
           ],

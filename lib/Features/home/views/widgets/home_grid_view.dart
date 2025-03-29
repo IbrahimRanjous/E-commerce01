@@ -1,33 +1,20 @@
 import 'package:flutter/material.dart';
- import '../../../../core/projucts_list.dart';
-import '../../../../core/utils/constants/sizes.dart';
+import '../../../../core/productsList.dart';
+import '../../../../core/widgets/grid layout/t_grid_lay_out.dart';
 import 'card_product_item.dart';
 
-class THomeGridView extends StatelessWidget {
-  const THomeGridView({
+class THomeGridViewBody extends StatelessWidget {
+  const THomeGridViewBody({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true, // Ensures the GridView only occupies necessary space
-      physics:
-          const NeverScrollableScrollPhysics(), // Disables the GridView's own scrolling
-      padding: EdgeInsets.zero,
+    return TGridLayout(
       itemCount: ProductsList.products.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // Number of items per row
-        crossAxisSpacing:
-            TSizes.gridViewSpacing, // Horizontal spacing between items
-        mainAxisSpacing:
-            TSizes.gridViewSpacing, // Vertical spacing between items
-        childAspectRatio: MediaQuery.of(context).size.aspectRatio *
-            1.4, // Adjust this ratio based on your card layout
-      ),
       itemBuilder: (BuildContext context, int index) {
         final product = ProductsList.products[index];
-        return ProductCard(
+        return VerticalProductCard(
           imageUrl: product['imageUrl']!,
           productTitle: product['productTitle']!,
           brand: product['brand']!,
@@ -37,6 +24,7 @@ class THomeGridView extends StatelessWidget {
           isFavorite: true,
           quantity: '5',
           onFavoriteTap: () {},
+          onTap: () {},
           // Optionally pass other parameters such as discountText, isFavorite, etc.
         );
       },

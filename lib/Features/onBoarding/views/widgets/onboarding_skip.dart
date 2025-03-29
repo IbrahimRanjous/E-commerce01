@@ -19,13 +19,13 @@ class OnboardingSkip extends StatelessWidget {
       right: TSizes.defaultSpace,
       child: TextButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: dark ? TColors.buttonPrimary : TColors.black),
+            backgroundColor: dark ? TColors.buttonPrimary : TColors.dark),
         onPressed: () {
           OnboardingControler.instance.skipPage();
         },
         child: const Text(
           'Skip',
-          style: TextStyle(color: TColors.white),
+          style: TextStyle(color: TColors.light),
         ),
       ),
     );
