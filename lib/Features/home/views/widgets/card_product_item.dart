@@ -7,7 +7,7 @@ import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 import '../../../../core/widgets/brand_widget.dart';
 import '../../../../core/widgets/text/my_text.dart';
 
-class VerticalProductCard extends StatelessWidget {
+class TVerticalProductCard extends StatelessWidget {
   /// URL for the product image.
   final String imageUrl;
 
@@ -39,7 +39,7 @@ class VerticalProductCard extends StatelessWidget {
   final void Function()? onTap;
 
   /// Creates a reusable product card widget.
-  const VerticalProductCard({
+  const TVerticalProductCard({
     super.key,
     required this.imageUrl,
     this.discountText = '',
@@ -128,7 +128,7 @@ class VerticalProductCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
                   // Display the brand and an optional verified check icon.
-                  BrandWidget(brand: brand, isVerified: isVerified),
+                  TBrandWidget(brand: brand, isVerified: isVerified),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

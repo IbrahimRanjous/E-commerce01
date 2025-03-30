@@ -6,14 +6,14 @@ import '../../../../core/utils/helpers/helper_functions.dart';
 class TVerticalListViewIconText extends StatelessWidget {
   const TVerticalListViewIconText({
     super.key,
-    required this.image,
+    required this.iconImage,
     required this.title,
     this.textColor = TColors.light,
     this.backgroundColor = TColors.light,
     this.onTap,
   });
 
-  final String image, title;
+  final String iconImage, title;
   final Color textColor;
   final Color? backgroundColor;
   final void Function()? onTap;
@@ -52,7 +52,7 @@ class TVerticalListViewIconText extends StatelessWidget {
               ),
               child: Center(
                 child: Image(
-                  image: AssetImage(image),
+                  image: AssetImage(iconImage),
                   fit: BoxFit.cover,
                   color: TColors.dark,
                 ),

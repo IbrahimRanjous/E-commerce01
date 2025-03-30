@@ -23,7 +23,7 @@ class THomeCategories extends StatelessWidget {
         itemBuilder: (_, index) {
           final category = categories[index];
           return TVerticalListViewIconText(
-            image: category.icon,
+            iconImage: category.icon,
             title: category.title,
             onTap: () {},
           );

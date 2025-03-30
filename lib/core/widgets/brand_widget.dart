@@ -4,8 +4,8 @@ import '../utils/constants/colors.dart';
 import '../utils/constants/sizes.dart';
 import 'text/my_text.dart';
 
-class BrandWidget extends StatelessWidget {
-  const BrandWidget({
+class TBrandWidget extends StatelessWidget {
+  const TBrandWidget({
     super.key,
     required this.brand,
     this.isVerified = false,

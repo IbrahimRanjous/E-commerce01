@@ -14,7 +14,7 @@ class THomeGridViewBody extends StatelessWidget {
       itemCount: ProductsList.products.length,
       itemBuilder: (BuildContext context, int index) {
         final product = ProductsList.products[index];
-        return VerticalProductCard(
+        return TVerticalProductCard(
           imageUrl: product['imageUrl']!,
           productTitle: product['productTitle']!,
           brand: product['brand']!,
