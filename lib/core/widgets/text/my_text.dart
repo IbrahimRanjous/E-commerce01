@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../utils/constants/colors.dart';
+ import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
 
 class MyText extends StatelessWidget {
@@ -11,6 +11,7 @@ class MyText extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
     this.fontWeight,
     this.style,
+    this.fontSize,
   });
 
   final String text;
@@ -19,6 +20,7 @@ class MyText extends StatelessWidget {
   final TextOverflow? overflow;
   final FontWeight? fontWeight;
   final TextStyle? style;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +31,9 @@ class MyText extends StatelessWidget {
       child: Text(text,
           style: style ??
               TextStyle(
-                fontWeight: fontWeight,
-                color: color ?? noColor,
-              ),
+                  fontWeight: fontWeight,
+                  color: color ?? noColor,
+                  fontSize: fontSize),
           maxLines: maxLines,
           overflow: overflow),
     );

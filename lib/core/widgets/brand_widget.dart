@@ -18,16 +18,23 @@ class TBrandWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        MyText(
-          text: brand,
-          color: TColors.darkGrey,
+        Flexible(
+          child: MyText(
+            text: brand,
+            color: TColors.darkGrey,
+          ),
         ),
         if (isVerified) ...[
           const SizedBox(width: 4),
-          const Icon(
-            Iconsax.verify5,
-            color: Colors.blue,
-            size: TSizes.iconSm,
+          const Expanded(
+            flex: 0,
+            child: FittedBox(
+              child: Icon(
+                Iconsax.verify5,
+                color: Colors.blue,
+                size: TSizes.iconSm,
+              ),
+            ),
           ),
         ] else
           ...[],

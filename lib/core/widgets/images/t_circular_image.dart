@@ -6,6 +6,8 @@ class TCircularImage extends StatelessWidget {
 
   /// The width and height of the widget.
   final double size;
+  final double? width;
+  final double? height;
 
   /// The padding inside the circular container.
   final double padding;
@@ -30,6 +32,8 @@ class TCircularImage extends StatelessWidget {
     this.fit,
     this.backgroundColor = Colors.transparent,
     this.overLayColor,
+    this.width,
+    this.height,
   });
 
   @override
@@ -44,7 +48,9 @@ class TCircularImage extends StatelessWidget {
       ),
       child: Image(
           fit: fit,
-          color: overLayColor ?? Colors.transparent,
+          width: width,
+          height: height,
+          color: overLayColor,
           image: isNetworkImage
               ? NetworkImage(url)
               : AssetImage(url) as ImageProvider),

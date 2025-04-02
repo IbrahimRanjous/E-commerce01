@@ -12,6 +12,7 @@ class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
+  @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SingleChildScrollView(
@@ -26,9 +27,7 @@ class HomeView extends StatelessWidget {
                   SizedBox(height: TSizes.defaultSpace),
 
                   // -- Searchbar
-                  TSearchContainer(
-                    text: 'Search In Store',
-                  ),
+                  TSearchContainer(text: 'Search In Store'),
                   SizedBox(height: TSizes.defaultSpace),
 
                   // -- Categories
@@ -49,6 +48,8 @@ class HomeView extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  SizedBox(height: TSizes.spaceBtwSections),
                 ],
               ),
             ),

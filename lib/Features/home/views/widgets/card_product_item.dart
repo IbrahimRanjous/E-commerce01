@@ -3,9 +3,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
-
 import '../../../../core/widgets/brand_widget.dart';
 import '../../../../core/widgets/text/my_text.dart';
+import 'custom_image.dart';
 
 class TVerticalProductCard extends StatelessWidget {
   /// URL for the product image.
@@ -55,6 +55,7 @@ class TVerticalProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
     // Using Card for material elevation and rounded corners.
     return GestureDetector(
       onTap: onTap,
@@ -67,7 +68,7 @@ class TVerticalProductCard extends StatelessWidget {
             // Image with overlay elements: discount badge and favorite icon.
             Stack(
               children: [
-                // Display the product image.
+                /////// -- Thumbnail -- ///////
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(TSizes.cardRadiusMd)),
@@ -76,7 +77,7 @@ class TVerticalProductCard extends StatelessWidget {
                     isNetworkImage: false,
                   ),
                 ),
-                // Discount badge positioned on the top-left.
+                /////// -- Discount -- ///////
                 if (discountText.isNotEmpty)
                   Positioned(
                     top: 8,
@@ -95,7 +96,7 @@ class TVerticalProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                // Favorite button positioned on the top-right.
+                /////// -- Favorite -- ///////
                 Positioned(
                   top: 4,
                   right: 4,
@@ -105,7 +106,7 @@ class TVerticalProductCard extends StatelessWidget {
                       isFavorite ? Iconsax.heart5 : Iconsax.heart,
                       color: isFavorite
                           ? Colors.red
-                          : THelperFunctions.isDarkMode(context)
+                          : dark
                               ? TColors.light
                               : TColors.dark,
                     ),
@@ -114,44 +115,52 @@ class TVerticalProductCard extends StatelessWidget {
                 ),
               ],
             ),
-            // Product details section.
+            /////// -- Details -- ///////
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Display the product title.
-                  MyText(
-                    text: productTitle,
-                    fontWeight: FontWeight.bold,
+                  /////// -- product title -- ///////
+                  Text(
+                    productTitle,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: TSizes.fontSizeSm,
+                        overflow: TextOverflow.ellipsis),
                   ),
 
                   const SizedBox(height: 4),
-                  // Display the brand and an optional verified check icon.
+                  /////// -- brand and verified check icon-- ///////
                   TBrandWidget(brand: brand, isVerified: isVerified),
                   const SizedBox(height: 8),
+
+                  /////// -- Price Row -- ///////
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       // Display the price range.
                       MyText(
                         text: priceRange,
                         fontWeight: FontWeight.bold,
                       ),
-
+                      const SizedBox(width: TSizes.xs),
                       // Display the quantity indicator if provided.
                       if (quantity.isNotEmpty)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius:
-                                BorderRadius.circular(TSizes.cardRadiusSm),
-                          ),
-                          child: MyText(
-                            text: quantity,
-                            fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.circular(TSizes.cardRadiusSm),
+                            ),
+                            child: MyText(
+                              text: quantity,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                     ],
@@ -163,43 +172,5 @@ class TVerticalProductCard extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CustomImage extends StatelessWidget {
-  const CustomImage({
-    super.key,
-    required this.imageUrl,
-    this.isNetworkImage = false,
-  });
-
-  final String imageUrl;
-  final bool isNetworkImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return isNetworkImage
-        ? Image.network(
-            imageUrl,
-            height: 150,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              height: THelperFunctions.screenHeight() * 0.2,
-              color: Colors.grey.shade300,
-              child: const Icon(Icons.broken_image, size: 48),
-            ),
-          )
-        : Image.asset(
-            imageUrl,
-            height: THelperFunctions.screenHeight() * 0.2,
-            width: double.infinity,
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) => Container(
-              height: 200,
-              color: Colors.grey.shade300,
-              child: const Icon(Icons.broken_image, size: 48),
-            ),
-          );
   }
 }
