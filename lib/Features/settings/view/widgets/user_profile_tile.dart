@@ -7,8 +7,10 @@ import '../../../../core/widgets/images/t_circular_image.dart';
 class TUserProfileTile extends StatelessWidget {
   const TUserProfileTile({
     super.key,
+    this.onPressed,
   });
 
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -25,14 +27,14 @@ class TUserProfileTile extends StatelessWidget {
             Theme.of(context).textTheme.bodyMedium!.apply(color: TColors.white),
       ),
       trailing: IconButton(
-          onPressed: () {},
+          onPressed: onPressed,
           icon: const Icon(
             Iconsax.edit,
             color: TColors.white,
           )),
       leading: const TCircularImage(
-          width: 50,
-          height: 50,
+          imageWidth: 50,
+          imgaeHeight: 50,
           padding: 0,
           url: TImages.user,
           isNetworkImage: false),

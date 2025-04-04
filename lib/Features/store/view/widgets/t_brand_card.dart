@@ -28,7 +28,8 @@ class TBrandCard extends StatelessWidget {
             ///  -- Icon
             Flexible(
               child: TCircularImage(
-                size: THelperFunctions.screenWidth() * 0.135,
+                imageWidth: THelperFunctions.screenWidth() * 0.135,
+                imgaeHeight: THelperFunctions.screenWidth() * 0.135,
                 isNetworkImage: false,
                 url: TImages.clothIcon,
                 overLayColor: THelperFunctions.isDarkMode(context)
