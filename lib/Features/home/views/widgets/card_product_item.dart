@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import 'package:rjs_store/core/widgets/Icons/t_circular_icon.dart';
 import '../../../../core/widgets/brand_widget.dart';
 import '../../../../core/widgets/text/my_text.dart';
 import 'custom_image.dart';
@@ -100,17 +101,13 @@ class TVerticalProductCard extends StatelessWidget {
                 Positioned(
                   top: 4,
                   right: 4,
-                  child: IconButton(
-                    color: TColors.buttonPrimary,
-                    icon: Icon(
-                      isFavorite ? Iconsax.heart5 : Iconsax.heart,
-                      color: isFavorite
-                          ? Colors.red
-                          : dark
-                              ? TColors.light
-                              : TColors.dark,
-                    ),
-                    onPressed: onFavoriteTap,
+                  child: TCircularIcon(
+                    icon: isFavorite ? Iconsax.heart5 : Iconsax.heart,
+                    color: isFavorite
+                        ? Colors.red
+                        : dark
+                            ? TColors.light
+                            : TColors.dark,
                   ),
                 ),
               ],

@@ -5,7 +5,7 @@ class TCircularImage extends StatelessWidget {
   final String url;
 
   /// The width and height of the widget.
-   final double? imageWidth;
+  final double? imageWidth;
   final double? imgaeHeight;
 
   /// The padding inside the circular container.
@@ -21,35 +21,40 @@ class TCircularImage extends StatelessWidget {
   final bool isNetworkImage;
 
   final BoxFit? fit;
+  final BoxBorder? border;
+  final void Function()? onTap;
 
   const TCircularImage({
     super.key,
     required this.url,
-     this.padding = 8.0,
+    this.padding = 8.0,
     required this.isNetworkImage,
     this.fit,
     this.backgroundColor = Colors.transparent,
     this.overLayColor,
     this.imageWidth,
     this.imgaeHeight,
+    this.onTap,
+    this.border,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: imageWidth,
-      height: imgaeHeight,
-      padding: EdgeInsets.all(padding),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: imageWidth,
+        height: imgaeHeight,
+        padding: EdgeInsets.all(padding),
+        decoration: BoxDecoration(
+            color: backgroundColor, shape: BoxShape.circle, border: border),
+        child: Image(
+            fit: fit,
+            color: overLayColor,
+            image: isNetworkImage
+                ? NetworkImage(url)
+                : AssetImage(url) as ImageProvider),
       ),
-      child: Image(
-          fit: fit,
-           color: overLayColor,
-          image: isNetworkImage
-              ? NetworkImage(url)
-              : AssetImage(url) as ImageProvider),
     );
   }
 }
