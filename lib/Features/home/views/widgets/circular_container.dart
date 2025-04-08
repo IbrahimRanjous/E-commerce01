@@ -17,11 +17,12 @@ class TCircularContainer extends StatelessWidget {
   final double? width, height;
   final double borderRadius;
   final double padding;
-  final Color color;
+  final Color? color;
   final Widget? child;
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       width: width,
       height: height,
       padding: EdgeInsets.all(padding),

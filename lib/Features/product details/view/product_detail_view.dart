@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rjs_store/Features/product%20details/view/widgets/product_attributs.dart';
 import 'package:rjs_store/Features/product%20details/view/widgets/product_meta_data.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'widgets/product_image_slider.dart';
@@ -30,8 +31,10 @@ class ProductDetailView extends StatelessWidget {
 
                     /// - Price , Title , Stack , Brand
                     TProductMetaData(),
-                    
+
                     /// -- Attributes
+                    TProductAttributs(),
+
                     /// -- Chekout Button
                     /// - Description
                     /// - Reviews

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TRoundedContainer extends StatelessWidget {
   /// The widget below this container in the tree.
-  final Widget child;
+  final Widget? child;
 
   /// The internal padding of the container.
   final EdgeInsetsGeometry? padding;
@@ -30,7 +30,7 @@ class TRoundedContainer extends StatelessWidget {
 
   const TRoundedContainer({
     super.key,
-    required this.child,
+    this.child,
     this.padding = const EdgeInsets.all(8.0),
     this.borderRadius = 12.0,
     this.borderColor = Colors.grey,
@@ -38,7 +38,7 @@ class TRoundedContainer extends StatelessWidget {
     this.margin,
     this.height,
     this.width,
-    required this.showBorder,
+    this.showBorder = false,
   });
 
   @override

@@ -4,38 +4,35 @@ import 'package:intl/intl.dart';
 
 class THelperFunctions {
   static Color? getColor(String value) {
-    /// Define your product specific colors here and it will match the attribute colors and show specific colors
-    if (value == 'Green') {
-      return Colors.green;
-    } else if (value == 'Green') {
-      return Colors.green;
-    } else if (value == 'Red') {
-      return Colors.red;
-    } else if (value == 'Blue') {
-      return Colors.blue;
-    } else if (value == 'Pink') {
-      return Colors.pink;
-    } else if (value == 'Grey') {
-      return Colors.grey;
-    } else if (value == 'Purple') {
-      return Colors.purple;
-    } else if (value == 'Black') {
-      return Colors.black;
-    } else if (value == 'White') {
-      return Colors.white;
-    } else if (value == 'Yellow') {
-      return Colors.yellow;
-    } else if (value == 'Orange') {
-      return Colors.orange;
-    } else if (value == 'Brown') {
-      return Colors.brown;
-    } else if (value == 'Teal') {
-      return Colors.teal;
-    } else if (value == 'Indigo') {
-      return Colors.indigo;
-    } else {
-      return null;
-    }
+    // Normalize the input: convert to uppercase and replace spaces with underscores.
+    final normalizedValue = value.toUpperCase().replaceAll(' ', '_');
+
+    // Map of all standard Material colors.
+    const Map<String, Color> colorMap = {
+      'RED': Colors.red,
+      'PINK': Colors.pink,
+      'PURPLE': Colors.purple,
+      'DEEP_PURPLE': Colors.deepPurple,
+      'INDIGO': Colors.indigo,
+      'BLUE': Colors.blue,
+      'LIGHT_BLUE': Colors.lightBlue,
+      'CYAN': Colors.cyan,
+      'TEAL': Colors.teal,
+      'GREEN': Colors.green,
+      'LIGHT_GREEN': Colors.lightGreen,
+      'LIME': Colors.lime,
+      'YELLOW': Colors.yellow,
+      'AMBER': Colors.amber,
+      'ORANGE': Colors.orange,
+      'DEEP_ORANGE': Colors.deepOrange,
+      'BROWN': Colors.brown,
+      'GREY': Colors.grey,
+      'BLUE_GREY': Colors.blueGrey,
+      'BLACK': Colors.black,
+      'WHITE': Colors.white,
+    };
+
+    return colorMap[normalizedValue];
   }
 
   static void showSnackBar(String message) {

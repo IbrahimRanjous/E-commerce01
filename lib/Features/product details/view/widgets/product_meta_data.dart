@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/Features/product%20details/view/widgets/product_price_text.dart';
-import 'package:rjs_store/Features/product%20details/view/widgets/product_title_text.dart';
+import 'package:rjs_store/core/widgets/text/product_price_text.dart';
+import 'package:rjs_store/core/widgets/text/product_title_text.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/enums.dart';
 import 'package:rjs_store/core/utils/constants/image_strings.dart';
