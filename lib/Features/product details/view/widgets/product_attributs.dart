@@ -8,9 +8,15 @@ import 'package:rjs_store/core/widgets/text/product_price_text.dart';
 import 'package:rjs_store/core/widgets/text/product_title_text.dart';
 import 'choice_chip.dart';
 
-class TProductAttributs extends StatelessWidget {
+class TProductAttributs extends StatefulWidget {
   const TProductAttributs({super.key});
 
+  @override
+  State<TProductAttributs> createState() => _TProductAttributsState();
+}
+
+class _TProductAttributsState extends State<TProductAttributs> {
+  List<String> listColors = [];
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
@@ -81,26 +87,57 @@ class TProductAttributs extends StatelessWidget {
               spacing: 8,
               children: [
                 TChoiceChip(
-                    text: 'red', onSelected: (value) {}, selected: true),
+                    text: 'red',
+                    onSelected: (value) {
+                      setState(() {
+                        if (value) {
+                          listColors.add('red');
+                        } else {
+                          listColors.remove('red');
+                        }
+                      });
+                    },
+                    selected: listColors.contains('red')),
                 TChoiceChip(
-                    text: 'green', onSelected: (value) {}, selected: false),
+                    text: 'green',
+                    onSelected: (value) {
+                      setState(() {
+                        if (value) {
+                          listColors.add('green');
+                        } else {
+                          listColors.remove('green');
+                        }
+                      });
+                    },
+                    selected: listColors.remove('green')),
                 TChoiceChip(
-                    text: 'yellow', onSelected: (value) {}, selected: false),
+                    text: 'yellow',
+                    onSelected: (value) {
+                      if (value) {
+                        listColors.add('yellow');
+                      } else {
+                        listColors.remove('yellow');
+                      }
+                    },
+                    selected: listColors.contains('yellow')),
               ],
             ),
           ],
         ),
-        const Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TSectionHeading(text: 'Sizes'),
-            SizedBox(height: TSizes.spaceBtwItems / 2),
+            const TSectionHeading(text: 'Sizes'),
+            const SizedBox(height: TSizes.spaceBtwItems / 2),
             Wrap(
               spacing: 8,
               children: [
-                TChoiceChip(text: 'EU 34', selected: true),
-                TChoiceChip(text: 'EU 36', selected: false),
-                TChoiceChip(text: 'EU 38', selected: false),
+                TChoiceChip(
+                    text: 'EU 34', selected: true, onSelected: (value) {}),
+                TChoiceChip(
+                    text: 'EU 36', selected: false, onSelected: (value) {}),
+                TChoiceChip(
+                    text: 'EU 38', selected: false, onSelected: (value) {}),
               ],
             ),
           ],

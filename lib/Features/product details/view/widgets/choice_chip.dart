@@ -16,24 +16,35 @@ class TChoiceChip extends StatelessWidget {
   final void Function(bool)? onSelected;
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
     final Color? mycolor = THelperFunctions.getColor(text);
-    return ChoiceChip(
-      avatar: mycolor != null
-          ? TCircularContainer(
-              width: 50,
-              height: 50,
-              color: mycolor,
-            )
-          : null,
-      selected: selected,
-      onSelected: onSelected,
-      shape: mycolor != null ? const CircleBorder() : null,
-      labelStyle: TextStyle(color: selected ? TColors.white : null),
-      label: mycolor != null ? const SizedBox() : MyText(text: text),
-      labelPadding: mycolor != null ? const EdgeInsets.all(0) : null,
-      padding: mycolor != null ? const EdgeInsets.all(0) : null,
-      backgroundColor: mycolor ?? TColors.buttonSecondary,
-      selectedColor: TColors.primary,
+    return Theme(
+      data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
+      child: ChoiceChip(
+        avatar: mycolor != null
+            ? TCircularContainer(
+                width: 50,
+                height: 50,
+                color: mycolor,
+              )
+            : null,
+        selected: selected,
+        onSelected: onSelected,
+        shape: mycolor != null ? const CircleBorder() : null,
+        labelStyle: TextStyle(color: selected ? TColors.white : null),
+        label: mycolor != null
+            ? const SizedBox()
+            : MyText(
+                text: text,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: dark ? TColors.light : TColors.black,
+              ),
+        labelPadding: mycolor != null ? const EdgeInsets.all(0) : null,
+        padding: mycolor != null ? const EdgeInsets.all(0) : null,
+        backgroundColor: mycolor ?? TColors.buttonSecondary,
+        selectedColor: TColors.buttonPrimary,
+      ),
     );
   }
 }
