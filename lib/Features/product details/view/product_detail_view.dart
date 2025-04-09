@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
+import 'package:rjs_store/Features/product%20details/view/reviews_ratings_view.dart';
 import 'package:rjs_store/Features/product%20details/view/widgets/product_attributs.dart';
 import 'package:rjs_store/Features/product%20details/view/widgets/product_meta_data.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
@@ -59,7 +61,9 @@ class ProductDetailView extends StatelessWidget {
                       children: [
                         const TSectionHeading(text: 'Reviews(199)'),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => const ReviewsRatingsView());
+                          },
                           icon: const Icon(
                             Iconsax.arrow_right_3,
                             size: 18,
