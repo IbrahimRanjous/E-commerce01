@@ -5,6 +5,7 @@ import 'package:rjs_store/Features/home/views/widgets/primary_header_container.d
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
 import 'package:rjs_store/Features/settings/view/account_view.dart';
+import 'package:rjs_store/Features/settings/view/addressed_view.dart';
 import 'package:rjs_store/Features/settings/view/widgets/settings_menu_tile.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
@@ -54,10 +55,13 @@ class SettingsView extends StatelessWidget {
                   /// -- Account Settings
                   const TSectionHeading(text: 'Account Settings'),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  const TSettingsMenuTile(
+                  TSettingsMenuTile(
                     icon: Iconsax.safe_home,
                     title: 'My Addresses',
                     subTitle: 'Set shopping delivery address',
+                    onTap: () {
+                      Get.to(() => const AddressedView());
+                    },
                   ),
                   const TSettingsMenuTile(
                     icon: Iconsax.shopping_cart,

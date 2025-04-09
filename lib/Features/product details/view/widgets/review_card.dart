@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
+import 'package:rjs_store/core/utils/constants/colors.dart';
+import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 import '../../../../core/utils/constants/sizes.dart';
 
 //// A card widget for displaying individual reviews and the store response.
@@ -53,9 +56,9 @@ class ReviewCard extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: TSizes.fontSizeMd),
                 ),
-                Text(
-                  reviewDate,
-                  style: const TextStyle(color: Colors.grey),
+                IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -63,15 +66,36 @@ class ReviewCard extends StatelessWidget {
 
             /// Display star rating
             Row(
-              children: _buildStarIcons(),
+              children: [
+                Row(
+                  children: _buildStarIcons(),
+                ),
+                const SizedBox(width: TSizes.defaultSpace),
+                Text(
+                  storeResponseDate,
+                  style: const TextStyle(fontSize: TSizes.fontSizeSm),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
 
             /// Review text
-            Text(
+            ReadMoreText(
               comment,
-              style: const TextStyle(fontSize: TSizes.fontSizeSm),
+              trimLines: 2,
+              trimMode: TrimMode.Line,
+              trimExpandedText: 'show less',
+              trimCollapsedText: 'show more',
+              moreStyle: const TextStyle(
+                  fontSize: TSizes.fontSizeSm,
+                  fontWeight: FontWeight.bold,
+                  color: TColors.primary),
+              lessStyle: const TextStyle(
+                  fontSize: TSizes.fontSizeSm,
+                  fontWeight: FontWeight.bold,
+                  color: TColors.primary),
             ),
+
             const SizedBox(height: 8),
 
             /// Store response section, if available
@@ -79,29 +103,41 @@ class ReviewCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: THelperFunctions.isDarkMode(context)
+                      ? TColors.darkerGrey
+                      : TColors.grey,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Response from T's Store",
+                      "Response from RJS's Store",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
+                    ReadMoreText(
                       storeResponse,
-                      style: const TextStyle(fontSize: TSizes.fontSizeSm),
+                      trimLines: 1,
+                      trimMode: TrimMode.Line,
+                      trimExpandedText: 'show less',
+                      trimCollapsedText: 'show more',
+                      moreStyle: const TextStyle(
+                          fontSize: TSizes.fontSizeSm,
+                          fontWeight: FontWeight.bold,
+                          color: TColors.primary),
+                      lessStyle: const TextStyle(
+                          fontSize: TSizes.fontSizeSm,
+                          fontWeight: FontWeight.bold,
+                          color: TColors.primary),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       storeResponseDate,
-                      style: const TextStyle(
-                          color: Colors.grey, fontSize: TSizes.fontSizeSm),
+                      style: const TextStyle(fontSize: TSizes.fontSizeSm),
                     ),
                   ],
                 ),

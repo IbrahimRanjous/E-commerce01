@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 import 'rating_bar.dart';
 
 //// Displays a vertical chart showing the distribution of ratings.
@@ -16,13 +17,19 @@ class RatingsBarChart extends StatelessWidget {
       RatingData(star: 1, progress: 0.2),
     ];
 
-    return Column(
-      children: ratingsData
-          .map((data) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: RatingBar(progress: data.progress, star: data.star),
-              ))
-          .toList(),
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: Column(
+        children: ratingsData
+            .map((data) => SizedBox(
+                  width: (THelperFunctions.screenWidth() / 2.3),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: RatingBar(progress: data.progress, star: data.star),
+                  ),
+                ))
+            .toList(),
+      ),
     );
   }
 }

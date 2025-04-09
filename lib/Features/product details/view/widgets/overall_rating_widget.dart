@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import 'package:rjs_store/core/widgets/text/my_text.dart';
 
 //// Displays the overall rating and total number of reviews.
 class OverallRatingWidget extends StatelessWidget {
@@ -35,34 +37,38 @@ class OverallRatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // Column to display the numerical rating and review count.
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              rating.toString(),
-              style: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
+    return SizedBox(
+      width: THelperFunctions.screenWidth() / 2.5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Column to display the numerical rating and review count.
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                rating.toString(),
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              "$reviewCount reviews",
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              Flexible(
+                flex: 0,
+                child: MyText(
+                  text: "$reviewCount reviews",
+                  color: Colors.grey,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(width: 16),
-        // Display stars based on the given rating.
-        Row(
-          children: _buildStarIcons(),
-        ),
-      ],
+            ],
+          ),
+          const SizedBox(width: 16),
+          // Display stars based on the given rating.
+          Row(
+            children: _buildStarIcons(),
+          ),
+        ],
+      ),
     );
   }
 }
