@@ -5,7 +5,7 @@ import 'package:rjs_store/Features/home/views/widgets/primary_header_container.d
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
 import 'package:rjs_store/Features/settings/view/account_view.dart';
-import 'package:rjs_store/Features/settings/view/addressed_view.dart';
+import 'package:rjs_store/Features/settings/view/user_addressed_view.dart';
 import 'package:rjs_store/Features/settings/view/widgets/settings_menu_tile.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
@@ -60,7 +60,7 @@ class SettingsView extends StatelessWidget {
                     title: 'My Addresses',
                     subTitle: 'Set shopping delivery address',
                     onTap: () {
-                      Get.to(() => const AddressedView());
+                      Get.to(() => const UserAddressedView());
                     },
                   ),
                   const TSettingsMenuTile(

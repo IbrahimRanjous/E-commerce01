@@ -1,18 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
+import 'add_new_address_view.dart';
 import 'widgets/address_tile.dart';
 
 /// The main page that displays a list of addresses and manages the selected index.
-class AddressedView extends StatefulWidget {
-  const AddressedView({super.key});
+class UserAddressedView extends StatefulWidget {
+  const UserAddressedView({super.key});
 
   @override
-  State<AddressedView> createState() => _AddressedViewState();
+  State<UserAddressedView> createState() => _UserAddressedViewState();
 }
 
-class _AddressedViewState extends State<AddressedView> {
+class _UserAddressedViewState extends State<UserAddressedView> {
   // Preselect Maria Garcia (index 4) based on our design.
   int selectedIndex = 0;
   Color containerColor = TColors.grey;
@@ -84,10 +86,10 @@ class _AddressedViewState extends State<AddressedView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Place logic to add a new address (e.g., open a dialog or a new page).
           if (kDebugMode) {
             print('Add new address tapped.+ $selectedIndex');
           }
+          Get.to(() => const AddNewAddressView());
         },
         child: const Icon(Icons.add),
       ),
