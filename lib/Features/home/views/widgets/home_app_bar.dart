@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rjs_store/Features/card/view/cart_view.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
@@ -38,7 +40,9 @@ class THomeAppBar extends StatelessWidget {
       ),
       actions: [
         TCardCounterIcon(
-          onPreessed: () {},
+          onPreessed: () {
+            Get.to(() => const CartView());
+          },
           iconColor: dark ? TColors.darkGrey : TColors.light,
         ),
       ],
