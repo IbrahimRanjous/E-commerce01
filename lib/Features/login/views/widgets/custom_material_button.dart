@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
+import 'package:rjs_store/core/widgets/text/my_text.dart';
 
 class CustomMaterialButton extends StatelessWidget {
   const CustomMaterialButton({
@@ -20,8 +21,8 @@ class CustomMaterialButton extends StatelessWidget {
       minWidth: double.maxFinite,
       color: TColors.buttonPrimary,
       textColor: Colors.white,
-      child: Text(
-        title,
+      child: MyText(
+        text: title,
         style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
       ),
     );

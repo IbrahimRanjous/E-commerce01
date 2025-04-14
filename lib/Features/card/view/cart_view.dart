@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rjs_store/Features/checkout/view/checkout_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
@@ -28,7 +30,9 @@ class CartView extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: CustomMaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => const CheckoutView());
+          },
           title: 'Checkout \$256',
         ),
       ),

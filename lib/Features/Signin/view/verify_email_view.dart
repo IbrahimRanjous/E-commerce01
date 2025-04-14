@@ -5,7 +5,7 @@ import 'package:rjs_store/Features/Signin/view/success_view.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_elevated_button.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
- import 'package:rjs_store/core/utils/constants/sizes.dart';
+import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
@@ -44,23 +44,23 @@ class VerifyEmailView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-        
+
                 // Title & SubTitle
                 Text(TTexts.confirmEmailTitle,
                     style: Theme.of(context).textTheme.headlineMedium,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
-        
+
                 Text("ibrahim.ranjous@gmail.com",
                     style: Theme.of(context).textTheme.labelLarge,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
-        
+
                 Text(TTexts.confirmEmailSubTitle,
                     style: Theme.of(context).textTheme.labelMedium,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwSections),
-        
+
                 // Buttons
                 CustomMaterialButton(
                     onPressed: () {
@@ -70,6 +70,7 @@ class VerifyEmailView extends StatelessWidget {
                             Get.offAll(() => const LoginView());
                           },
                           image: TImages.staticSuccessIllustration,
+                          buttonTitle: TTexts.signIn,
                           title: TTexts.yourAccountCreatedTitle,
                           subTitle: TTexts.yourAccountCreatedSubTitle,
                         ),
@@ -77,8 +78,9 @@ class VerifyEmailView extends StatelessWidget {
                     },
                     title: TTexts.Continue),
                 const SizedBox(height: TSizes.spaceBtwItems),
-        
-                CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
+
+                CustomElevatedButton(
+                    onPressed: () {}, title: TTexts.resendEmail),
               ],
             ),
           ),
