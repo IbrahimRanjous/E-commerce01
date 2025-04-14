@@ -78,6 +78,7 @@ class CheckoutView extends StatelessWidget {
               () => SuccessView(
                   image: TImages.successfulPaymentIcon,
                   title: 'Payment Success!',
+                  buttonTitle: 'Continue Shopping',
                   subTitle: 'Your item will be shipped soon',
                   onPressed: () => Get.offAll(() => const NavigationMenu())),
             );

@@ -23,8 +23,10 @@ class TCouponTextFiled extends StatelessWidget {
           /// Text Field
           Flexible(
             child: TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Have a promo code ? Enter here',
+                hintStyle:
+                    TextStyle(color: dark ? TColors.white : TColors.black),
                 focusedBorder: InputBorder.none,
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,

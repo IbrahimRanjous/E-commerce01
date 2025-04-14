@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:rjs_store/Features/card/view/cart_view.dart';
 import 'package:rjs_store/Features/home/views/widgets/primary_header_container.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
@@ -11,6 +12,7 @@ import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import 'package:rjs_store/core/widgets/section_heading.dart';
+import 'orders_view.dart';
 import 'widgets/user_profile_tile.dart';
 
 class SettingsView extends StatelessWidget {
@@ -63,15 +65,21 @@ class SettingsView extends StatelessWidget {
                       Get.to(() => const UserAddressedView());
                     },
                   ),
-                  const TSettingsMenuTile(
+                  TSettingsMenuTile(
                     icon: Iconsax.shopping_cart,
                     title: 'My Cart',
                     subTitle: 'Add, remove products and move to checkout',
+                    onTap: () {
+                      Get.to(() => const CartView());
+                    },
                   ),
-                  const TSettingsMenuTile(
+                  TSettingsMenuTile(
                     icon: Iconsax.bag_tick,
                     title: 'My Orders',
                     subTitle: 'In-progress and Completed Orders',
+                    onTap: () {
+                      Get.to(() => const OrdersView());
+                    },
                   ),
                   const TSettingsMenuTile(
                     icon: Iconsax.bank,
