@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants/sizes.dart';
 
-class TGridLayout extends StatelessWidget {
-  const TGridLayout({
+class TGridLayoutBody extends StatelessWidget {
+  const TGridLayoutBody({
     super.key,
     required this.itemCount,
     required this.itemBuilder,

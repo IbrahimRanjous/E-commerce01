@@ -17,8 +17,10 @@ class TBrandWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
+          flex: 0,
           child: MyText(
             text: brand,
             color: TColors.darkGrey,
@@ -26,14 +28,11 @@ class TBrandWidget extends StatelessWidget {
         ),
         if (isVerified) ...[
           const SizedBox(width: 4),
-          const Expanded(
-            flex: 0,
-            child: FittedBox(
-              child: Icon(
-                Iconsax.verify5,
-                color: Colors.blue,
-                size: TSizes.iconSm,
-              ),
+          const FittedBox(
+            child: Icon(
+              Iconsax.verify5,
+              color: Colors.blue,
+              size: TSizes.iconSm,
             ),
           ),
         ] else

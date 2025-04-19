@@ -48,7 +48,13 @@ class TThumbnail extends StatelessWidget {
             ),
           ),
         /////// -- Favorite -- ///////
-        FavoriteIcon(isFavorite: isFavorite),
+        FavoriteIcon(
+          isFavorite: isFavorite,
+          iconSize: 30.0,
+          containerSize: 35.0,
+          top: 2.0,
+          right: 2.0,
+        )
       ],
     );
   }

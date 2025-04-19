@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/Features/home/views/widgets/search_container.dart';
+import 'package:rjs_store/Features/store/view/brand_view.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
@@ -55,10 +57,11 @@ class StoreView extends StatelessWidget {
 
                         // -- Featured Brands
                         TSectionHeading(
-                            text: 'Featured Brands',
-                            showActionButton: true,
-                            buttonColor: TColors.buttonPrimary,
-                            onPressed: () {}),
+                          text: 'Featured Brands',
+                          showActionButton: true,
+                          buttonColor: TColors.buttonPrimary,
+                          onPressed: () => Get.to(() => const BrandView()),
+                        ),
                         const SizedBox(height: TSizes.spaceBtwItems / 2),
                         // -- Brand Grid
                         const TStoreGridViewbody(),

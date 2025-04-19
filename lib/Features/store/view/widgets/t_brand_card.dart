@@ -13,9 +13,11 @@ class TBrandCard extends StatelessWidget {
     super.key,
     this.onTap,
     required this.showBorder,
+    this.url = TImages.clothIcon,
   });
   final void Function()? onTap;
   final bool showBorder;
+  final String url;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,7 +33,7 @@ class TBrandCard extends StatelessWidget {
                 imageWidth: THelperFunctions.screenWidth() * 0.135,
                 imageHeight: THelperFunctions.screenWidth() * 0.135,
                 isNetworkImage: false,
-                url: TImages.clothIcon,
+                url: url,
                 overLayColor: THelperFunctions.isDarkMode(context)
                     ? TColors.light
                     : TColors.dark,

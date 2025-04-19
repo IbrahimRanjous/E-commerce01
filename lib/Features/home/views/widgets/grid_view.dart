@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/Features/product%20details/view/product_detail_view.dart';
-import 'package:rjs_store/core/utils/constants/sizes.dart';
-import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out.dart';
+import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
 import '../../../../core/productsList.dart';
+import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/widgets/products cart/vertical_product_card.dart';
 
-class THomeGridViewBody extends StatelessWidget {
-  const THomeGridViewBody({
+class TGridView extends StatelessWidget {
+  const TGridView({
     super.key,
   });
 
@@ -15,7 +15,7 @@ class THomeGridViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
-      child: TGridLayout(
+      child: TGridLayoutBody(
         itemCount: ProductsList.products.length,
         itemBuilder: (BuildContext context, int index) {
           final product = ProductsList.products[index];

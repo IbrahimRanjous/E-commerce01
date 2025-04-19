@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../Features/veiw all/view/view_all_view.dart';
 
 class TSectionHeading extends StatelessWidget {
   const TSectionHeading({
@@ -38,7 +40,7 @@ class TSectionHeading extends StatelessWidget {
         ),
         if (showActionButton)
           TextButton(
-              onPressed: onPressed,
+              onPressed: onPressed ?? () => Get.to(() => const ViewAllView()),
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text(

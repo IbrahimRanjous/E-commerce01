@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants/colors.dart';
-import '../../utils/constants/sizes.dart';
-import '../../utils/helpers/helper_functions.dart';
+ import '../../utils/helpers/helper_functions.dart';
 
 class TCircularIcon extends StatelessWidget {
-  /// A custom Circular Icon widget with a background color.
+  /// A custom circular icon widget with a background color.
   ///
-  /// Properties are:
-  /// Container [width], [height], & [backgroundColor].
-  /// Icon's [size], [color] & [onPressed]
+  /// Allows setting [width] and [height] for the container,
+  /// and [size] for the icon itself.
   const TCircularIcon({
     super.key,
     required this.icon,
-    this.width,
-    this.height,
-    this.size = TSizes.lg,
+    this.width = 32.0,        // default width 
+    this.height = 32.0,       // default height
+    this.size = 16.0,         // default icon size for compact usage
     this.color,
     this.onPressed,
     this.backgroundColor,
   });
 
-  final double? width, height, size;
+  final double width, height, size;
   final IconData icon;
   final Color? color;
   final Color? backgroundColor;
@@ -32,15 +30,19 @@ class TCircularIcon extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: (backgroundColor != null)
-            ? backgroundColor
-            : THelperFunctions.isDarkMode(context)
+        color: backgroundColor ??
+            (THelperFunctions.isDarkMode(context)
                 ? TColors.black.withOpacity(0.9)
-                : TColors.white.withOpacity(0.9),
+                : TColors.white.withOpacity(0.9)),
         borderRadius: BorderRadius.circular(100),
       ),
+      // Remove the button's default padding & constraints
       child: IconButton(
-          onPressed: onPressed, icon: Icon(icon, color: color, size: size)),
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
+        onPressed: onPressed,
+        icon: Icon(icon, color: color, size: size),
+      ),
     );
   }
 }
