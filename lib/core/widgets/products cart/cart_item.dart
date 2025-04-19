@@ -3,7 +3,7 @@ import '../../utils/constants/colors.dart';
 import '../../utils/constants/image_strings.dart';
 import '../../utils/constants/sizes.dart';
 import '../../utils/helpers/helper_functions.dart';
-import '../images/t_circular_image.dart';
+import '../images/t_rounded_image.dart';
 import '../text/brand_title_with_verified_icon.dart';
 import '../text/product_title_text.dart';
 
@@ -17,11 +17,11 @@ class TCartItem extends StatelessWidget {
     return Row(
       children: [
         /// Image
-        TCircularImage(
+        TRoundedImage(
           url: TImages.productImage1,
           isNetworkImage: false,
           imageWidth: 60,
-          imgaeHeight: 60,
+          imageHeight: 60,
           padding: TSizes.sm,
           backgroundColor: THelperFunctions.isDarkMode(context)
               ? TColors.darkerGrey

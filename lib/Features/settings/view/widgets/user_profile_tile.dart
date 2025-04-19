@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/image_strings.dart';
-import '../../../../core/widgets/images/t_circular_image.dart';
+import '../../../../core/widgets/images/t_rounded_image.dart';
 
 class TUserProfileTile extends StatelessWidget {
   const TUserProfileTile({
@@ -32,9 +32,9 @@ class TUserProfileTile extends StatelessWidget {
             Iconsax.edit,
             color: TColors.white,
           )),
-      leading: const TCircularImage(
+      leading: const TRoundedImage(
           imageWidth: 50,
-          imgaeHeight: 50,
+          imageHeight: 50,
           padding: 0,
           url: TImages.user,
           isNetworkImage: false),

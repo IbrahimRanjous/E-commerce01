@@ -7,7 +7,7 @@ import '../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../core/widgets/Appbar/appbar.dart';
 import '../../../../core/widgets/Icons/t_circular_icon.dart';
 import '../../../../core/widgets/custom shapes/curved_edges_widget.dart';
-import '../../../../core/widgets/images/t_circular_image.dart';
+import '../../../../core/widgets/images/t_rounded_image.dart';
 
 class TProductImageSlider extends StatelessWidget {
   const TProductImageSlider({
@@ -49,13 +49,13 @@ class TProductImageSlider extends StatelessWidget {
                   separatorBuilder: (_, __) =>
                       const SizedBox(width: TSizes.spaceBtwItems),
                   itemBuilder: (BuildContext context, int index) =>
-                      TCircularImage(
+                      TRoundedImage(
                     url: TImages.productImage1,
                     isNetworkImage: false,
                     backgroundColor: isDark ? TColors.dark : TColors.light,
                     border: Border.all(color: TColors.primary),
                     padding: TSizes.sm,
-                    imgaeHeight: TSizes.imageThumbSize,
+                    imageHeight: TSizes.imageThumbSize,
                     imageWidth: TSizes.imageThumbSize,
                   ),
                 ),

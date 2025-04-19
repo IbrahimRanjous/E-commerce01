@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 import 'package:rjs_store/Features/product%20details/view/product_detail_view.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out.dart';
-
 import '../../../../core/productsList.dart';
-import 'card_product_item.dart';
+import '../../../../core/widgets/products cart/vertical_product_card.dart';
 
 class THomeGridViewBody extends StatelessWidget {
   const THomeGridViewBody({
@@ -28,7 +27,7 @@ class THomeGridViewBody extends StatelessWidget {
             discountText: '75%',
             isVerified: true,
             isFavorite: true,
-            quantity: '5',
+            // quantity: '5',
             onFavoriteTap: () {},
             onTap: () {
               Get.to(() => const ProductDetailView());

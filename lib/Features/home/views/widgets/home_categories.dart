@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/Features/home/views/widgets/vertical_list_view_icon_text.dart';
 import 'package:rjs_store/core/utils/device/device_utility.dart';
 import '../../../../core/utils/constants/image_strings.dart';
+import '../sub_categories_view.dart';
 
 class THomeCategories extends StatelessWidget {
   const THomeCategories({
@@ -25,7 +27,9 @@ class THomeCategories extends StatelessWidget {
           return TVerticalListViewIconText(
             iconImage: category.icon,
             title: category.title,
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const SubCategoriesView());
+            },
           );
         },
       ),

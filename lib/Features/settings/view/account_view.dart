@@ -3,7 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
-import 'package:rjs_store/core/widgets/images/t_circular_image.dart';
+import 'package:rjs_store/core/widgets/images/t_rounded_image.dart';
 import 'package:rjs_store/core/widgets/section_heading.dart';
 import 'widgets/t_profile_menu.dart';
 
@@ -27,11 +27,11 @@ class AccountView extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const TCircularImage(
+                    const TRoundedImage(
                       url: TImages.user,
                       isNetworkImage: false,
                       imageWidth: 100,
-                      imgaeHeight: 100,
+                      imageHeight: 100,
                     ),
                     TextButton(
                       onPressed: () {},

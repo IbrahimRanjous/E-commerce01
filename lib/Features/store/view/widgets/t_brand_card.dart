@@ -5,7 +5,7 @@ import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../core/widgets/brand_widget.dart';
 import '../../../../core/widgets/custom shapes/rounded_container.dart';
-import '../../../../core/widgets/images/t_circular_image.dart';
+import '../../../../core/widgets/images/t_rounded_image.dart';
 import '../../../../core/widgets/text/my_text.dart';
 
 class TBrandCard extends StatelessWidget {
@@ -27,9 +27,9 @@ class TBrandCard extends StatelessWidget {
           children: [
             ///  -- Icon
             Flexible(
-              child: TCircularImage(
+              child: TRoundedImage(
                 imageWidth: THelperFunctions.screenWidth() * 0.135,
-                imgaeHeight: THelperFunctions.screenWidth() * 0.135,
+                imageHeight: THelperFunctions.screenWidth() * 0.135,
                 isNetworkImage: false,
                 url: TImages.clothIcon,
                 overLayColor: THelperFunctions.isDarkMode(context)

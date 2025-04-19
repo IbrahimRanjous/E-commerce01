@@ -4,7 +4,7 @@ import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out.dart';
-import '../../home/views/widgets/card_product_item.dart';
+import '../../../core/widgets/products cart/vertical_product_card.dart';
 
 class WhishListView extends StatelessWidget {
   const WhishListView({super.key});

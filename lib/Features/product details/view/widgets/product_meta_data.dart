@@ -7,7 +7,7 @@ import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 import 'package:rjs_store/core/widgets/custom%20shapes/rounded_container.dart';
-import 'package:rjs_store/core/widgets/images/t_circular_image.dart';
+import 'package:rjs_store/core/widgets/images/t_rounded_image.dart';
 import 'package:rjs_store/core/widgets/text/brand_title_with_verified_icon.dart';
 
 class TProductMetaData extends StatelessWidget {
@@ -68,11 +68,11 @@ class TProductMetaData extends StatelessWidget {
         /// Brand
         Row(
           children: [
-            TCircularImage(
+            TRoundedImage(
               url: TImages.shoeIcon,
               isNetworkImage: false,
               imageWidth: 32,
-              imgaeHeight: 32,
+              imageHeight: 32,
               overLayColor: darkMode ? TColors.white : TColors.black,
             ),
             const TBrandTitleWithVerifiedIcon(
