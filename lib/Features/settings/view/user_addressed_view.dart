@@ -73,7 +73,8 @@ class _UserAddressedViewState extends State<UserAddressedView> {
           padding: const EdgeInsets.all(TSizes.sm),
           margin: const EdgeInsets.all(TSizes.spaceBtwItems / 2),
           decoration: BoxDecoration(
-            color: index == selectedIndex ? TColors.accent : TColors.grey,
+            color:
+                index == selectedIndex ? TColors.primary : TColors.darkerGrey,
             border: Border.all(color: TColors.primary),
             borderRadius: BorderRadius.circular(TSizes.borderRadiusLg),
           ),

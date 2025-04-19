@@ -38,7 +38,7 @@ class OverallRatingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: THelperFunctions.screenWidth() / 2.5,
+      width: THelperFunctions.screenWidth() * 0.34,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

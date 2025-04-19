@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rjs_store/Features/product%20details/view/product_detail_view.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
 import '../../../../core/productsList.dart';
 import '../../../../core/utils/constants/sizes.dart';
@@ -29,9 +27,6 @@ class TGridView extends StatelessWidget {
             isFavorite: true,
             // quantity: '5',
             onFavoriteTap: () {},
-            onTap: () {
-              Get.to(() => const ProductDetailView());
-            },
             // Optionally pass other parameters such as discountText, isFavorite, etc.
           );
         },

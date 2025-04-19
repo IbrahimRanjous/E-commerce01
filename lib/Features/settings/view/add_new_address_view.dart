@@ -21,16 +21,18 @@ class AddNewAddressView extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Iconsax.user),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.user),
                       labelText: 'Name',
+                      labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Iconsax.mobile),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.mobile),
                       labelText: 'Phone Number',
+                      labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
@@ -38,18 +40,20 @@ class AddNewAddressView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Iconsax.building_31),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.building_31),
                             labelText: 'Street',
+                            labelStyle: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
                       const SizedBox(width: TSizes.spaceBtwInputFields),
                       Expanded(
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Iconsax.code),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.code),
                             labelText: 'Postal Code',
+                            labelStyle: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
@@ -60,18 +64,20 @@ class AddNewAddressView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Iconsax.building),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.building),
                             labelText: 'City',
+                            labelStyle: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
                       const SizedBox(width: TSizes.spaceBtwInputFields),
                       Expanded(
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Iconsax.activity),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.activity),
                             labelText: 'State',
+                            labelStyle: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ),
@@ -79,9 +85,10 @@ class AddNewAddressView extends StatelessWidget {
                   ),
                   const SizedBox(height: TSizes.spaceBtwInputFields),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Iconsax.global),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.global),
                       labelText: 'Country',
+                      labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   const SizedBox(height: TSizes.defaultSpace),

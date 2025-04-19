@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
+import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import 'widgets/overall_rating_widget.dart';
 import 'widgets/ratings_bar_chart.dart';
@@ -10,43 +11,43 @@ class ReviewsRatingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        appBar: TAppbar(
+        appBar: const TAppbar(
           title: Text('Reviews & Ratings'),
           showBackArrow: true,
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(TSizes.defaultSpace),
+            padding: const EdgeInsets.all(TSizes.defaultSpace),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// Verified review message
-                Text(
+                const Text(
                   'Verified ratings and reviews from users with similar devices ',
                   style: TextStyle(fontSize: TSizes.fontSizeMd),
                 ),
-                SizedBox(height: TSizes.spaceBtwItems),
+                const SizedBox(height: TSizes.spaceBtwItems),
 
                 /// Overall rating widget (4.7 & total reviews)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    OverallRatingWidget(
+                    const OverallRatingWidget(
                       rating: 3.7,
                       reviewCount: 121160,
                     ),
-                    SizedBox(width: TSizes.spaceBtwItems),
+                    SizedBox(width: THelperFunctions.screenWidth() * 0.02),
 
                     /// Bar chart for the rating distribution
-                    RatingsBarChart(),
+                    const RatingsBarChart(),
                   ],
                 ),
-                SizedBox(height: TSizes.spaceBtwItems),
+                const SizedBox(height: TSizes.spaceBtwItems),
 
                 /// Review Cards below
-                ReviewCard(
+                const ReviewCard(
                   reviewerName: "John Doe",
                   reviewDate: "03-Nov-2023",
                   rating: 5,
@@ -55,8 +56,8 @@ class ReviewsRatingsView extends StatelessWidget {
                   storeResponse: "Thank you for the kind words.",
                   storeResponseDate: "03-Nov-2023",
                 ),
-                SizedBox(height: 16),
-                ReviewCard(
+                const SizedBox(height: 16),
+                const ReviewCard(
                   reviewerName: "Sophia Wilson",
                   reviewDate: "03-Nov-2023",
                   rating: 5,

@@ -45,7 +45,7 @@ class DetailsHorizontalWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Display the price range.
-                TProductPriceText(price: priceRange),
+                Flexible(child: TProductPriceText(price: priceRange)),
 
                 const SizedBox(width: TSizes.xs),
                 if (quantity.isEmpty)

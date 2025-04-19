@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rjs_store/Features/home/views/widgets/grid_view.dart';
 import 'package:rjs_store/core/widgets/section_heading.dart';
 import '../../../core/utils/constants/sizes.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/widgets/Appbar/appbar.dart';
 import '../../veiw all/view/widgets/custom_drop_down_button.dart';
 import 'widgets/t_brand_card.dart';

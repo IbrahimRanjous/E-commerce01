@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../core/productsList.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/widgets/products cart/horizontal_product_card.dart';
 import '../../../../core/widgets/section_heading.dart';
-import '../../../product details/view/product_detail_view.dart';
 
 class TSubCategories extends StatelessWidget {
   const TSubCategories({
@@ -43,9 +41,6 @@ class TSubCategories extends StatelessWidget {
                 isFavorite: true,
                 // quantity: '5',
                 onFavoriteTap: () {},
-                onTap: () {
-                  Get.to(() => const ProductDetailView());
-                },
               );
             },
           ),

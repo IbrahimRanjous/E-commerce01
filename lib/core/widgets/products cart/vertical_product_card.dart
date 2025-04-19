@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import '../../../Features/product details/view/product_detail_view.dart';
 import 'details_vertical_widget.dart';
 import 'thumbnail.dart';
 
@@ -31,9 +33,6 @@ class TVerticalProductCard extends StatelessWidget {
   /// The quantity indicator (could show available stock, etc.)
   final String quantity;
 
-  /// The Action when you click on the card
-  final void Function()? onTap;
-
   /// Creates a reusable product card widget.
   const TVerticalProductCard({
     super.key,
@@ -46,7 +45,6 @@ class TVerticalProductCard extends StatelessWidget {
     this.isVerified = false,
     required this.priceRange,
     this.quantity = '',
-    this.onTap,
   });
 
   @override
@@ -54,7 +52,9 @@ class TVerticalProductCard extends StatelessWidget {
     THelperFunctions.isDarkMode(context);
     // Using Card for material elevation and rounded corners.
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        Get.to(() => const ProductDetailView());
+      },
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

@@ -18,13 +18,22 @@ class AddressTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      title: Text(address.name),
+      title: Text(
+        address.name,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(address.phone),
+          Text(
+            address.phone,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
           const SizedBox(height: 4),
-          Text(address.address),
+          Text(
+            address.address,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ],
       ),
       // If selected, apply a blue tint background

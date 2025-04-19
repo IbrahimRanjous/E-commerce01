@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import '../../../Features/product details/view/product_detail_view.dart';
 import 'details_horizontal_widget.dart';
 import 'thumbnail.dart';
 
@@ -32,9 +34,6 @@ class THorizontalProductCard extends StatelessWidget {
   /// The quantity indicator (could show available stock, etc.)
   final String quantity;
 
-  /// Action when you click on the card.
-  final void Function()? onTap;
-
   /// Creates a reusable horizontal product card widget.
   const THorizontalProductCard({
     super.key,
@@ -47,7 +46,6 @@ class THorizontalProductCard extends StatelessWidget {
     this.isVerified = false,
     required this.priceRange,
     this.quantity = '',
-    this.onTap,
   });
 
   @override
@@ -59,7 +57,9 @@ class THorizontalProductCard extends StatelessWidget {
     const imageWidth = 100.0;
     const imageHeight = 100.0;
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        Get.to(() => const ProductDetailView());
+      },
       child: SizedBox(
         width: cardWidth,
         child: Card(

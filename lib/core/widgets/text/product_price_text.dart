@@ -19,7 +19,7 @@ class TProductPriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyText(
-      text: currencySign + price,
+      text: price,
       maxLines: maxLines,
       style: isLarge
           ? Theme.of(context).textTheme.headlineMedium!.apply(

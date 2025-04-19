@@ -22,18 +22,6 @@ class _OnboardingViewState extends State<OnboardingView> {
     for (var path in TImages.productImages) {
       precacheImage(AssetImage(path), context);
     }
-    for (var path in TImages.productReviewImages) {
-      precacheImage(AssetImage(path), context);
-    }
-    for (var path in TImages.categoryIcons) {
-      precacheImage(AssetImage(path), context);
-    }
-    for (var path in TImages.brandIcons) {
-      precacheImage(AssetImage(path), context);
-    }
-    for (var path in TImages.banners) {
-      precacheImage(AssetImage(path), context);
-    }
   }
 
   @override
