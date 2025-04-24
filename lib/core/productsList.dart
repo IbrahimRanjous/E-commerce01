@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:rjs_store/core/utils/constants/image_strings.dart';
 
 class ProductsList {

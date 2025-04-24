@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
+// ignore: depend_on_referenced_packages
+import 'package:cloudinary_flutter/image/cld_image.dart';
 
 class CustomImage extends StatelessWidget {
   const CustomImage({
@@ -15,8 +17,8 @@ class CustomImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height = THelperFunctions.screenHeight();
     return isNetworkImage
-        ? Image.network(
-            imageUrl,
+        ? CldImageWidget(
+            publicId: 'trcksuit_parrotgreen_likjgj',
             height: 150,
             width: double.infinity,
             fit: BoxFit.cover,

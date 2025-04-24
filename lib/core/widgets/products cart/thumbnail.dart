@@ -26,7 +26,7 @@ class TThumbnail extends StatelessWidget {
               top: Radius.circular(TSizes.cardRadiusMd)),
           child: CustomImage(
             imageUrl: imageUrl,
-            isNetworkImage: false,
+            isNetworkImage: true,
           ),
         ),
         /////// -- Discount -- ///////

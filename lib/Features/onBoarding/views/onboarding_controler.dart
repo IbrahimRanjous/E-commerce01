@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 
 class OnboardingControler {
@@ -24,6 +26,19 @@ class OnboardingControler {
   /// Update Current Index & Jump to next page
   void nextPage() {
     if (currentPageIndex.value == 2) {
+      final storage = GetStorage();
+      if (kDebugMode) {
+        print(
+            ' =================== Get Storage Next Button =================== ');
+        print(storage.read(kIsFirstTime));
+      }
+
+      storage.write(kIsFirstTime, false);
+      if (kDebugMode) {
+        print(
+            ' =================== Get Storage Next Button =================== ');
+        print(storage.read(kIsFirstTime));
+      }
       Get.offAll(() => const LoginView());
     } else {
       currentPageIndex.value += 1;

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rjs_store/Features/home/views/widgets/grid_view.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
-import '../../../../core/widgets/grid layout/t_grid_lay_out_body.dart';
 import '../../../../core/widgets/section_heading.dart';
-import '../../../../core/widgets/products cart/vertical_product_card.dart';
 import 'brand_show_case.dart';
 
 class TCategoryTap extends StatelessWidget {

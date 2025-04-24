@@ -85,7 +85,7 @@ class TForm extends StatelessWidget {
         CustomMaterialButton(
           title: TTexts.signIn,
           onPressed: () {
-            Get.offAll(const NavigationMenu());
+            Get.offAll(() => const NavigationMenu());
           },
         ),
         const SizedBox(
