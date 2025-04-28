@@ -32,7 +32,7 @@ class TBrandCard extends StatelessWidget {
               child: TRoundedImage(
                 imageWidth: THelperFunctions.screenWidth() * 0.135,
                 imageHeight: THelperFunctions.screenWidth() * 0.135,
-                isNetworkImage: false,
+                isNetworkImage: true,
                 url: url,
                 overLayColor: THelperFunctions.isDarkMode(context)
                     ? TColors.light

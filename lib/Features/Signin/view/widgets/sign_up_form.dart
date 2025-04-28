@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
+import 'package:rjs_store/Features/Signin/data/repo/signup_controller.dart';
+import 'package:rjs_store/core/utils/validators/validation.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/widgets/custom_text_form.dart';
@@ -15,53 +16,82 @@ class TSingUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignupController());
     return Form(
+      key: controller.signupFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // First Name & Last Name
-          const Row(
+          Row(
             children: [
               Expanded(
                 child: CustomTextForm(
-                    prefixicon: Icon(Iconsax.user), hintText: TTexts.firstName),
+                    controller: controller.firstName,
+                    validator: (value) =>
+                        TValidator.validateEmptyText('First Name', value),
+                    prefixicon: const Icon(Iconsax.user),
+                    hintText: TTexts.firstName),
               ),
-              SizedBox(
+              const SizedBox(
                 width: TSizes.spaceBtwInputFields,
               ),
               Expanded(
                 child: CustomTextForm(
-                    prefixicon: Icon(Iconsax.user), hintText: TTexts.lastName),
+                    controller: controller.lastName,
+                    validator: (value) =>
+                        TValidator.validateEmptyText('Last Name', value),
+                    prefixicon: const Icon(Iconsax.user),
+                    hintText: TTexts.lastName),
               ),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           // Username
-          const CustomTextForm(
-              prefixicon: Icon(Iconsax.user_edit), hintText: TTexts.username),
+          CustomTextForm(
+              controller: controller.userName,
+              validator: (value) =>
+                  TValidator.validateEmptyText('User Name', value),
+              prefixicon: const Icon(Iconsax.user_edit),
+              hintText: TTexts.username),
 
           const SizedBox(height: TSizes.spaceBtwInputFields),
           // E-Mail
-          const CustomTextForm(
-              prefixicon: Icon(Iconsax.direct), hintText: TTexts.email),
+          CustomTextForm(
+              controller: controller.email,
+              validator: (value) => TValidator.validateEmail(value),
+              prefixicon: const Icon(Iconsax.direct),
+              hintText: TTexts.email),
 
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           // Phone Number
-          const CustomTextForm(
-              prefixicon: Icon(Iconsax.call), hintText: TTexts.phoneNu),
+          CustomTextForm(
+              controller: controller.phoneNumber,
+              validator: (value) => TValidator.validatePhoneNumber(value),
+              prefixicon: const Icon(Iconsax.call),
+              hintText: TTexts.phoneNu),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           // Password
-          TextFormField(
-            autocorrect: true,
-            obscureText: true,
-            decoration: InputDecoration(
-                prefixIcon: const Icon(Iconsax.password_check),
-                suffixIcon: const Icon(Iconsax.eye_slash),
-                hintText: TTexts.password,
-                hintStyle: Theme.of(context).textTheme.titleSmall),
+          Obx(
+            () => TextFormField(
+              controller: controller.password,
+              validator: (value) => TValidator.validatePassword(value),
+              autocorrect: true,
+              obscureText: controller.hidePassword.value,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Iconsax.password_check),
+                  suffixIcon: IconButton(
+                      onPressed: () => controller.hidePassword.value =
+                          !controller.hidePassword.value,
+                      icon: Icon(controller.hidePassword.value
+                          ? Iconsax.eye_slash
+                          : Iconsax.eye)),
+                  hintText: TTexts.password,
+                  hintStyle: Theme.of(context).textTheme.titleSmall),
+            ),
           ),
           const SizedBox(height: TSizes.spaceBtwSections),
 
@@ -72,7 +102,7 @@ class TSingUpForm extends StatelessWidget {
           // Create Account Button
           CustomMaterialButton(
             onPressed: () {
-              Get.to(() => const VerifyEmailView());
+              controller.signup();
             },
             title: TTexts.createAccount,
           ),
