@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class CustomTextForm extends StatelessWidget {
   final Icon prefixicon;
   final String hintText;
-
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
   const CustomTextForm({
     super.key,
     required this.prefixicon,
     required this.hintText,
+    this.validator,
+    this.controller,
   });
 
   @override
@@ -15,6 +18,8 @@ class CustomTextForm extends StatelessWidget {
     return TextFormField(
       autocorrect: true,
       expands: false,
+      validator: validator,
+      controller: controller,
       decoration: InputDecoration(
           prefixIcon: prefixicon,
           hintText: hintText,
