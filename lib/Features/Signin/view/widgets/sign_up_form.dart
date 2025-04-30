@@ -78,7 +78,7 @@ class TSingUpForm extends StatelessWidget {
           Obx(
             () => TextFormField(
               autocorrect: true,
-              obscureText: true,
+              obscureText: controller.hidePassword.value,
               controller: controller.password,
               validator: (value) => TValidator.validatePassword(value),
               decoration: InputDecoration(

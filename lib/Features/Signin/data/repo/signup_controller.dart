@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
-// import 'package:rjs_store/core/utils/network/network_manager.dart';
 import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
-
 import '../../../../core/utils/network/network_manager.dart';
 // import '../cubit/user_model.dart';
 

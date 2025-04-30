@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rjs_store/Features/Signin/data/repo/signup_controller.dart';
 import 'package:rjs_store/core/utils/device/device_utility.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
@@ -13,7 +15,7 @@ class PrivacyPolicyAndTermsofUse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-
+    final controller = Get.put(SignupController());
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: TDeviceUtils.getScreenWidth(context) * 0.05,
@@ -23,7 +25,12 @@ class PrivacyPolicyAndTermsofUse extends StatelessWidget {
           SizedBox(
             height: 24,
             width: 24,
-            child: Checkbox(value: true, onChanged: (value) {}),
+            child: Obx(() => Checkbox(
+                value: controller.privacyPolicy.value,
+                onChanged: (value) {
+                  controller.privacyPolicy.value =
+                      !controller.privacyPolicy.value;
+                })),
           ),
           const SizedBox(
             width: TSizes.spaceBtwItems,

@@ -20,9 +20,11 @@ class NetworkManager extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Listen to connectivity changes.
+    // Map the list of ConnectivityResult to a single ConnectivityResult and
+    // Listen for changes. If the emitted list is not empty, use the first element.
     _connectivitySubscription = _connectivity.onConnectivityChanged
-        .cast<ConnectivityResult>()
+        .map((results) =>
+            results.isNotEmpty ? results.first : ConnectivityResult.none)
         .listen(_updateConnectionStatus);
   }
 
@@ -53,7 +55,7 @@ class NetworkManager extends GetxController {
   @override
   void onClose() {
     // Cancel the subscription when the controller is disposed.
-    _connectivitySubscription.cancel();
     super.onClose();
+    _connectivitySubscription.cancel();
   }
 }
