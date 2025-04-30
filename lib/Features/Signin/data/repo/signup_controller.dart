@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
 import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import '../../../../core/utils/network/network_manager.dart';
-// import '../cubit/user_model.dart';
+import '../cubit/user_model.dart';
+import 'user_repository.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
@@ -29,7 +29,7 @@ class SignupController extends GetxController {
       /// start loading
       TFullScreenLoader.openLoadingDialog(
           'We are processing your information...',
-          'assets/images/animations/loader-animation.json');
+          'assets/images/animations/cloud-uploading-animation.json');
 
       /// Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -58,22 +58,22 @@ class SignupController extends GetxController {
       }
 
       /// Register user in the firebase authentication & Save user data in the firebase
-      // final userCredential =
-      //     await AuthenticationRepository.Instance.registerWithEmailAndPassword(
-      //         email.text.trim(), password.text.trim());
+      final userCredential =
+          await AuthenticationRepository.Instance.registerWithEmailAndPassword(
+              email.text.trim(), password.text.trim());
 
       /// save authenticated user data in the firebase firestore
-      // final newUser = UserModel(
-      //   id: userCredential.user!.uid,
-      //   firstName: firstName.text.trim(),
-      //   lastName: lastName.text.trim(),
-      //   userName: userName.text.trim(),
-      //   email: email.text.trim(),
-      //   phoneNumber: phoneNumber.text.trim(),
-      //   profilePicture: '',
-      // );
-      // final userRepository = Get.put(UserRepository());
-      // await userRepository.saveUserRecord(newUser);
+      final newUser = UserModel(
+        id: userCredential.user!.uid,
+        firstName: firstName.text.trim(),
+        lastName: lastName.text.trim(),
+        userName: userName.text.trim(),
+        email: email.text.trim(),
+        phoneNumber: phoneNumber.text.trim(),
+        profilePicture: '',
+      );
+      final userRepository = Get.put(UserRepository());
+      await userRepository.saveUserRecord(newUser);
 
       // Remove Loader
       TFullScreenLoader.stopLoading();
