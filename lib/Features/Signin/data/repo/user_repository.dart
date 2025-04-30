@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
 import '../../../../core/utils/exceptions/format_exceptions.dart';
 import '../../../../core/utils/exceptions/platform_exceptions.dart';
 import '../cubit/user_model.dart';
-
 
 /// Repository class for user-related operations.
 class UserRepository extends GetxController {
@@ -18,7 +18,9 @@ class UserRepository extends GetxController {
   /// Function to save user data to Firestore.
   Future<void> saveUserRecord(UserModel user) async {
     try {
-      await _db.collection("Users").doc(user.id).set(user.toJson());
+      if (FirebaseAuth.instance.currentUser == null) {
+        await _db.collection("Users").doc(user.id).set(user.toJson());
+      }
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
