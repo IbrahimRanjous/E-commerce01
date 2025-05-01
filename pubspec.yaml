@@ -59,6 +59,7 @@ dependencies:
   readmore: ^3.0.0
   smooth_page_indicator: ^1.2.1
   url_launcher: ^6.3.1
+
 #---------------------------------PACHAGES END------------------------------------#
 dev_dependencies:
   flutter_lints: ^5.0.0

@@ -7,6 +7,7 @@ import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/widgets/custom_text_form.dart';
 import '../../../login/views/widgets/custom_material_button.dart';
+import '../../data/cubit/signup_controller.dart';
 import 'privace_and_terms_form.dart';
 
 class TSingUpForm extends StatelessWidget {
@@ -17,12 +18,15 @@ class TSingUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
+    final controller = Get.put(SignupController());
     return Form(
+      key: controller.signupFormKey,
       key: controller.signupFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // First Name & Last Name
+          Row(
           Row(
             children: [
               Expanded(
@@ -32,12 +36,23 @@ class TSingUpForm extends StatelessWidget {
                         TValidator.validateEmptyText('First Name', value),
                     prefixicon: const Icon(Iconsax.user),
                     hintText: TTexts.firstName),
+                    controller: controller.firstName,
+                    validator: (value) =>
+                        TValidator.validateEmptyText('First Name', value),
+                    prefixicon: const Icon(Iconsax.user),
+                    hintText: TTexts.firstName),
               ),
+              const SizedBox(
               const SizedBox(
                 width: TSizes.spaceBtwInputFields,
               ),
               Expanded(
                 child: CustomTextForm(
+                    controller: controller.lastName,
+                    validator: (value) =>
+                        TValidator.validateEmptyText('Last Name', value),
+                    prefixicon: const Icon(Iconsax.user),
+                    hintText: TTexts.lastName),
                     controller: controller.lastName,
                     validator: (value) =>
                         TValidator.validateEmptyText('Last Name', value),
@@ -55,9 +70,20 @@ class TSingUpForm extends StatelessWidget {
                   TValidator.validateEmptyText('User Name', value),
               prefixicon: const Icon(Iconsax.user_edit),
               hintText: TTexts.username),
+          CustomTextForm(
+              controller: controller.userName,
+              validator: (value) =>
+                  TValidator.validateEmptyText('User Name', value),
+              prefixicon: const Icon(Iconsax.user_edit),
+              hintText: TTexts.username),
 
           const SizedBox(height: TSizes.spaceBtwInputFields),
           // E-Mail
+          CustomTextForm(
+              controller: controller.email,
+              validator: (value) => TValidator.validateEmail(value),
+              prefixicon: const Icon(Iconsax.direct),
+              hintText: TTexts.email),
           CustomTextForm(
               controller: controller.email,
               validator: (value) => TValidator.validateEmail(value),
@@ -67,6 +93,11 @@ class TSingUpForm extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           // Phone Number
+          CustomTextForm(
+              controller: controller.phoneNumber,
+              validator: (value) => TValidator.validatePhoneNumber(value),
+              prefixicon: const Icon(Iconsax.call),
+              hintText: TTexts.phoneNu),
           CustomTextForm(
               controller: controller.phoneNumber,
               validator: (value) => TValidator.validatePhoneNumber(value),
@@ -104,6 +135,7 @@ class TSingUpForm extends StatelessWidget {
           // Create Account Button
           CustomMaterialButton(
             onPressed: () {
+              controller.signup();
               controller.signup();
             },
             title: TTexts.createAccount,

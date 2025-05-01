@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:cloudinary_flutter/image/cld_image.dart';
+import '../../utils/helpers/helper_functions.dart';
 
 class TRoundedImage extends StatelessWidget {
   /// The image URL path.
@@ -31,7 +34,7 @@ class TRoundedImage extends StatelessWidget {
     super.key,
     required this.url,
     this.padding = 0,
-    required this.isNetworkImage,
+    this.isNetworkImage = false,
     this.fit,
     this.backgroundColor = Colors.transparent,
     this.overLayColor,
@@ -44,6 +47,8 @@ class TRoundedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = THelperFunctions.screenHeight();
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -58,15 +63,27 @@ class TRoundedImage extends StatelessWidget {
         ),
         // Adding clipBehavior ensures the child is clipped to the rounded shape.
         clipBehavior: Clip.antiAlias,
-        child: Image(
-          width: imageWidth,
-          height: imageHeight,
-          fit: fit,
-          color: overLayColor,
-          image: isNetworkImage
-              ? NetworkImage(url)
-              : AssetImage(url) as ImageProvider,
-        ),
+        child: isNetworkImage
+            ? CldImageWidget(
+                publicId: 'trcksuit_parrotgreen_likjgj',
+                height: imageHeight,
+                width: imageWidth,
+                fit: fit,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  height: height * 0.2,
+                  color: Colors.grey.shade300,
+                  child: const Icon(Icons.broken_image, size: 48),
+                ),
+              )
+            : Image(
+                width: imageWidth,
+                height: imageHeight,
+                fit: fit,
+                color: overLayColor,
+                image: isNetworkImage
+                    ? NetworkImage(url)
+                    : AssetImage(url) as ImageProvider,
+              ),
       ),
     );
   }

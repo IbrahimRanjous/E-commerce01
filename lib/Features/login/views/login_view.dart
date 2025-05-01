@@ -8,6 +8,7 @@ import 'widgets/login_footer.dart';
 import 'widgets/login_form.dart';
 
 class LoginView extends StatelessWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override

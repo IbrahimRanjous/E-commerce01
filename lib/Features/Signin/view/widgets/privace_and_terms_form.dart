@@ -6,6 +6,7 @@ import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
+import '../../data/repo/signup_controller.dart';
 
 class PrivacyPolicyAndTermsofUse extends StatelessWidget {
   const PrivacyPolicyAndTermsofUse({

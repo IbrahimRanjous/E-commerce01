@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+// ignore: depend_on_referenced_packages
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
-import '../../../../core/utils/exceptions/format_exceptions.dart';
+import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import '../../../../core/utils/exceptions/platform_exceptions.dart';
 import '../cubit/user_model.dart';
 
@@ -31,7 +32,10 @@ class UserRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-}
 
- /// Function to fetch user details based on user ID .
- /// Function to update user data in Firestore
+  /// Function to fetch user details based on user ID
+  /// Function to update user data in Firestor.
+  /// Update any field in specific Users Collection
+  /// Upload any Image
+  /// Function to remove user data from Firestore.
+}

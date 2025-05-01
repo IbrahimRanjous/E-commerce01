@@ -19,11 +19,22 @@ class MyApp extends StatelessWidget {
           /// Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen.
           const Scaffold(
         backgroundColor: TColors.primary,
-        body: Center(
-          child: CircularProgressIndicator(
-            color: TColors.white,
-          ),
-        ),
+        body: TCircularProgressIndicator(),
+      ),
+    );
+  }
+}
+
+class TCircularProgressIndicator extends StatelessWidget {
+  const TCircularProgressIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(
+        color: TColors.white,
       ),
     );
   }

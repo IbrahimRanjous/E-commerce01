@@ -13,10 +13,12 @@ import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/platform_exceptions.dart';
 
 class AuthenticationRepository extends GetxController {
+  // ignore: non_constant_identifier_names
   static AuthenticationRepository get Instance => Get.find();
 
   /// Variables
   final deviceStorage = GetStorage();
+  final _auth = FirebaseAuth.instance;
   final _auth = FirebaseAuth.instance;
 
   /// Called from main.dart on app lunch
@@ -33,7 +35,7 @@ class AuthenticationRepository extends GetxController {
     deviceStorage.writeIfNull(kIsFirstTime, true);
     if (kDebugMode) {
       print(' =================== Get Storage Auth Repo =================== ');
-      print('First time open app + ${deviceStorage.read(kIsFirstTime)}');
+      print('First time open app :${deviceStorage.read(kIsFirstTime)}');
     }
 
     deviceStorage.read(kIsFirstTime) != true
