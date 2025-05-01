@@ -2,51 +2,62 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../popups/loaders.dart';
+import 'package:rjs_store/core/utils/popups/loaders.dart';
 
+/// ----------------------------------
+/// Connectivity Service
+/// ----------------------------------
 class NetworkManager extends GetxController {
-  // Provides a static way to access the NetworkManager instance using Get.find().
+  // This provides a shorthand for accessing the controller instance throughout your app
+  // by calling NetworkManager.instance
+  // (assuming you’ve properly registered it using Get.put(NetworkManager())
+  // somewhere in your code).
   static NetworkManager get instance => Get.find();
 
-  // Connectivity instance to check network state.
+  // An instance of the Connectivity class that lets you query or listen for changes in
+  // network connection status.
   final Connectivity _connectivity = Connectivity();
-
-  // Subscription to the connectivity changes.
+  // A subscription that will hold the listener for connectivity changes.
+  // Marked as late because it will be assigned in onInit().
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
-  // Observable variable to keep track of the connectivity status.
+  // A reactive (observable) variable holding the current connectivity status. It’s initialized to
+  // ConnectivityResult.none (meaning, by default, no connection).
+  // The .obs postfix makes it an observable, so views can react to changes.
   final Rx<ConnectivityResult> _connectionStatus = ConnectivityResult.none.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Map the list of ConnectivityResult to a single ConnectivityResult and
-    // Listen for changes. If the emitted list is not empty, use the first element.
+    /*
+    Listening to Connectivity Changes:
+    * _connectivity.onConnectivityChanged provides a stream that emits changes in connectivity.
+    * Mapping the Stream: The stream now emits a list of connectivity results.
+    * The map operator processes this list:
+    ** It checks if the list is not empty.
+    ** If it isn’t empty, it takes the first element.
+    ** If it’s empty, it defaults to ConnectivityResult.none.
+    * .listen(_updateConnectionStatus): Finally, each time a connectivity change is emitted
+    (after mapping), the _updateConnectionStatus method is invoked with the new status.
+    */
     _connectivitySubscription = _connectivity.onConnectivityChanged
         .map((results) =>
             results.isNotEmpty ? results.first : ConnectivityResult.none)
         .listen(_updateConnectionStatus);
   }
 
-  // Updates the connectivity status and shows a warning if not connected.
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     _connectionStatus.value = result;
     if (_connectionStatus.value == ConnectivityResult.none) {
-      // Display a warning snack bar (assuming TLoaders.warningSnackBar is defined)
-      TLoaders.warningSnackBar(title: 'No Internet Connection');
+      TLoaders.warningSnackBar(title: 'No internet Connection');
     }
   }
 
-  // Checks if the device is currently connected to the internet.
+  /// Checks the internet connection status.
+  /// Returns `true` if connected to a network, otherwise `false`.
   Future<bool> isConnected() async {
     try {
       final result = await _connectivity.checkConnectivity();
-      // ignore: unrelated_type_equality_checks
-      if (result == ConnectivityResult.none) {
-        return false;
-      } else {
-        return true;
-      }
+      return result != ConnectivityResult.none;
     } on PlatformException catch (_) {
       return false;
     }
@@ -54,8 +65,11 @@ class NetworkManager extends GetxController {
 
   @override
   void onClose() {
-    // Cancel the subscription when the controller is disposed.
-    super.onClose();
+    // The connectivity subscription is cancelled to avoid any memory leaks or
+    // unnecessary processing when the controller is no longer active
     _connectivitySubscription.cancel();
+    // This method is part of the lifecycle of GetxControllers and is called when
+    // the controller is being disposed.
+    super.onClose();
   }
 }

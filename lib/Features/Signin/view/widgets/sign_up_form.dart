@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:rjs_store/Features/Signin/data/repo/signup_controller.dart';
+import 'package:rjs_store/Features/Signin/data/cubit/signup_controller.dart';
 import 'package:rjs_store/core/utils/validators/validation.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';

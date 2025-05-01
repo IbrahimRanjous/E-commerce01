@@ -5,8 +5,8 @@ import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import '../../../../core/utils/network/network_manager.dart';
-import '../cubit/user_model.dart';
-import 'user_repository.dart';
+import 'user_model.dart';
+import '../repo/user_repository.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
