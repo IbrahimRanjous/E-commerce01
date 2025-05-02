@@ -14,10 +14,9 @@ class MyApp extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       initialBinding: GeneralBindings(),
-      home:
 
-          /// Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen.
-          const Scaffold(
+      /// Show Loader or Circular Progress Indicator meanwhile Authentication Repository is deciding to show relevant screen.
+      home: const Scaffold(
         backgroundColor: TColors.primary,
         body: TCircularProgressIndicator(),
       ),

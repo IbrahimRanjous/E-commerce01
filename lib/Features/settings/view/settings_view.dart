@@ -12,6 +12,7 @@ import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import 'package:rjs_store/core/widgets/section_heading.dart';
+import '../../../core/utils/repositories/authentication_repository.dart';
 import 'orders_view.dart';
 import 'widgets/user_profile_tile.dart';
 
@@ -137,6 +138,7 @@ class SettingsView extends StatelessWidget {
                   CustomMaterialButton(
                       onPressed: () {
                         Get.offAll(() => const LoginView());
+                        AuthenticationRepository.Instance.logout();
                       },
                       title: 'Log Out'),
                   const SizedBox(height: TSizes.spaceBtwSections * 2.5),

@@ -6,7 +6,6 @@ import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
-import '../../data/repo/signup_controller.dart';
 
 class PrivacyPolicyAndTermsofUse extends StatelessWidget {
   const PrivacyPolicyAndTermsofUse({
@@ -16,7 +15,7 @@ class PrivacyPolicyAndTermsofUse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    final controller = Get.put(SignupController());
+    final controller = SignupController.instance;
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: TDeviceUtils.getScreenWidth(context) * 0.05,

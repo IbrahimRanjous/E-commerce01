@@ -20,8 +20,6 @@ class CustomTextForm extends StatelessWidget {
       validator: validator,
       autocorrect: true,
       expands: false,
-      validator: validator,
-      controller: controller,
       decoration: InputDecoration(
           prefixIcon: prefixicon,
           hintText: hintText,

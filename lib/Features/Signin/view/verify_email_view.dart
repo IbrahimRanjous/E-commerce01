@@ -1,27 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/Signin/view/success_view.dart';
-import 'package:rjs_store/Features/login/views/login_view.dart';
+import 'package:rjs_store/Features/Signin/data/cubit/verify_email_controller.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_elevated_button.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
+import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/widgets/spacing_styles.dart';
 
 class VerifyEmailView extends StatelessWidget {
-  const VerifyEmailView({super.key});
+  const VerifyEmailView({super.key, this.email});
 
+  final String? email;
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VerifyEmailController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () => Get.offAll(const LoginView()),
+            onPressed: () => AuthenticationRepository.Instance.logout(),
             icon: const Icon(CupertinoIcons.clear),
           )
         ],
@@ -51,7 +53,7 @@ class VerifyEmailView extends StatelessWidget {
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
 
-                Text("ibrahim.ranjous@gmail.com",
+                Text(email ?? '',
                     style: Theme.of(context).textTheme.labelLarge,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
@@ -63,24 +65,15 @@ class VerifyEmailView extends StatelessWidget {
 
                 // Buttons
                 CustomMaterialButton(
-                    onPressed: () {
-                      Get.to(
-                        () => SuccessView(
-                          onPressed: () {
-                            Get.offAll(() => const LoginView());
-                          },
-                          image: TImages.staticSuccessIllustration,
-                          buttonTitle: TTexts.signIn,
-                          title: TTexts.yourAccountCreatedTitle,
-                          subTitle: TTexts.yourAccountCreatedSubTitle,
-                        ),
-                      );
-                    },
+                    onPressed: () => controller.checkEmailVerificationStatus(),
                     title: TTexts.Continue),
                 const SizedBox(height: TSizes.spaceBtwItems),
 
                 CustomElevatedButton(
-                    onPressed: () {}, title: TTexts.resendEmail),
+                    onPressed: () {
+                      controller.sendEmailVerification();
+                    },
+                    title: TTexts.resendEmail),
               ],
             ),
           ),

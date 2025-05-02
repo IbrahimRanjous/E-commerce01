@@ -31,7 +31,7 @@ class UserRepository extends GetxController {
     } catch (e) {
       throw 'Something went wrong. Please try again';
     }
-  }
+  } 
 
   /// Function to fetch user details based on user ID
   /// Function to update user data in Firestor.
