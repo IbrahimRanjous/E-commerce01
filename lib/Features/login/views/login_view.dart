@@ -12,7 +12,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+     return const Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -23,7 +23,7 @@ class LoginView extends StatelessWidget {
                 TLoginHeader(),
 
                 // Form
-                TForm(),
+                TLoginForm(),
 
                 SizedBox(height: TSizes.spaceBtwSections),
 
