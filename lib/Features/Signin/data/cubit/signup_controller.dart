@@ -60,7 +60,7 @@ class SignupController extends GetxController {
       /// Register user in the firebase authentication & Save user data in the firebase
       final userCredential =
           await AuthenticationRepository.Instance.registerWithEmailAndPassword(
-              email.text.trim(), password.text.trim());
+              email.text.trim().toLowerCase(), password.text.trim());
 
       /// save authenticated user data in the firebase firestore
       final newUser = UserModel(
@@ -68,7 +68,7 @@ class SignupController extends GetxController {
         firstName: firstName.text.trim(),
         lastName: lastName.text.trim(),
         userName: userName.text.trim(),
-        email: email.text.trim(),
+        email: email.text.trim().toLowerCase(),
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
       );
@@ -85,7 +85,7 @@ class SignupController extends GetxController {
 
       /// move to verify email screen
       Get.to(() => VerifyEmailView(
-            email: email.text.trim(),
+            email: email.text.trim().toLowerCase(),
           ));
     } catch (e) {
       // remove loader

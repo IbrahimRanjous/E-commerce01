@@ -1,6 +1,8 @@
 // This class contains all the App Text in String formats.
 class TTexts {
   // -- GLOBAL Texts
+  static const String kEmail = "REMEMBER_ME_EMAIL";
+  static const String kPassword = "REMEMBER_ME_PASSWORD";
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

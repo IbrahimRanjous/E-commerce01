@@ -60,7 +60,7 @@ class HomeView extends StatelessWidget {
             // -- Products
             THomeBodyHeading(),
             SizedBox(height: TSizes.spaceBtwSections),
-
+            
             TGridView(),
 
 ///////////////////////////////////////////////////////////////////////

@@ -14,7 +14,7 @@ class TGridView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
       child: TGridLayoutBody(
-        itemCount: ProductsList.products.length,
+        itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           final product = ProductsList.products[index];
           return TVerticalProductCard(

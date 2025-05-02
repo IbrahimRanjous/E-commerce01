@@ -5,7 +5,6 @@ import 'package:rjs_store/Features/Signin/view/signup_view.dart';
 import 'package:rjs_store/Features/login/data/cubit/login_controller.dart';
 import 'package:rjs_store/Features/login/views/forget_password_view.dart';
 import 'package:rjs_store/core/utils/validators/validation.dart';
-import 'package:rjs_store/navigation_menu.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
@@ -108,9 +107,7 @@ class TLoginForm extends StatelessWidget {
         // Sign In
         CustomMaterialButton(
           title: TTexts.signIn,
-          onPressed: () {
-            Get.offAll(() => const NavigationMenu());
-          },
+          onPressed: () => controller.emailAndPasswordLogin(),
         ),
         const SizedBox(
           height: TSizes.spaceBtwItems,

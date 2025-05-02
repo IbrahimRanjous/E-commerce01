@@ -20,7 +20,7 @@ class TLoginHeader extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(TSizes.cardRadiusSm),
           child: Image(
-            height: 150,
+            height: 80,
             image:
                 AssetImage(dark ? TImages.lightAppLogo : TImages.darkAppLogo),
           ),

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/retry.dart';
 import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/onBoarding/views/onboarding_view.dart';
@@ -35,8 +34,14 @@ class AuthenticationRepository extends GetxController {
   screenRedirect() async {
     final user = _auth.currentUser;
     if (user != null) {
-      // Reload the user's data to update the emailVerified flag.
-      await user.reload();
+      try {
+        // Reload the user's data to update the emailVerified flag.
+        await user.reload();
+      } catch (e) {
+        TLoaders.errorSnackBar(
+            title: 'Something Wrong',
+            message: 'Something went wrong. Please try again');
+      }
       if (user.emailVerified) {
         TLoaders.successSnackBar(
             title: 'Let\'s Go', message: 'You are logged in');
@@ -136,7 +141,6 @@ class AuthenticationRepository extends GetxController {
   Future<void> logout() async {
     try {
       await FirebaseAuth.instance.signOut();
-      await FirebaseAuth.instance.currentUser?.delete();
       Get.offAll(() => const LoginView());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/Features/card/view/cart_view.dart';
 import 'package:rjs_store/Features/home/views/widgets/primary_header_container.dart';
-import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
 import 'package:rjs_store/Features/settings/view/account_view.dart';
 import 'package:rjs_store/Features/settings/view/user_addressed_view.dart';
@@ -137,7 +136,6 @@ class SettingsView extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
                   CustomMaterialButton(
                       onPressed: () {
-                        Get.offAll(() => const LoginView());
                         AuthenticationRepository.Instance.logout();
                       },
                       title: 'Log Out'),
