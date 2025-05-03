@@ -3,6 +3,7 @@ class TTexts {
   // -- GLOBAL Texts
   static const String kEmail = "REMEMBER_ME_EMAIL";
   static const String kPassword = "REMEMBER_ME_PASSWORD";
+  static const String kIsFirstTime = "Is First Time";
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

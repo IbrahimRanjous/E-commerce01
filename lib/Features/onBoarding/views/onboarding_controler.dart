@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
+import 'package:rjs_store/core/utils/constants/texts.dart';
 
 class OnboardingControler {
   static OnboardingControler get instance => Get.find();
@@ -30,14 +31,14 @@ class OnboardingControler {
       if (kDebugMode) {
         print(
             ' =================== Get Storage Next Button =================== ');
-        print(storage.read(kIsFirstTime));
+        print(storage.read(TTexts.kIsFirstTime));
       }
 
-      storage.write(kIsFirstTime, false);
+      storage.write(TTexts.kIsFirstTime, false);
       if (kDebugMode) {
         print(
             ' =================== Get Storage Next Button =================== ');
-        print(storage.read(kIsFirstTime));
+        print(storage.read(TTexts.kIsFirstTime));
       }
       Get.offAll(() => const LoginView());
     } else {

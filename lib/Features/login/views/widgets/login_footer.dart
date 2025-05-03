@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rjs_store/Features/login/data/cubit/login_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/image_strings.dart';
- import '../../../../core/utils/constants/sizes.dart';
+import '../../../../core/utils/constants/sizes.dart';
 
 class TFooter extends StatelessWidget {
   const TFooter({
@@ -10,6 +11,7 @@ class TFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = LoginController.instance;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -19,7 +21,9 @@ class TFooter extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.loginWithGoogle();
+            },
             icon: const Image(
               width: TSizes.iconLg,
               height: TSizes.iconLg,
