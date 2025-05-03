@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants/colors.dart';
- import '../../utils/helpers/helper_functions.dart';
+import '../../utils/helpers/helper_functions.dart';
 
 class TCircularIcon extends StatelessWidget {
   /// A custom circular icon widget with a background color.
@@ -10,9 +10,9 @@ class TCircularIcon extends StatelessWidget {
   const TCircularIcon({
     super.key,
     required this.icon,
-    this.width = 32.0,        // default width 
-    this.height = 32.0,       // default height
-    this.size = 16.0,         // default icon size for compact usage
+    this.width = 32.0, // default width
+    this.height = 32.0, // default height
+    this.size = 16.0, // default icon size for compact usage
     this.color,
     this.onPressed,
     this.backgroundColor,
@@ -32,8 +32,8 @@ class TCircularIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor ??
             (THelperFunctions.isDarkMode(context)
-                ? TColors.black.withOpacity(0.9)
-                : TColors.white.withOpacity(0.9)),
+                ? TColors.black.withValues(alpha: 0.9)
+                : TColors.white.withValues(alpha: 0.9)),
         borderRadius: BorderRadius.circular(100),
       ),
       // Remove the button's default padding & constraints

@@ -39,7 +39,7 @@ class TTexts {
   static const String resetPassword = "Reset Password";
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";
-  static const String orSignInWith = "or sign in with";
+  static const String orLogInWith = "or Log in with";
   static const String orSignUpWith = "or sign up with";
   static const String agreeTo = "I agree to";
   static const String privacyPolicy = "Privacy Policy";

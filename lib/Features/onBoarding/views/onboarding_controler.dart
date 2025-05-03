@@ -14,12 +14,12 @@ class OnboardingControler {
   Rx<int> currentPageIndex = 0.obs;
 
   //// Update Current Index when Page Scroll
-  void updatePageIndecator(index) {
+  void updatePageIndecator(int index) {
     currentPageIndex.value = index;
   }
 
   /// Jump to the specific dot seleted page
-  void dotNavigationClick(index) {
+  void dotNavigationClick(int index) {
     currentPageIndex.value = index;
     pageController.jumpToPage(index);
   }

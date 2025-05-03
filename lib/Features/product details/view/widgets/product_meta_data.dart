@@ -25,7 +25,7 @@ class TProductMetaData extends StatelessWidget {
             /// Sale Tap
             TRoundedContainer(
               borderRadius: TSizes.sm,
-              backgroundColor: TColors.secondary.withOpacity(0.8),
+              backgroundColor: TColors.secondary.withValues(alpha: 0.8),
               padding: const EdgeInsets.symmetric(
                   horizontal: TSizes.sm, vertical: TSizes.xs),
               showBorder: true,

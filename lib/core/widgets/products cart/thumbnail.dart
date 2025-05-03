@@ -37,7 +37,7 @@ class TThumbnail extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.yellow.withOpacity(0.7),
+                color: Colors.yellow.withValues(alpha: 0.7),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: MyText(

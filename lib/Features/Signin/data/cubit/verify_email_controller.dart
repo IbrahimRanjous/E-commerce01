@@ -31,7 +31,7 @@ class VerifyEmailController extends GetxController {
   }
 
   /// Timer to automatically redirect on Email verfication
-  setTimerForAutoRedirect() {
+  void setTimerForAutoRedirect() {
     Timer.periodic(const Duration(seconds: 5), (timer) async {
       try {
         await FirebaseAuth.instance.currentUser?.reload();
@@ -57,7 +57,7 @@ class VerifyEmailController extends GetxController {
   }
 
   /// Manually check if Email verified
-  checkEmailVerificationStatus() async {
+  Future<void> checkEmailVerificationStatus() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null && currentUser.emailVerified) {
       Get.off(

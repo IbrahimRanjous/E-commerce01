@@ -32,7 +32,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Function to Show Relevant Screen
-  screenRedirect() async {
+  Future<void> screenRedirect() async {
     final user = _auth.currentUser;
     if (user != null) {
       try {

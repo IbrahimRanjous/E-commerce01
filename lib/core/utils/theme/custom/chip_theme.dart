@@ -4,7 +4,7 @@ class TChipTheme {
   TChipTheme._();
 
   static ChipThemeData lightChipThemeData = ChipThemeData(
-    disabledColor: Colors.grey.withOpacity(0.4),
+    disabledColor: Colors.grey.withValues(alpha: 0.4),
     labelStyle: const TextStyle(color: Colors.black),
     selectedColor: Colors.blue,
     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
@@ -12,7 +12,7 @@ class TChipTheme {
   );
 
   static ChipThemeData darkChipThemeData = ChipThemeData(
-    disabledColor: Colors.grey.withOpacity(0.4),
+    disabledColor: Colors.grey.withValues(alpha: 0.4),
     labelStyle: const TextStyle(color: Colors.white),
     selectedColor: Colors.blue,
     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),

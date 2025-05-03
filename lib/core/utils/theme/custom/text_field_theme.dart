@@ -13,6 +13,7 @@ class TtextFormFieldTheme {
     errorStyle:
         const TextStyle().copyWith(fontSize: 14, fontStyle: FontStyle.normal),
     floatingLabelStyle:
+        // ignore: deprecated_member_use
         const TextStyle().copyWith(color: Colors.black.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14),
@@ -46,7 +47,7 @@ class TtextFormFieldTheme {
     errorStyle:
         const TextStyle().copyWith(fontSize: 14, fontStyle: FontStyle.normal),
     floatingLabelStyle:
-        const TextStyle().copyWith(color: Colors.black.withOpacity(0.8)),
+        const TextStyle().copyWith(color: Colors.black.withValues(alpha: 0.8)),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(14),
       borderSide: const BorderSide(width: 1, color: Colors.grey),

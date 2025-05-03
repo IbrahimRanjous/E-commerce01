@@ -6,7 +6,8 @@ import '../../login/views/widgets/custom_material_button.dart';
 
 class SuccessView extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
-  final image, title, subTitle, buttonTitle;
+  final String image, title, subTitle;
+  final String? buttonTitle;
   final VoidCallback onPressed;
   const SuccessView(
       {super.key,

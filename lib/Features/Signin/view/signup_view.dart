@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rjs_store/Features/login/views/widgets/login_divider.dart';
-import 'package:rjs_store/Features/login/views/widgets/login_footer.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
+import 'widgets/sign_in_footer.dart';
 import 'widgets/sign_up_form.dart';
 
 class SignupView extends StatelessWidget {
@@ -32,7 +32,7 @@ class SignupView extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwItems),
 
               // Footer
-              const TFooter(),
+              const TSignInFooter(),
               const SizedBox(height: TSizes.spaceBtwSections),
             ],
           ),
