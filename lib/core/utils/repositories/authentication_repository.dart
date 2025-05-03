@@ -81,7 +81,7 @@ class AuthenticationRepository extends GetxController {
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
-      throw TFormatException();
+      throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
@@ -100,7 +100,7 @@ class AuthenticationRepository extends GetxController {
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
-      throw TFormatException();
+      throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
@@ -119,7 +119,7 @@ class AuthenticationRepository extends GetxController {
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
-      throw TFormatException();
+      throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
@@ -132,7 +132,30 @@ class AuthenticationRepository extends GetxController {
   /// ====================== Federated identity & Social Sign-in ====================== ///
 
   /// [Google Authentication] - Google
+  Future<void> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow 
+      final GooogleSignInAccount? userAccount = await GoogleSignIn().signIn();
+      
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = await userAccount?.authentication;
 
+      // Create a new credential
+      final creadential = googleAuthProvider.creadential(accessToken : googleAuth?.accessToken);
+      
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      if(kDebugMode) print( 'Something went wrong : $e');
+      return null;
+    }
+  }
   /// [Facebook Authentication] - Facebook
 
   /// ====================== ./end Federated Identity & Social Sign-in ====================== ///
@@ -147,7 +170,7 @@ class AuthenticationRepository extends GetxController {
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
-      throw TFormatException();
+      throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {

@@ -35,7 +35,7 @@ class TLoginForm extends StatelessWidget {
                 CustomTextForm(
                   controller: controller.email,
                   validator: (value) => TValidator.validateEmail(value),
-                  prefixicon: Icon(Iconsax.direct_right),
+                  prefixicon: const Icon(Iconsax.direct_right),
                   hintText: TTexts.email,
                 ),
 

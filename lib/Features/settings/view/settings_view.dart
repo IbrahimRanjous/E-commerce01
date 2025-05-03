@@ -132,10 +132,11 @@ class SettingsView extends StatelessWidget {
                   ),
 
                   /// -- Logout Button
-
+                  
                   const SizedBox(height: TSizes.spaceBtwSections),
                   CustomMaterialButton(
                       onPressed: () {
+                        
                         AuthenticationRepository.Instance.logout();
                       },
                       title: 'Log Out'),
