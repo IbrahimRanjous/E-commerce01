@@ -7,7 +7,25 @@ import 'package:rjs_store/core/utils/popups/loaders.dart';
 class UserController extends GetxController {
   static UserController get instance => Get.find();
 
+  // obs means : it will observe this user and when data change it will redraw the UI
+  Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
+
+  @override
+  void onInit() {
+    super.onInit();
+    // fetchUserRecord();
+  }
+
+  /// Fetch user record
+  // Future<void> fetchUserRecord() async {
+  //   try {
+  //     final user = await userRepository.fetchUserDetails();
+  //     this.user(user);
+  //   } catch (e) {
+  //     user(UserModel.empty());
+  //   }
+  // }
 
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {

@@ -12,9 +12,13 @@ import 'package:rjs_store/core/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/platform_exceptions.dart';
+import 'package:rjs_store/core/utils/network/network_manager.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/navigation_menu.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class AuthenticationRepository extends GetxController {
   // ignore: non_constant_identifier_names
@@ -23,6 +27,18 @@ class AuthenticationRepository extends GetxController {
   /// Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+
+  /// Get Authentication User Data
+  User? get authUser => _auth.currentUser;
+
+  Future<bool> isConnected() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      return false;
+    }
+// Use the singleton instance provided by the package.
+    return await InternetConnectionChecker.instance.hasConnection;
+  }
 
   /// Called from main.dart on app lunch
   @override
@@ -75,6 +91,10 @@ class AuthenticationRepository extends GetxController {
   /// [Email Authentication] - Login
   Future<UserCredential> loginWithEmailAndPassword(
       String email, String password) async {
+    if (!await isConnected()) {
+      throw 'No internet connection. Please check your network settings.';
+    }
+
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -95,6 +115,12 @@ class AuthenticationRepository extends GetxController {
   Future<UserCredential> registerWithEmailAndPassword(
       String email, String password) async {
     try {
+      // Check Internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TLoaders.errorSnackBar(title: 'No Internet Connection');
+      }
+
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -169,6 +195,9 @@ class AuthenticationRepository extends GetxController {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
+      // save data
+      // await UserRepository.instance.saveUserRecord(credential);
 
       // Once signed in , return the UserCredential
       return await _auth.signInWithCredential(credential);

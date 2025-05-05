@@ -20,19 +20,6 @@ class UserModel {
     required this.profilePicture,
   });
 
-  /// Convert model to JSON structure for storing data in Firebase.
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'firstName': firstName,
-      'lastName': lastName,
-      'userName': userName,
-      'email': email,
-      'phoneNumber': phoneNumber,
-      'profilePicture': profilePicture,
-    };
-  }
-
   /// Helper function to get the full name.
   String get fullName => '$firstName $lastName';
 
@@ -64,6 +51,19 @@ class UserModel {
         phoneNumber: '',
         profilePicture: '',
       );
+
+  /// Convert model to JSON structure for storing data in Firebase.
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'FirstName': firstName,
+      'LastName': lastName,
+      'Username': userName,
+      'Email': email,
+      'PhoneNumber': phoneNumber,
+      'ProfilePicture': profilePicture,
+    };
+  }
 
   /// Factory method to create a UserModel from a Firebase document snapshot.
   factory UserModel.fromSnapshot(

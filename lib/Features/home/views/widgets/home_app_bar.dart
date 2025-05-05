@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/Features/card/view/cart_view.dart';
+import 'package:rjs_store/core/widgets/user/user_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
@@ -15,6 +16,7 @@ class THomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final controller = Get.put(UserController());
 
     return TAppbar(
       title: Column(
@@ -28,13 +30,15 @@ class THomeAppBar extends StatelessWidget {
                 .apply(color: dark ? TColors.grey : TColors.grey),
             textAlign: TextAlign.start,
           ),
-          Text(
-            TTexts.homeAppbarSubTitle,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .apply(color: dark ? TColors.grey : TColors.light),
-            textAlign: TextAlign.start,
+          Obx(
+            () => Text(
+              controller.user.value.fullName,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .apply(color: dark ? TColors.grey : TColors.light),
+              textAlign: TextAlign.start,
+            ),
           ),
         ],
       ),
