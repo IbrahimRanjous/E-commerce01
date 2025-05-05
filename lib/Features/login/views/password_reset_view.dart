@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/login/data/cubit/forget_password_controller.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_elevated_button.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
@@ -12,9 +11,8 @@ import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/widgets/spacing_styles.dart';
 
 class PasswordResetView extends StatelessWidget {
-  const PasswordResetView({super.key, required this.email});
+  const PasswordResetView({super.key});
 
-  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,23 +45,23 @@ class PasswordResetView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-
+        
                 // Title & SubTitle
                 Text(TTexts.resetPasswordTitle,
                     style: Theme.of(context).textTheme.headlineMedium,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
-
-                Text(email,
+        
+                Text("ibrahim.ranjous@gmail.com",
                     style: Theme.of(context).textTheme.labelLarge,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
-
+        
                 Text(TTexts.resetPasswordSubTitle,
                     style: Theme.of(context).textTheme.labelMedium,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwSections),
-
+        
                 // Buttons
                 CustomMaterialButton(
                     onPressed: () {
@@ -71,11 +69,8 @@ class PasswordResetView extends StatelessWidget {
                     },
                     title: TTexts.done),
                 const SizedBox(height: TSizes.spaceBtwItems),
-
-                CustomElevatedButton(
-                    onPressed: () => ForgetPasswordController.instance
-                        .resendPasswordResetEmail(email),
-                    title: TTexts.resendEmail),
+        
+                CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
               ],
             ),
           ),
