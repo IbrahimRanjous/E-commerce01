@@ -92,7 +92,7 @@ class TLoginForm extends StatelessWidget {
             TextButton(
               style: ElevatedButton.styleFrom(overlayColor: TColors.primary),
               onPressed: () {
-                Get.to(() => const ForgetPasswordView());
+                Get.to(const ForgetPasswordView());
               },
               child: Text(
                 TTexts.forgetPassword,
