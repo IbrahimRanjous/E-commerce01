@@ -14,18 +14,19 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // fetchUserRecord();
+    fetchUserRecord();
   }
 
   /// Fetch user record
-  // Future<void> fetchUserRecord() async {
-  //   try {
-  //     final user = await userRepository.fetchUserDetails();
-  //     this.user(user);
-  //   } catch (e) {
-  //     user(UserModel.empty());
-  //   }
-  // }
+  Future<void> fetchUserRecord() async {
+    try {
+      final user = await userRepository.fetchUserDetails();
+      this.user(user);
+    } catch (e) {
+      // TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
+      user(UserModel.empty());
+    }
+  }
 
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {

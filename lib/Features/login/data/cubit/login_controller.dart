@@ -21,6 +21,13 @@ class LoginController extends GetxController {
   final userController = Get.put(UserController());
 
   @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
+  @override
   void onInit() {
     email.text = localStorage.read(TTexts.kEmail) ?? '';
     // password.text = localStorage.read(TTexts.kPassword) ?? '';

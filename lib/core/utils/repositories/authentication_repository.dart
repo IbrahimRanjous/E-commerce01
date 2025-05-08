@@ -23,7 +23,7 @@ class AuthenticationRepository extends GetxController {
   /// Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
-  final User? authUser = FirebaseAuth.instance.currentUser;
+  User? get authUser => _auth.currentUser;
 
   /// Called from main.dart on app lunch
   @override
@@ -96,6 +96,10 @@ class AuthenticationRepository extends GetxController {
   Future<UserCredential> registerWithEmailAndPassword(
       String email, String password) async {
     try {
+      if (kDebugMode) {
+        print(
+            'Singing innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn');
+      }
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {

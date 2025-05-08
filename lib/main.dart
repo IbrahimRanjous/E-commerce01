@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, deprecated_member_use
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -13,6 +11,7 @@ import 'my_app.dart';
 
 Future<void> main() async {
   // Create a Cloudinary instance and set your cloud name.
+  // ignore: deprecated_member_use
   CloudinaryContext.cloudinary =
       Cloudinary.fromCloudName(cloudName: "dolast4ks");
 

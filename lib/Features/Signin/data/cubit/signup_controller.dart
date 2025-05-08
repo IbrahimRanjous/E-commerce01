@@ -1,15 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
-import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
-import 'package:rjs_store/core/utils/popups/loaders.dart';
-import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import '../../../../core/utils/network/network_manager.dart';
-import 'user_model.dart';
+import '../../../../core/utils/popups/full_screen_loader.dart';
+import '../../../../core/utils/popups/loaders.dart';
+import '../../../../core/utils/repositories/authentication_repository.dart';
+import '../../view/verify_email_view.dart';
 import '../repo/user_repository.dart';
+import 'user_model.dart';
 
 class SignupController extends GetxController {
-  static SignupController get instance => Get.find();
+  static SignupController get instance =>  Get.find();
 
   /// Variables
   final hidePassword = true.obs; // Observable for hiding/showing password
@@ -22,6 +23,18 @@ class SignupController extends GetxController {
   final phoneNumber = TextEditingController();
   // Form key for form validation
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
+
+  // For Best Practices: (Prevents Memory Leaks)+(Efficient Resource Management)+(Clean Widget Lifecycle)+(Avoids Unexpected Behavior)
+  @override
+  void dispose() {
+    email.dispose();
+    userName.dispose();
+    firstName.dispose();
+    lastName.dispose();
+    password.dispose();
+    phoneNumber.dispose();
+    super.dispose();
+  }
 
   /// -- Sign Up
   void signup() async {
@@ -62,6 +75,15 @@ class SignupController extends GetxController {
           await AuthenticationRepository.Instance.registerWithEmailAndPassword(
               email.text.trim().toLowerCase(), password.text.trim());
 
+      // confirm userCredential.user is not null
+      if (userCredential.user == null) {
+        throw Exception('User credential is null!');
+      }
+      if (kDebugMode) {
+        print(
+            'Regesteringggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg');
+      }
+
       /// save authenticated user data in the firebase firestore
       final newUser = UserModel(
         id: userCredential.user!.uid,
@@ -72,6 +94,9 @@ class SignupController extends GetxController {
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
       );
+      if (kDebugMode) {
+        print('Creating modelllllllllllllllllllllllllllllllllllllllllllllllll');
+      }
       final userRepository = Get.put(UserRepository());
       await userRepository.saveUserRecord(newUser);
 
