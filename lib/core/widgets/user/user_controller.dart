@@ -8,6 +8,7 @@ class UserController extends GetxController {
   static UserController get instance => Get.find();
 
   // obs means : it will observe this user and when data change it will redraw the UI
+  final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
 
@@ -20,11 +21,14 @@ class UserController extends GetxController {
   /// Fetch user record
   Future<void> fetchUserRecord() async {
     try {
+      profileLoading.value = true;
       final user = await userRepository.fetchUserDetails();
       this.user(user);
     } catch (e) {
       TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
       user(UserModel.empty());
+    } finally {
+      profileLoading.value = false;
     }
   }
 

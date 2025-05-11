@@ -4,6 +4,7 @@ import 'package:rjs_store/Features/card/view/cart_view.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
+import '../../../../core/utils/loaders/shimmer_effect.dart';
 import '../../../../core/widgets/Appbar/appbar.dart';
 import '../../../../core/widgets/products cart/cart_menu_icon.dart';
 import '../../../../core/widgets/user/user_controller.dart';
@@ -31,14 +32,30 @@ class THomeAppBar extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           Obx(
-            () => Text(
-              controller.user.value.fullName,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall!
-                  .apply(color: dark ? TColors.grey : TColors.light),
-              textAlign: TextAlign.start,
-            ),
+            () {
+              if (controller.profileLoading.value) {
+                // Display a shimmer loader while user profile is being loaded
+                return TShimmerEffect(width: 80, height: 15);
+              } else if (controller.user.value.fullName == ' ') {
+                return Text(
+                  'No Name',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .apply(color: dark ? TColors.grey : TColors.light),
+                  textAlign: TextAlign.start,
+                );
+              } else {
+                return Text(
+                  controller.user.value.fullName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .apply(color: dark ? TColors.grey : TColors.light),
+                  textAlign: TextAlign.start,
+                );
+              }
+            },
           ),
         ],
       ),

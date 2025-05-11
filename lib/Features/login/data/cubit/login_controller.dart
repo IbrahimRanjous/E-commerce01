@@ -7,6 +7,7 @@ import 'package:rjs_store/core/utils/network/network_manager.dart';
 import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
+import '../../../../core/utils/constants/image_strings.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -38,8 +39,10 @@ class LoginController extends GetxController {
   Future<void> emailAndPasswordLogin() async {
     try {
       // start internet connectivity
-      TFullScreenLoader.openLoadingDialog('Loggin you in ... ',
-          'assets/images/animations/141594-animation-of-docer.json');
+      TFullScreenLoader.openLoadingDialog(
+        'Loggin you in ... ',
+        TImages.dacerAnimation,
+      );
 
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
