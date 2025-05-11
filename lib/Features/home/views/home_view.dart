@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/core/utils/constants/sizes.dart';
+ import 'package:rjs_store/core/utils/constants/sizes.dart';
 import '../../../core/widgets/section_heading.dart';
-import 'widgets/home_app_bar.dart';
+ import 'widgets/home_app_bar.dart';
 import 'widgets/home_body_heading.dart';
 import 'widgets/home_categories.dart';
 import 'widgets/grid_view.dart';
@@ -14,6 +14,7 @@ class HomeView extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
+    // Get.put(UserController());
     return const Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -60,7 +61,7 @@ class HomeView extends StatelessWidget {
             // -- Products
             THomeBodyHeading(),
             SizedBox(height: TSizes.spaceBtwSections),
-            
+
             TGridView(),
 
 ///////////////////////////////////////////////////////////////////////

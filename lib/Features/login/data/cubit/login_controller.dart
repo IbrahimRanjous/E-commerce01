@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
 import 'package:rjs_store/core/utils/network/network_manager.dart';
 import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
@@ -20,6 +22,7 @@ class LoginController extends GetxController {
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final userController = Get.put(UserController());
 
+  // For Best Practices: (Prevents Memory Leaks)+(Efficient Resource Management)+(Clean Widget Lifecycle)+(Avoids Unexpected Behavior)
   @override
   void dispose() {
     email.dispose();
@@ -66,7 +69,7 @@ class LoginController extends GetxController {
       // final userCredentials =
       await AuthenticationRepository.Instance.loginWithEmailAndPassword(
           email.text.trim().toLowerCase(), password.text.trim());
-
+ 
       // Redirect
       AuthenticationRepository.Instance.screenRedirect();
       // // Remove Loader
@@ -108,5 +111,14 @@ class LoginController extends GetxController {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Error', message: e.toString());
     }
+  }
+
+  @override
+  void onClose() {
+    // Cleanup logic here
+    if (kDebugMode) {
+      print("LoginController disposed");
+    }
+    super.onClose();
   }
 }

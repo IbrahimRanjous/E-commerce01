@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/onBoarding/views/onboarding_view.dart';
@@ -16,7 +17,6 @@ import 'package:rjs_store/core/utils/network/network_manager.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/navigation_menu.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -33,6 +33,7 @@ class AuthenticationRepository extends GetxController {
 
   Future<bool> isConnected() async {
     final connectivityResult = await Connectivity().checkConnectivity();
+    // ignore: unrelated_type_equality_checks
     if (connectivityResult == ConnectivityResult.none) {
       return false;
     }
@@ -182,7 +183,18 @@ class AuthenticationRepository extends GetxController {
       );
 
       // save data
-      // await UserRepository.instance.saveUserRecord(credential);
+      if (kDebugMode) {
+        print("Saaaaaaaaaaaaaaaaaaaaaavinggggggggggggggggggggggg");
+      }
+      var userData = ParseObject('Users')
+        ..set('email', userAccount.email)
+        ..set('userName', userAccount.displayName)
+        ..set('profilePhoto', userAccount.photoUrl);
+
+      await userData.save();
+      if (kDebugMode) {
+        print("Finiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish");
+      }
 
       // Once signed in , return the UserCredential
       return await _auth.signInWithCredential(credential);

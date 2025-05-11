@@ -10,7 +10,7 @@ import '../repo/user_repository.dart';
 import 'user_model.dart';
 
 class SignupController extends GetxController {
-  static SignupController get instance =>  Get.find();
+  static SignupController get instance => Get.find();
 
   /// Variables
   final hidePassword = true.obs; // Observable for hiding/showing password
@@ -99,7 +99,7 @@ class SignupController extends GetxController {
       }
       final userRepository = Get.put(UserRepository());
       await userRepository.saveUserRecord(newUser);
-
+ 
       // Remove Loader
       TFullScreenLoader.stopLoading();
 
@@ -118,5 +118,14 @@ class SignupController extends GetxController {
       // show some generic error to the user
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
+  }
+
+  @override
+  void onClose() {
+    // Cleanup logic here
+    if (kDebugMode) {
+      print("LoginController disposed");
+    }
+    super.onClose();
   }
 }

@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:rjs_store/Features/Signin/data/cubit/signup_controller.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
@@ -23,6 +23,32 @@ class UserRepository extends GetxController {
 
   /// Function to save user data to Firestore.
   Future<void> saveUserRecord(UserModel user) async {
+    try {
+      if (kDebugMode) {
+        print("Saaaaaaaaaaaaaaaaaaaaaavinggggggggggggggggggggggg");
+      }
+      var userData = ParseObject('Users')
+        ..set('userData', user.toJson())
+        ..set('accountID', user.id)
+        ..set('firstName', user.firstName)
+        ..set('lastName', user.lastName)
+        ..set('userName', user.userName)
+        ..set('phoneNumber', user.phoneNumber)
+        ..set('email', user.email);
+      await userData.save();
+      if (kDebugMode) {
+        print("Finiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish");
+      }
+      if (userData.objectId == null) {
+        var response = await userData.saveEventually();
+        if (response.success == false) {
+          throw 'Data Not Saved';
+        }
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(title: 'Something Wrong', message: e.toString());
+    }
+
     // try {
     //   if (kDebugMode) {
     //     print(
@@ -56,35 +82,35 @@ class UserRepository extends GetxController {
     //   throw 'Something went wrong. Please try again';
     // }
 
-    try {
-      if (FirebaseAuth.instance.currentUser != null) {
-        if (kDebugMode) {
-          print("Current User UID: ${FirebaseAuth.instance.currentUser!.uid}");
-          print("UserModel id: ${user.id}");
-        }
-        // Attempt to write data here
-        final docRef =
-            _db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
-        await docRef.set(user.toJson()).timeout(Duration(seconds: 10),
-            onTimeout: () {
-          throw Exception("Firestore write timed out");
-        });
-
-        if (kDebugMode) {
-          print("User saved successfully.");
-        }
-      } else {
-        if (kDebugMode) {
-          print("User is not authenticated.");
-        }
-      }
-    } catch (e, stacktrace) {
-      if (kDebugMode) {
-        print("Error during Firestore set: $e");
-        print(stacktrace);
-      }
-      rethrow;
-    }
+    //   try {
+    //     if (FirebaseAuth.instance.currentUser != null) {
+    //       if (kDebugMode) {
+    //         print("Current User UID: ${FirebaseAuth.instance.currentUser!.uid}");
+    //         print("UserModel id: ${user.id}");
+    //       }
+    //       // Attempt to write data here
+    //       final docRef =
+    //           _db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+    //       await docRef.set(user.toJson()).timeout(Duration(seconds: 10),
+    //           onTimeout: () {
+    //         throw Exception("Firestore write timed out");
+    //       });
+    //       if (kDebugMode) {
+    //         print("User saved successfully.");
+    //       }
+    //     } else {
+    //       if (kDebugMode) {
+    //         print("User is not authenticated.");
+    //       }
+    //     }
+    //   } catch (e, stacktrace) {
+    //     if (kDebugMode) {
+    //       print("Error during Firestore set: $e");
+    //       print(stacktrace);
+    //     }
+    //     rethrow;
+    //   }
+    // }
   }
 
   /// Function to save user data by google login to Firestore.

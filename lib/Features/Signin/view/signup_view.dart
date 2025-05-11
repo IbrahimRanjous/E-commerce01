@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rjs_store/Features/Signin/data/cubit/signup_controller.dart';
+
 import 'package:rjs_store/Features/login/views/widgets/login_divider.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
@@ -10,6 +13,7 @@ class SignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(SignupController());
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(

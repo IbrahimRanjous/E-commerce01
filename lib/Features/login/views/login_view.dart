@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:rjs_store/Features/login/data/cubit/login_controller.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/spacing_styles.dart';
 import '../../../core/utils/constants/texts.dart';
@@ -15,7 +12,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return const Scaffold(
+    return const Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

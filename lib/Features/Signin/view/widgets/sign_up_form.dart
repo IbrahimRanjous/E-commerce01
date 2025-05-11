@@ -6,7 +6,7 @@ import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/widgets/custom_text_form.dart';
 import '../../../login/views/widgets/custom_material_button.dart';
- import '../../data/cubit/signup_controller.dart';
+import '../../data/cubit/signup_controller.dart';
 import 'privace_and_terms_form.dart';
 
 class TSingUpForm extends StatelessWidget {
@@ -16,7 +16,7 @@ class TSingUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignupController());
+    final controller = SignupController.instance;
     return Form(
       key: controller.signupFormKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

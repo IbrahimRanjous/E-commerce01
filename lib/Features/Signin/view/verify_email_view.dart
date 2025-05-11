@@ -6,6 +6,7 @@ import 'package:rjs_store/Features/login/views/widgets/custom_elevated_button.da
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
+import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
@@ -23,7 +24,14 @@ class VerifyEmailView extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () => AuthenticationRepository.Instance.logout(),
+            onPressed: () {
+              try {
+                AuthenticationRepository.Instance.logout();
+              } on Exception catch (e) {
+                TLoaders.errorSnackBar(
+                    title: 'Error', message: 'Loggout problem');
+              }
+            },
             icon: const Icon(CupertinoIcons.clear),
           )
         ],
