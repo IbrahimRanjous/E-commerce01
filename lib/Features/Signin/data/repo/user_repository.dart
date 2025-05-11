@@ -16,9 +16,6 @@ class UserRepository extends GetxController {
   // Provides a static way to access the UserRepository instance using Get.find().
   static UserRepository get instance => Get.find();
 
-  // Firestore instance.
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
   /// Function to save user data to Firestore.
   Future<void> saveUserRecord(UserModel user) async {
     try {
@@ -126,12 +123,22 @@ class UserRepository extends GetxController {
   /// Function to update user data in Firestor.
   Future<void> updateUserDetails(UserModel updatedUser) async {
     try {
-      await _db
-          .collection('Users')
-          .doc(updatedUser.id)
-          .update(updatedUser.toJson());
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
+      // Create a ParseObject representing the user
+      final userObject = ParseObject('Users')
+        ..objectId = updatedUser.id
+        ..set<String>('userName', updatedUser.userName)
+        ..set<String>('firstName', updatedUser.firstName)
+        ..set<String>('lastName', updatedUser.lastName)
+        ..set<String>('phoneNumber', updatedUser.phoneNumber)
+        ..set<String>('email', updatedUser.email)
+        ..set<String>('profilePicture', updatedUser.profilePicture);
+
+      // Update the object on Back4App
+      final apiResponse = await userObject.save();
+
+      if (!apiResponse.success) {
+        throw 'Failed to update user details: ${apiResponse.error?.message}';
+      }
     } on FormatException catch (_) {
       throw const TFormatException();
     } on PlatformException catch (e) {
@@ -144,12 +151,24 @@ class UserRepository extends GetxController {
   /// Update any field in specific Users Collection
   Future<void> updateSingleField(Map<String, dynamic> json) async {
     try {
-      await _db
-          .collection('Users')
-          .doc(AuthenticationRepository.Instance.authUser?.uid)
-          .update(json);
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
+      // Get the user ID from the authentication repository
+      final userId = AuthenticationRepository.Instance.authUser?.uid;
+      if (userId == null) throw 'User ID is null';
+
+      // Create a ParseObject for the user
+      final userObject = ParseObject('Users')..objectId;
+
+      // Set the fields dynamically based on the provided JSON
+      json.forEach((key, value) {
+        userObject.set<dynamic>(key, value);
+      });
+
+      // Save the updated object to Back4App
+      final apiResponse = await userObject.save();
+
+      if (!apiResponse.success) {
+        throw 'Failed to update user field: ${apiResponse.error?.message}';
+      }
     } on FormatException catch (_) {
       throw const TFormatException();
     } on PlatformException catch (e) {
@@ -160,11 +179,17 @@ class UserRepository extends GetxController {
   }
 
   /// Function to remove user data from Firestore.
-  Future<void> removeUserRecod(String userID) async {
+  Future<void> removeUserRecord(String storeID) async {
     try {
-      await _db.collection('Users').doc(userID).delete();
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
+      // Create a ParseObject for the user with the specified objectId
+      final userObject = ParseObject('Users')..objectId = storeID;
+
+      // Attempt to delete the user record from Back4App
+      final apiResponse = await userObject.delete();
+
+      if (!apiResponse.success) {
+        throw 'Failed to remove user record: ${apiResponse.error?.message}';
+      }
     } on FormatException catch (_) {
       throw const TFormatException();
     } on PlatformException catch (e) {
