@@ -16,7 +16,7 @@ class TSingUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = SignupController.instance;
+    final controller = Get.put(SignupController());
     return Form(
       key: controller.signupFormKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

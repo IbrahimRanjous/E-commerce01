@@ -6,6 +6,7 @@ import '../../../../core/utils/constants/texts.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../core/widgets/Appbar/appbar.dart';
 import '../../../../core/widgets/products cart/cart_menu_icon.dart';
+import '../../../../core/widgets/user/user_controller.dart';
 
 class THomeAppBar extends StatelessWidget {
   const THomeAppBar({
@@ -15,7 +16,7 @@ class THomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    // final controller = Get.put(UserController());
+    final controller = Get.put(UserController());
 
     return TAppbar(
       title: Column(
@@ -29,17 +30,15 @@ class THomeAppBar extends StatelessWidget {
                 .apply(color: dark ? TColors.grey : TColors.grey),
             textAlign: TextAlign.start,
           ),
-          // add : obx
-          Text(
-            // controller.user.value.fullName != ' '
-            //     ? controller.user.value.fullName
-            // :
-            'UserName',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .apply(color: dark ? TColors.grey : TColors.light),
-            textAlign: TextAlign.start,
+          Obx(
+            () => Text(
+              controller.user.value.fullName,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .apply(color: dark ? TColors.grey : TColors.light),
+              textAlign: TextAlign.start,
+            ),
           ),
         ],
       ),

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:rjs_store/Features/Signin/data/cubit/signup_controller.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
@@ -19,7 +18,6 @@ class UserRepository extends GetxController {
 
   // Firestore instance.
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final userData = SignupController.instance;
 
   /// Function to save user data to Firestore.
   Future<void> saveUserRecord(UserModel user) async {
@@ -48,69 +46,6 @@ class UserRepository extends GetxController {
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Something Wrong', message: e.toString());
     }
-
-    // try {
-    //   if (kDebugMode) {
-    //     print(
-    //         "//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Saving User Dataaaaaaaaaaaaaaaa .");
-    //   }
-    //   if (FirebaseAuth.instance.currentUser != null) {
-    //     final docRef =
-    //         FirebaseFirestore.instance.collection('users').doc(user.id);
-    //     if (kDebugMode) {
-    //       print(
-    //           "  DocRefffffffffffffffffffffffffffffffffffffffffffffffffffff .");
-    //     }
-    //     await docRef.set(user.toJson());
-    //     if (kDebugMode) {
-    //       print(
-    //           "//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////User saved successfully.");
-    //     }
-    //   } else {
-    //     if (kDebugMode) {
-    //       print(
-    //           "/////////////\n//////////////////////////////////////////\n////////////////////////////////////////////");
-    //     }
-    //   }
-    // } on FirebaseException catch (e) {
-    //   throw TFirebaseException(e.code).message;
-    // } on FormatException catch (_) {
-    //   throw const TFormatException();
-    // } on PlatformException catch (e) {
-    //   throw TPlatformException(e.code).message;
-    // } catch (e) {
-    //   throw 'Something went wrong. Please try again';
-    // }
-
-    //   try {
-    //     if (FirebaseAuth.instance.currentUser != null) {
-    //       if (kDebugMode) {
-    //         print("Current User UID: ${FirebaseAuth.instance.currentUser!.uid}");
-    //         print("UserModel id: ${user.id}");
-    //       }
-    //       // Attempt to write data here
-    //       final docRef =
-    //           _db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
-    //       await docRef.set(user.toJson()).timeout(Duration(seconds: 10),
-    //           onTimeout: () {
-    //         throw Exception("Firestore write timed out");
-    //       });
-    //       if (kDebugMode) {
-    //         print("User saved successfully.");
-    //       }
-    //     } else {
-    //       if (kDebugMode) {
-    //         print("User is not authenticated.");
-    //       }
-    //     }
-    //   } catch (e, stacktrace) {
-    //     if (kDebugMode) {
-    //       print("Error during Firestore set: $e");
-    //       print(stacktrace);
-    //     }
-    //     rethrow;
-    //   }
-    // }
   }
 
   /// Function to save user data by google login to back4app
@@ -144,7 +79,7 @@ class UserRepository extends GetxController {
   Future<UserModel> fetchUserDetails() async {
     try {
       // Retrieve all objects of the "Profile" class
-      final apiResponse = await ParseObject('Profile').getAll();
+      final apiResponse = await ParseObject('Users').getAll();
       final key = AuthenticationRepository.Instance.authUser!.uid;
       if (apiResponse.success && apiResponse.results != null) {
         // Assuming you need to fetch user details based on the provided key
@@ -153,6 +88,11 @@ class UserRepository extends GetxController {
 
           // Validate if the object matches the key (assuming objectId is the key)
           if (object.get<String>('accountID') == key) {
+            if (kDebugMode) {
+              print(
+                  '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+              print(object.get<String>('userName'));
+            }
             return UserModel(
               id: object.objectId!,
               userName: object.get<String>('userName') ?? '',
@@ -169,6 +109,7 @@ class UserRepository extends GetxController {
           }
         }
       }
+
       // If no matching user is found, return an error
       throw 'User not found';
     } on FirebaseException catch (e) {

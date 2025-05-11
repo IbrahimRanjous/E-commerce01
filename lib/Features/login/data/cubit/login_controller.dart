@@ -2,12 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
- import 'package:rjs_store/core/utils/constants/texts.dart';
+import 'package:rjs_store/core/utils/constants/texts.dart';
 import 'package:rjs_store/core/utils/network/network_manager.dart';
 import 'package:rjs_store/core/utils/popups/full_screen_loader.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
-import 'package:rjs_store/core/widgets/user/user_controller.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
@@ -19,7 +18,6 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  final userController = Get.put(UserController());
 
   // For Best Practices: (Prevents Memory Leaks)+(Efficient Resource Management)+(Clean Widget Lifecycle)+(Avoids Unexpected Behavior)
   @override
@@ -68,7 +66,7 @@ class LoginController extends GetxController {
       // final userCredentials =
       await AuthenticationRepository.Instance.loginWithEmailAndPassword(
           email.text.trim().toLowerCase(), password.text.trim());
- 
+
       // Redirect
       AuthenticationRepository.Instance.screenRedirect();
       // // Remove Loader
@@ -93,12 +91,8 @@ class LoginController extends GetxController {
         return;
       }
 
-      // Google Authentication
-      final userCredentials =
-          await AuthenticationRepository.Instance.signInWithGoogle();
-
-      // Save User Record
-      await userController.saveUserRecord(userCredentials);
+      // Google Authentication & Save User Record
+      await AuthenticationRepository.Instance.signInWithGoogle();
 
       // // Remove Loader
       // TFullScreenLoader.stopLoading();

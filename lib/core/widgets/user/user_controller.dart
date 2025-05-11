@@ -23,7 +23,7 @@ class UserController extends GetxController {
       final user = await userRepository.fetchUserDetails();
       this.user(user);
     } catch (e) {
-      // TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
+      TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
       user(UserModel.empty());
     }
   }
