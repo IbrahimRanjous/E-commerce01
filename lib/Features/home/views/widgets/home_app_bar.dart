@@ -33,7 +33,7 @@ class THomeAppBar extends StatelessWidget {
           Text(
             // controller.user.value.fullName != ' '
             //     ? controller.user.value.fullName
-            //     :
+            // :
             'UserName',
             style: Theme.of(context)
                 .textTheme

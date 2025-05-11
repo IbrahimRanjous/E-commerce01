@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/Signin/view/verify_email_view.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/Features/onBoarding/views/onboarding_view.dart';
@@ -157,6 +157,21 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [Email Authentication] - Forget Password
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   /// ====================== Federated identity & Social Sign-in ====================== ///
 
@@ -183,18 +198,7 @@ class AuthenticationRepository extends GetxController {
       );
 
       // save data
-      if (kDebugMode) {
-        print("Saaaaaaaaaaaaaaaaaaaaaavinggggggggggggggggggggggg");
-      }
-      var userData = ParseObject('Users')
-        ..set('email', userAccount.email)
-        ..set('userName', userAccount.displayName)
-        ..set('profilePhoto', userAccount.photoUrl);
-
-      await userData.save();
-      if (kDebugMode) {
-        print("Finiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish");
-      }
+      UserRepository.instance.saveUserRecordByBack4app(userAccount);
 
       // Once signed in , return the UserCredential
       return await _auth.signInWithCredential(credential);

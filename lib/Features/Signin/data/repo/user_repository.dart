@@ -113,14 +113,22 @@ class UserRepository extends GetxController {
     // }
   }
 
-  /// Function to save user data by google login to Firestore.
-  Future<void> saveUserRecordByGoogle(GoogleSignInAccount account) async {
+  /// Function to save user data by google login to back4app
+  Future<void> saveUserRecordByBack4app(GoogleSignInAccount userAccount) async {
     try {
-      await _db.collection('users').doc(account.email).set({
-        'Email': account.email,
-        "FirstName": account.displayName,
-        "ProfilePicture": account.photoUrl,
-      });
+      // save data
+      if (kDebugMode) {
+        print("Saaaaaaaaaaaaaaaaaaaaaavinggggggggggggggggggggggg");
+      }
+      var userData = ParseObject('Users')
+        ..set('email', userAccount.email)
+        ..set('userName', userAccount.displayName)
+        ..set('profilePhoto', userAccount.photoUrl);
+
+      await userData.save();
+      if (kDebugMode) {
+        print("Finiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish");
+      }
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -135,18 +143,34 @@ class UserRepository extends GetxController {
   /// Function to fetch user details based on user ID
   Future<UserModel> fetchUserDetails() async {
     try {
-      final documentSnapshot = await _db
-          .collection('Users')
-          .doc(AuthenticationRepository.Instance.authUser?.email)
-          .get();
-      if (documentSnapshot.exists) {
-        return UserModel.fromSnapshot(documentSnapshot);
-      } else {
-        TLoaders.warningSnackBar(
-            title: 'Warning', message: 'Leak in user data');
+      // Retrieve all objects of the "Profile" class
+      final apiResponse = await ParseObject('Profile').getAll();
+      final key = AuthenticationRepository.Instance.authUser!.uid;
+      if (apiResponse.success && apiResponse.results != null) {
+        // Assuming you need to fetch user details based on the provided key
+        for (var o in apiResponse.results!) {
+          final object = o as ParseObject;
 
-        return UserModel.empty();
+          // Validate if the object matches the key (assuming objectId is the key)
+          if (object.get<String>('accountID') == key) {
+            return UserModel(
+              id: object.objectId!,
+              userName: object.get<String>('userName') ?? '',
+              firstName: object.get<String>('firstName') ?? '',
+              lastName: object.get<String>('lastName') ?? '',
+              phoneNumber: object.get<String>('phoneNumber') ?? '',
+              email: object.get<String>('email') ?? '',
+              profilePicture: object.get<String>('profilePicture') ?? '',
+            );
+          } else {
+            TLoaders.warningSnackBar(
+                title: "Warning", message: 'The user data not fetched');
+            return UserModel.empty();
+          }
+        }
       }
+      // If no matching user is found, return an error
+      throw 'User not found';
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {

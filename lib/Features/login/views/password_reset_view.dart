@@ -11,8 +11,8 @@ import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/widgets/spacing_styles.dart';
 
 class PasswordResetView extends StatelessWidget {
-  const PasswordResetView({super.key});
-
+  const PasswordResetView({super.key, required this.email});
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class PasswordResetView extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () => Get.offAll(const LoginView()),
+            onPressed: () => Get.offAll(() => const LoginView()),
             icon: const Icon(CupertinoIcons.clear),
           )
         ],
@@ -45,32 +45,33 @@ class PasswordResetView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
-        
+
                 // Title & SubTitle
                 Text(TTexts.resetPasswordTitle,
                     style: Theme.of(context).textTheme.headlineMedium,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
-        
-                Text("ibrahim.ranjous@gmail.com",
+
+                Text(email,
                     style: Theme.of(context).textTheme.labelLarge,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwItems),
-        
+
                 Text(TTexts.resetPasswordSubTitle,
                     style: Theme.of(context).textTheme.labelMedium,
                     textAlign: TextAlign.center),
                 const SizedBox(height: TSizes.spaceBtwSections),
-        
+
                 // Buttons
                 CustomMaterialButton(
                     onPressed: () {
-                      Get.offAll(const LoginView());
+                      Get.offAll(() => const LoginView());
                     },
                     title: TTexts.done),
                 const SizedBox(height: TSizes.spaceBtwItems),
-        
-                CustomElevatedButton(onPressed: () {}, title: TTexts.resendEmail),
+
+                CustomElevatedButton(
+                    onPressed: () {}, title: TTexts.resendEmail),
               ],
             ),
           ),
