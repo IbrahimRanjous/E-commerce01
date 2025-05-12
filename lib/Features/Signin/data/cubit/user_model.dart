@@ -29,16 +29,16 @@ class UserModel {
   /// Static function to split full name into first and last name.
   static List<String> nameParts(String fullName) => fullName.split(" ");
 
-  /// Static function to generate a username from the full name.
-  static String generateUsername(String fullName) {
+  /// Static function to generate a userName from the full name.
+  static String generateuserName(String fullName) {
     List<String> nameParts = fullName.split(" ");
     String firstName = nameParts[0].toLowerCase();
     String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
 
-    String camelCaseUsername =
+    String camelCaseuserName =
         "$firstName$lastName"; // Combine first and last name
-    String usernameWithPrefix = "cwt_$camelCaseUsername"; // Add "cwt_" prefix
-    return usernameWithPrefix;
+    String userNameWithPrefix = "cwt_$camelCaseuserName"; // Add "cwt_" prefix
+    return userNameWithPrefix;
   }
 
   /// Static function to create an empty user model.
@@ -58,7 +58,7 @@ class UserModel {
       'id': id,
       'FirstName': firstName,
       'LastName': lastName,
-      'Username': userName,
+      'UserName': userName,
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
@@ -74,7 +74,7 @@ class UserModel {
         id: document.id,
         firstName: data['FirstName'] ?? '',
         lastName: data['LastName'] ?? '',
-        userName: data['Username'] ?? '',
+        userName: data['UserName'] ?? '',
         email: data['Email'] ?? '',
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',

@@ -1,18 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:rjs_store/core/utils/popups/loaders.dart';
+import 'package:rjs_store/navigation_menu.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/network/network_manager.dart';
 import '../../../../core/utils/popups/full_screen_loader.dart';
 import '../../../../core/widgets/user/user_controller.dart';
 import '../../../Signin/data/repo/user_repository.dart';
-
-// Make sure to import the following dependencies as they are assumed to be defined in your project:
-// import 'package:your_project/controllers/user_controller.dart';
-// import 'package:your_project/repositories/user_repository.dart';
-// import 'package:your_project/network/network_manager.dart';
-// import 'package:your_project/widgets/t_full_screen_loader.dart';
-// import 'package:your_project/constants/t_images.dart';
 
 /// Controller to manage user-related functionality.
 class UpdateNameController extends GetxController {
@@ -51,20 +46,59 @@ class UpdateNameController extends GetxController {
         TImages.dacerAnimation,
       );
 
-      // Check Internet Connectivity.
-      final bool isConnected = await NetworkManager.instance.isConnected();
+      // Check Internet Connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        // Handle no internet connection (e.g., show an error message).
+        TFullScreenLoader.stopLoading();
+        return;
       }
 
-      // Update user name logic here.
-      // For example, you might call:
-      // await userRepository.updateUserName(firstName.text, lastName.text);
-    } catch (e) {
-      // Handle error (you may log the error or display an error message).
-    } finally {
-      // Close the loading dialog.
+      // Build the update payload using a helper function.
+      final Map<String, dynamic> updatedFields = _buildUpdatedFields();
+
+      // Debug prints (if running in debug mode).
+      if (kDebugMode) {
+        print('Updated Fields: $updatedFields');
+        print('Proceeding with update...');
+      }
+
+      // Call the update function with the constructed JSON payload.
+      await userRepository.updateSingleField(updatedFields);
+
+      // Optionally, fetch user details after updating.
+      await userRepository.fetchUserDetails();
+
       TFullScreenLoader.stopLoading();
+
+      // Show success message.
+      TLoaders.successSnackBar(
+        title: 'Congratulations',
+        message: 'Your Name has been updated',
+      );
+
+      // Navigate to the home (or profile) screen.
+      Get.offAll(() => const NavigationMenu());
+    } catch (e) {
+      TFullScreenLoader.stopLoading();
+      TLoaders.errorSnackBar(
+        title: 'Something went wrong',
+        message: e.toString(),
+      );
     }
+  }
+
+  /// Helper function to build the updatedFields map.
+  Map<String, dynamic> _buildUpdatedFields() {
+    final String trimmedFirstName = firstName.text.trim();
+    final String trimmedLastName = lastName.text.trim();
+
+    return {
+      'firstName': trimmedFirstName,
+      'lastName': trimmedLastName,
+      'userData': {
+        'FirstName': trimmedFirstName,
+        'LastName': trimmedLastName,
+      },
+    };
   }
 }

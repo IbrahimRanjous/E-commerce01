@@ -19,10 +19,14 @@ class TUserProfileTile extends StatelessWidget {
     final controller = UserController.instance;
 
     return ListTile(
-      title: CustomShimmerName(
-          controller: controller, name: controller.user.value.fullName),
-      subtitle: CustomShimmerName(
-          controller: controller, name: controller.user.value.email),
+      title: Obx(
+        () => CustomShimmerName(
+            controller: controller, name: controller.user.value.fullName),
+      ),
+      subtitle: Obx(
+        () => CustomShimmerName(
+            controller: controller, name: controller.user.value.email),
+      ),
       trailing: IconButton(
           onPressed: onPressed,
           icon: const Icon(
@@ -50,29 +54,23 @@ class CustomShimmerName extends StatelessWidget {
   final String? name;
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        if (controller.profileLoading.value) {
-          // Display a shimmer loader while user profile is being loaded
-          return TShimmerEffect(width: 80, height: 15);
-        } else if (name == ' ') {
-          return Text(
-            'No Name',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .apply(color: TColors.white),
-          );
-        } else {
-          return Text(
-            name ?? '',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .apply(color: TColors.white),
-          );
-        }
-      },
-    );
+    if (controller.profileLoading.value) {
+      // Display a shimmer loader while user profile is being loaded
+      return TShimmerEffect(width: 80, height: 15);
+    } else if (name == ' ') {
+      return Text(
+        'No Name',
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall!
+            .apply(color: TColors.white),
+      );
+    } else {
+      return Text(
+        name ?? '',
+        style:
+            Theme.of(context).textTheme.bodyLarge!.apply(color: TColors.white),
+      );
+    }
   }
 }

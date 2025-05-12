@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/Features/card/view/cart_view.dart';
 import 'package:rjs_store/Features/home/views/widgets/primary_header_container.dart';
 import 'package:rjs_store/Features/login/views/widgets/custom_material_button.dart';
-import 'package:rjs_store/Features/settings/view/account_view.dart';
+import 'package:rjs_store/Features/settings/view/profile_view.dart';
 import 'package:rjs_store/Features/settings/view/user_addressed_view.dart';
 import 'package:rjs_store/Features/settings/view/widgets/settings_menu_tile.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
@@ -43,7 +43,7 @@ class SettingsView extends StatelessWidget {
 
                   /// User Profile Card
                   TUserProfileTile(
-                    onPressed: () => Get.to(() => const AccountView()),
+                    onPressed: () => Get.to(() => const ProfileView()),
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                 ],

@@ -149,26 +149,125 @@ class UserRepository extends GetxController {
   }
 
   /// Update any field in specific Users Collection
+  /// OLLLLD
+  // Future<void> updateSingleField(Map<String, dynamic> json) async {
+  //   try {
+  //     // Get the user ID from the authentication repository
+  //     final userId = AuthenticationRepository.Instance.authUser?.uid;
+  //     if (userId == null) throw 'User ID is null';
+  //     // Create a ParseObject for the user
+  //     final userObject = ParseObject('Users')..objectId;
+  //     // Set the fields dynamically based on the provided JSON
+  //     json.forEach((key, value) {
+  //       userObject.set<dynamic>(key, value);
+  //     });
+  //     // Save the updated object to Back4App
+  //     final apiResponse = await userObject.save();
+  //     if (!apiResponse.success) {
+  //       throw 'Failed to update user field: ${apiResponse.error?.message}';
+  //     }
+  //   } on FormatException catch (_) {
+  //     throw const TFormatException();
+  //   } on PlatformException catch (e) {
+  //     throw TPlatformException(e.code).message;
+  //   } catch (e) {
+  //     throw 'Something went wrong. Please try again';
+  //   }
+  // }
+  /// Update any field in specific Users Collection
   Future<void> updateSingleField(Map<String, dynamic> json) async {
     try {
-      // Get the user ID from the authentication repository
-      final userId = AuthenticationRepository.Instance.authUser?.uid;
-      if (userId == null) throw 'User ID is null';
+      // Get the current authenticated user's accountID.
+      final String? currentUserId =
+          AuthenticationRepository.Instance.authUser?.uid;
+      if (currentUserId == null) {
+        throw 'User ID is null';
+      }
 
-      // Create a ParseObject for the user
-      final userObject = ParseObject('Users')..objectId;
+      // Automatically insert the accountID if not provided.
+      json.putIfAbsent('accountID', () => currentUserId);
 
-      // Set the fields dynamically based on the provided JSON
+      // If objectId is not provided, retrieve it by querying the Users table by accountID.
+      if (!json.containsKey('objectId')) {
+        final queryForObjectId = QueryBuilder<ParseObject>(ParseObject('Users'))
+          ..whereEqualTo('accountID', currentUserId);
+        final ParseResponse queryForObjectIdResponse =
+            await queryForObjectId.query();
+
+        if (!queryForObjectIdResponse.success ||
+            queryForObjectIdResponse.results == null ||
+            queryForObjectIdResponse.results!.isEmpty) {
+          throw 'User not found';
+        }
+
+        final ParseObject userRecord =
+            queryForObjectIdResponse.results!.first as ParseObject;
+        json['objectId'] = userRecord.objectId;
+      }
+
+      // Extract the identifiers.
+      final String objectId = json['objectId'];
+      final String accountID = json['accountID'];
+
+      // Double-check that our authenticated user matches the payload.
+      if (currentUserId != accountID) {
+        throw 'Authenticated user does not match provided accountID.';
+      }
+
+      // Query for the user object with both unique identifiers.
+      final query = QueryBuilder<ParseObject>(ParseObject('Users'))
+        ..whereEqualTo('objectId', objectId)
+        ..whereEqualTo('accountID', accountID);
+      final ParseResponse queryResponse = await query.query();
+      if (!queryResponse.success ||
+          queryResponse.results == null ||
+          queryResponse.results!.isEmpty) {
+        throw 'User not found';
+      }
+
+      // Retrieve the user object from the query result.
+      final userObject = queryResponse.results!.first as ParseObject;
+
+      // Remove unique identifiers from the JSON update payload to avoid overwriting them.
+      json.remove('objectId');
+      json.remove('accountID');
+
+      // Check for nested "userData" updates.
+      Map<String, dynamic>? nestedUserData;
+      if (json.containsKey('userData') &&
+          json['userData'] is Map<String, dynamic>) {
+        nestedUserData = json.remove('userData');
+      }
+
+      // Dynamically update only the provided top-level fields.
       json.forEach((key, value) {
         userObject.set<dynamic>(key, value);
       });
 
-      // Save the updated object to Back4App
-      final apiResponse = await userObject.save();
+      // If there are updates for userData, merge them with the existing data.
+      if (nestedUserData != null) {
+        // Try to retrieve the current userData from the object.
+        Map<String, dynamic> currentUserData = {};
+        final existingUserData = userObject.get('userData');
+        if (existingUserData != null &&
+            existingUserData is Map<String, dynamic>) {
+          currentUserData = Map<String, dynamic>.from(existingUserData);
+        }
+        // Merge the provided keys into the current userData.
+        nestedUserData.forEach((key, value) {
+          currentUserData[key] = value;
+        });
+        // Save the merged result back into userData.
+        userObject.set<Map<String, dynamic>>('userData', currentUserData);
+      }
 
+      // Save the changes to Back4App.
+      final apiResponse = await userObject.save();
       if (!apiResponse.success) {
         throw 'Failed to update user field: ${apiResponse.error?.message}';
       }
+      print(
+          'Saaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavedddddddddddddddddddddddd');
     } on FormatException catch (_) {
       throw const TFormatException();
     } on PlatformException catch (e) {
@@ -181,14 +280,35 @@ class UserRepository extends GetxController {
   /// Function to remove user data from Firestore.
   Future<void> removeUserRecord(String storeID) async {
     try {
+      // Get the current authenticated user's accountID.
+      final String? currentUserId =
+          AuthenticationRepository.Instance.authUser?.uid;
+      if (currentUserId == null) {
+        throw 'User ID is null';
+      }
+
       // Create a ParseObject for the user with the specified objectId
-      final userObject = ParseObject('Users')..objectId = storeID;
+      final queryForObjectId = QueryBuilder<ParseObject>(ParseObject('Users'))
+        ..whereEqualTo('accountID', currentUserId);
+      final ParseResponse queryForObjectIdResponse =
+          await queryForObjectId.query();
+
+      if (!queryForObjectIdResponse.success ||
+          queryForObjectIdResponse.results == null ||
+          queryForObjectIdResponse.results!.isEmpty) {
+        throw 'User not found';
+      }
+
+      final ParseObject userRecord =
+          queryForObjectIdResponse.results!.first as ParseObject;
 
       // Attempt to delete the user record from Back4App
-      final apiResponse = await userObject.delete();
+      final apiResponse = await userRecord.delete();
 
       if (!apiResponse.success) {
-        throw 'Failed to remove user record: ${apiResponse.error?.message}';
+        TLoaders.errorSnackBar(
+            title: 'Failed to remove user record',
+            message: ' ${apiResponse.error?.message}');
       }
     } on FormatException catch (_) {
       throw const TFormatException();

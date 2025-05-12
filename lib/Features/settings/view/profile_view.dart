@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
@@ -11,13 +11,13 @@ import '../../../core/widgets/user/user_controller.dart';
 import 'change_name.dart';
 import 'widgets/t_profile_menu.dart';
 
-class AccountView extends StatelessWidget {
-  const AccountView({super.key});
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
-
+    final user = UserRepository.instance;
     return Scaffold(
       appBar: const TAppbar(
         showBackArrow: true,
@@ -99,7 +99,9 @@ class AccountView extends StatelessWidget {
 
               Center(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      user.removeUserRecord(controller.user.value.id);
+                    },
                     child: const Text('Close Account',
                         style: TextStyle(color: Colors.red))),
               )

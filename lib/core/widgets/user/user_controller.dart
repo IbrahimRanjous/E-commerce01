@@ -39,7 +39,7 @@ class UserController extends GetxController {
         final nameParts =
             UserModel.nameParts(userCredentials.user!.displayName ?? '');
         final username =
-            UserModel.generateUsername(userCredentials.user!.displayName ?? '');
+            UserModel.generateuserName(userCredentials.user!.displayName ?? '');
 
         // Map data
         final user = UserModel(
