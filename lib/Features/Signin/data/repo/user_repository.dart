@@ -46,14 +46,16 @@ class UserRepository extends GetxController {
   }
 
   /// Function to save user data by google login to back4app
-  Future<void> saveUserRecordByBack4app(GoogleSignInAccount userAccount) async {
+  Future<void> saveUserRecordByBack4app(
+      GoogleSignInAccount userAccount, String? accountID) async {
     try {
       // save data
       if (kDebugMode) {
         print("Saaaaaaaaaaaaaaaaaaaaaavinggggggggggggggggggggggg");
       }
       var userData = ParseObject('Users')
-        ..set('email', userAccount.email)
+        ..set('accountID', accountID)
+        ..set('email', userAccount.email.trim().toLowerCase())
         ..set('userName', userAccount.displayName)
         ..set('profilePhoto', userAccount.photoUrl);
 
@@ -106,8 +108,10 @@ class UserRepository extends GetxController {
           phoneNumber: userObject.get<String>('phoneNumber') ?? '',
           email: userObject.get<String>('email') ?? '',
           profilePicture: userObject.get<String>('profilePicture') ?? '',
+          dateOfBirth: userObject.get<DateTime?>('dateOfBirth'),
         );
       }
+
       TLoaders.warningSnackBar(
           title: "Warning", message: 'The user data not fetched');
       return UserModel.empty();
@@ -133,7 +137,8 @@ class UserRepository extends GetxController {
         ..set<String>('lastName', updatedUser.lastName)
         ..set<String>('phoneNumber', updatedUser.phoneNumber)
         ..set<String>('email', updatedUser.email)
-        ..set<String>('profilePicture', updatedUser.profilePicture);
+        ..set<String>('profilePicture', updatedUser.profilePicture)
+        ..set<DateTime?>('dateOfBirth', updatedUser.dateOfBirth);
 
       // Update the object on Back4App
       final apiResponse = await userObject.save();
@@ -268,8 +273,10 @@ class UserRepository extends GetxController {
       if (!apiResponse.success) {
         throw 'Failed to update user field: ${apiResponse.error?.message}';
       }
-      print(
-          'Saaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavedddddddddddddddddddddddd');
+      if (kDebugMode) {
+        print(
+            'Saaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavedddddddddddddddddddddddd');
+      }
     } on FormatException catch (_) {
       throw const TFormatException();
     } on PlatformException catch (e) {

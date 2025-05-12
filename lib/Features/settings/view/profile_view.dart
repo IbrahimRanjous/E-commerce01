@@ -2,7 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
+import 'package:rjs_store/Features/settings/view/change_email.dart';
+import 'package:rjs_store/Features/settings/view/change_phone.dart';
+import 'package:rjs_store/Features/settings/view/change_d_o_b.dart';
 import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
@@ -58,13 +62,17 @@ class ProfileView extends StatelessWidget {
                   text: 'Profile Information', showActionButton: false),
               const SizedBox(height: TSizes.spaceBtwItems),
 
+              Obx(
+                () => TProfileMenu(
+                    title: 'Name',
+                    value: controller.user.value.fullName,
+                    onPressed: () {
+                      Get.to(() => ChangeName());
+                    }),
+              ),
+
               TProfileMenu(
-                  title: 'Name',
-                  value: controller.user.value.fullName,
-                  onPressed: () {
-                    Get.to(() => ChangeName());
-                  }),
-              TProfileMenu(
+                  icon: Iconsax.copy,
                   title: 'User Name',
                   value: controller.user.value.userName,
                   onPressed: () {}),
@@ -83,19 +91,36 @@ class ProfileView extends StatelessWidget {
                   value: controller.user.value.id,
                   icon: Iconsax.copy,
                   onPressed: () {}),
+              Obx(
+                () => TProfileMenu(
+                    title: 'E-Mail',
+                    value: controller.user.value.email,
+                    onPressed: () {
+                      // Add some logic for authentication + changing the account on firebase
+                      Get.to(() => const ChangeEmail());
+                    }),
+              ),
+              Obx(
+                () => TProfileMenu(
+                    title: 'Phone Number',
+                    value: '+963 ${controller.user.value.phoneNumber}',
+                    onPressed: () {
+                      Get.to(() => ChangePhone());
+                    }),
+              ),
               TProfileMenu(
-                  title: 'E-Mail',
-                  value: controller.user.value.email,
-                  onPressed: () {}),
-              TProfileMenu(
-                  title: 'Phone Number',
-                  value: '+963 ${controller.user.value.phoneNumber}',
-                  onPressed: () {}),
-              TProfileMenu(title: 'Gender', value: 'Male', onPressed: () {}),
-              TProfileMenu(
+                  title: 'Gender', value: 'Not selected', onPressed: () {}),
+              Obx(
+                () => TProfileMenu(
                   title: 'Date Of Birth',
-                  value: '14 , jan , 2004',
-                  onPressed: () {}),
+                  value: DateFormat('dd/MM/yyyy').format(
+                      controller.user.value.dateOfBirth?.toLocal() ??
+                          DateTime.now()),
+                  onPressed: () {
+                    Get.to(() => const ChangeDOB());
+                  },
+                ),
+              ),
               const Divider(),
 
               const SizedBox(height: TSizes.spaceBtwItems),

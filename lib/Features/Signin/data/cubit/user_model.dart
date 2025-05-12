@@ -9,6 +9,7 @@ class UserModel {
   final String email;
   String phoneNumber;
   String profilePicture;
+  DateTime? dateOfBirth;
 
   UserModel({
     required this.id,
@@ -18,6 +19,7 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.profilePicture,
+    required this.dateOfBirth,
   });
 
   /// Helper function to get the full name.
@@ -50,6 +52,7 @@ class UserModel {
         email: '',
         phoneNumber: '',
         profilePicture: '',
+        dateOfBirth: null,
       );
 
   /// Convert model to JSON structure for storing data in Firebase.
@@ -62,6 +65,7 @@ class UserModel {
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
+      'DateOfBirth': dateOfBirth,
     };
   }
 
@@ -78,6 +82,7 @@ class UserModel {
         email: data['Email'] ?? '',
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
+        dateOfBirth: data['DateOfBirth'] ?? '',
       );
     } else {
       throw Exception("Document data is null");

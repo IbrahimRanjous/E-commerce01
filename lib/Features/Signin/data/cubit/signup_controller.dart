@@ -93,6 +93,7 @@ class SignupController extends GetxController {
         email: email.text.trim().toLowerCase(),
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
+        dateOfBirth: null,
       );
       if (kDebugMode) {
         print('Creating modelllllllllllllllllllllllllllllllllllllllllllllllll');

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/spacing_styles.dart';
-import '../../../core/utils/constants/texts.dart';
 import 'widgets/login_header.dart';
-import 'widgets/login_divider.dart';
-import 'widgets/login_footer.dart';
 import 'widgets/login_form.dart';
 
 class LoginView extends StatelessWidget {
@@ -27,15 +24,16 @@ class LoginView extends StatelessWidget {
 
                 SizedBox(height: TSizes.spaceBtwSections),
 
+                ///////////////////// Additional update for it  /////////////////////////////
                 // Divider
-                TFormDivider(
-                  text: TTexts.orLogInWith,
-                ),
+                // TFormDivider(
+                //   text: TTexts.orLogInWith,
+                // ),
 
-                SizedBox(height: TSizes.spaceBtwSections),
+                // SizedBox(height: TSizes.spaceBtwSections),
 
                 // Footer
-                TLoginFooter(),
+                // TLoginFooter(),
               ],
             ),
           ),

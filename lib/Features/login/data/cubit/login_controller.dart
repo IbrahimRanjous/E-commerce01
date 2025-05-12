@@ -97,7 +97,7 @@ class LoginController extends GetxController {
       // Google Authentication & Save User Record
       await AuthenticationRepository.Instance.signInWithGoogle();
 
-      // // Remove Loader
+      /// Remove Loader
       // TFullScreenLoader.stopLoading();
 
       // Redirect

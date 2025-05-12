@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/Features/Signin/data/cubit/signup_controller.dart';
-
-import 'package:rjs_store/Features/login/views/widgets/login_divider.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
-import 'widgets/sign_in_footer.dart';
 import 'widgets/sign_up_form.dart';
 
 class SignupView extends StatelessWidget {
@@ -31,13 +28,15 @@ class SignupView extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               const TSingUpForm(),
+              ///////////////////// Additional update for it  /////////////////////////////
+
               // Divider
-              const TFormDivider(text: TTexts.orSignUpWith),
-              const SizedBox(height: TSizes.spaceBtwItems),
+              // const TFormDivider(text: TTexts.orSignUpWith),
+              // const SizedBox(height: TSizes.spaceBtwItems),
 
               // Footer
-              const TSignInFooter(),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              // const TSignInFooter(),
+              // const SizedBox(height: TSizes.spaceBtwSections),
             ],
           ),
         ),

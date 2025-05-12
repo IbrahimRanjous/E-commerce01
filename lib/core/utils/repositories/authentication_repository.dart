@@ -180,11 +180,11 @@ class AuthenticationRepository extends GetxController {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
-
       if (userAccount == null) {
-        // The user canceled the sign-in flow
+        if (kDebugMode) print('User cancelled the Google sign-in.');
         return null;
       }
+      if (kDebugMode) print('User Account found: ${userAccount.email}');
 
       // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth =
@@ -198,7 +198,11 @@ class AuthenticationRepository extends GetxController {
       );
 
       // save data
-      UserRepository.instance.saveUserRecordByBack4app(userAccount);
+      final user = Get.put(UserRepository());
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final String uid = userCredential.user!.uid;
+      user.saveUserRecordByBack4app(userAccount, uid);
 
       // Once signed in , return the UserCredential
       return await _auth.signInWithCredential(credential);
