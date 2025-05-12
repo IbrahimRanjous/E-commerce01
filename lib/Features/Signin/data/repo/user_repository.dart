@@ -75,40 +75,42 @@ class UserRepository extends GetxController {
   /// Function to fetch user details based on user ID
   Future<UserModel> fetchUserDetails() async {
     try {
-      // Retrieve all objects of the "Profile" class
-      final apiResponse = await ParseObject('Users').getAll();
-      final key = AuthenticationRepository.Instance.authUser!.uid;
-      if (apiResponse.success && apiResponse.results != null) {
-        // Assuming you need to fetch user details based on the provided key
-        for (var o in apiResponse.results!) {
-          final object = o as ParseObject;
+      // Get the current authenticated user's uid, which is used as the accountID.
+      final String key = AuthenticationRepository.Instance.authUser!.uid;
 
-          // Validate if the object matches the key (assuming objectId is the key)
-          if (object.get<String>('accountID') == key) {
-            if (kDebugMode) {
-              print(
-                  '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-              print(object.get<String>('userName'));
-            }
-            return UserModel(
-              id: object.objectId!,
-              userName: object.get<String>('userName') ?? '',
-              firstName: object.get<String>('firstName') ?? '',
-              lastName: object.get<String>('lastName') ?? '',
-              phoneNumber: object.get<String>('phoneNumber') ?? '',
-              email: object.get<String>('email') ?? '',
-              profilePicture: object.get<String>('profilePicture') ?? '',
-            );
-          } else {
-            TLoaders.warningSnackBar(
-                title: "Warning", message: 'The user data not fetched');
-            return UserModel.empty();
-          }
+      // Create a query to get only the user record matching the accountID.
+      final query = QueryBuilder<ParseObject>(ParseObject('Users'))
+        ..whereEqualTo('accountID', key)
+        ..setLimit(1); // Limit to one record to reduce resource usage.
+
+      final ParseResponse apiResponse = await query.query();
+
+      // Check if the API call was successful and that we got a result.
+      if (apiResponse.success &&
+          apiResponse.results != null &&
+          apiResponse.results!.isNotEmpty) {
+        final userObject = apiResponse.results!.first as ParseObject;
+
+        if (kDebugMode) {
+          print(
+              '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+          print('Fetched user: ${userObject.get<String>('userName')}');
         }
-      }
 
-      // If no matching user is found, return an error
-      throw 'User not found';
+        // Build and return the UserModel using the data from the Parse object.
+        return UserModel(
+          id: userObject.objectId!,
+          userName: userObject.get<String>('userName') ?? '',
+          firstName: userObject.get<String>('firstName') ?? '',
+          lastName: userObject.get<String>('lastName') ?? '',
+          phoneNumber: userObject.get<String>('phoneNumber') ?? '',
+          email: userObject.get<String>('email') ?? '',
+          profilePicture: userObject.get<String>('profilePicture') ?? '',
+        );
+      }
+      TLoaders.warningSnackBar(
+          title: "Warning", message: 'The user data not fetched');
+      return UserModel.empty();
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -278,7 +280,7 @@ class UserRepository extends GetxController {
   }
 
   /// Function to remove user data from Firestore.
-  Future<void> removeUserRecord(String storeID) async {
+  Future<void> removeUserRecord() async {
     try {
       // Get the current authenticated user's accountID.
       final String? currentUserId =
@@ -309,6 +311,9 @@ class UserRepository extends GetxController {
         TLoaders.errorSnackBar(
             title: 'Failed to remove user record',
             message: ' ${apiResponse.error?.message}');
+      } else {
+        TLoaders.successSnackBar(
+            title: 'Success', message: 'User data deleted');
       }
     } on FormatException catch (_) {
       throw const TFormatException();
