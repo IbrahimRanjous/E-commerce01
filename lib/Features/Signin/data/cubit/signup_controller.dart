@@ -49,6 +49,9 @@ class SignupController extends GetxController {
       if (!isConnected) {
         // Remove Loader
         TFullScreenLoader.stopLoading();
+        TLoaders.errorSnackBar(
+            title: 'No Internet Connection',
+            message: 'Please check your network settings.');
         return;
       }
 

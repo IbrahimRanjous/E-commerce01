@@ -119,7 +119,9 @@ class AuthenticationRepository extends GetxController {
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        TLoaders.errorSnackBar(title: 'No Internet Connection');
+        TLoaders.errorSnackBar(
+            title: 'No Internet Connection',
+            message: 'Please check your network settings.');
       }
 
       return await _auth.createUserWithEmailAndPassword(

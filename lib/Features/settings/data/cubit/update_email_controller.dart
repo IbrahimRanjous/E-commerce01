@@ -49,6 +49,9 @@ class UpdateEmailController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
+        TLoaders.errorSnackBar(
+            title: 'No Internet Connection',
+            message: 'Please check your network settings.');
         return;
       }
 

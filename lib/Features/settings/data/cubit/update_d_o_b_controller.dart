@@ -43,8 +43,9 @@ class UpdateDOBController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
-        TLoaders.warningSnackBar(
-            title: "Network Error", message: 'No internet connection');
+        TLoaders.errorSnackBar(
+            title: 'No Internet Connection',
+            message: 'Please check your network settings.');
         return;
       }
 
