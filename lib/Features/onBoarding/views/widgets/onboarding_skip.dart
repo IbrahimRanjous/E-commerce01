@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/Features/onBoarding/views/onboarding_controler.dart';
+import 'package:rjs_store/Features/onBoarding/data/controllers/onboarding_controler.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/device/device_utility.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';

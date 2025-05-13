@@ -32,7 +32,7 @@ class SettingsView extends StatelessWidget {
                   /// AppBar
                   TAppbar(
                     title: Text(
-                      'Account',
+                      'Settings',
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!

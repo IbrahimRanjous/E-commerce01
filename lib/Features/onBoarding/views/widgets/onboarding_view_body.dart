@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/onBoarding/views/onboarding_controler.dart';
+import 'package:rjs_store/Features/onBoarding/data/controllers/onboarding_controler.dart';
  import 'package:rjs_store/core/utils/constants/texts.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import 'onboarding_dot_navigation.dart';

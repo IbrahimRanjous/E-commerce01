@@ -9,7 +9,7 @@ import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import '../../../../core/utils/exceptions/platform_exceptions.dart';
 import '../../../../core/utils/popups/loaders.dart';
-import '../cubit/user_model.dart';
+import 'user_model.dart';
 
 /// Repository class for user-related operations.
 class UserRepository extends GetxController {
@@ -286,7 +286,7 @@ class UserRepository extends GetxController {
     }
   }
 
-  /// Function to remove user data from Firestore.
+  /// Function to remove user data from back4app.
   Future<void> removeUserRecord() async {
     try {
       // Get the current authenticated user's accountID.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/Signin/data/cubit/signup_controller.dart';
+import 'package:rjs_store/Features/Signin/data/controllers/signup_controller.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
 import 'widgets/sign_up_form.dart';

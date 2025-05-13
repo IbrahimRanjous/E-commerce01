@@ -7,7 +7,7 @@ import 'package:rjs_store/core/utils/validators/validation.dart';
 import 'package:rjs_store/core/widgets/spacing_styles.dart';
 import '../../../core/utils/constants/sizes.dart';
 import '../../../core/widgets/custom_text_form.dart';
-import '../data/cubit/forget_password_controller.dart';
+import '../data/controllers/forget_password_controller.dart';
 
 class ForgetPasswordView extends StatelessWidget {
   const ForgetPasswordView({super.key});

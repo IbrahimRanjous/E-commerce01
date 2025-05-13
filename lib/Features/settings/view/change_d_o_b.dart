@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import '../../../core/utils/constants/sizes.dart';
-import '../data/cubit/update_d_o_b_controller.dart';
+import '../data/controllers/update_d_o_b_controller.dart';
 
 class ChangeDOB extends StatelessWidget {
   const ChangeDOB({super.key});

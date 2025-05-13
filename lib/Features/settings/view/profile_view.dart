@@ -1,22 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/settings/view/change_email.dart';
 import 'package:rjs_store/Features/settings/view/change_phone.dart';
 import 'package:rjs_store/Features/settings/view/change_d_o_b.dart';
 import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
-import 'package:rjs_store/core/utils/popups/loaders.dart';
-import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import 'package:rjs_store/core/widgets/images/t_rounded_image.dart';
 import 'package:rjs_store/core/widgets/section_heading.dart';
 import '../../../core/widgets/user/user_controller.dart';
 import 'change_name.dart';
-import 'widgets/custom_popup_dialog.dart';
 import 'widgets/t_profile_menu.dart';
 
 class ProfileView extends StatelessWidget {
@@ -127,7 +122,7 @@ class ProfileView extends StatelessWidget {
 
               Center(
                 child: TextButton(
-                    onPressed: () => showCustomPopupDialog(context),
+                    onPressed: () => controller..deleteAccountWarningPopup(),
                     child: const Text('Delete Account',
                         style: TextStyle(color: Colors.red))),
               )
@@ -136,43 +131,5 @@ class ProfileView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void showCustomPopupDialog(BuildContext context) {
-    showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) => CustomPopupDialog(
-        title: 'Delete Account',
-        content:
-            'We will delete all your stored data and your account from our service, Are you sure about that ?',
-        onPressedCancel: () {
-          Get.back();
-        },
-        onPressedOK: () {
-          try {
-            UserRepository.instance.removeUserRecord();
-            AuthenticationRepository.Instance.logout();
-            AuthenticationRepository.Instance.deleteFirebaseUser();
-          } catch (e) {
-            TLoaders.errorSnackBar(title: 'Ops!', message: e.toString());
-          }
-        },
-      ),
-    ).then((result) {
-      // The result will be true if OK was pressed, false otherwise.
-      if (result != null) {
-        if (result) {
-          // Handle action when OK was tapped.
-          if (kDebugMode) {
-            print('OK pressed!');
-          }
-        } else {
-          // Handle action when Cancel was tapped.
-          if (kDebugMode) {
-            print('Cancel pressed!');
-          }
-        }
-      }
-    });
   }
 }

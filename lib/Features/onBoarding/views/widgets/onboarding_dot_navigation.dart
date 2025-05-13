@@ -4,7 +4,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/device/device_utility.dart';
-import '../onboarding_controler.dart';
+import '../../data/controllers/onboarding_controler.dart';
 
 class OnboardingDotNavigation extends StatelessWidget {
   const OnboardingDotNavigation({

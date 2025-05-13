@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import '../../../core/utils/constants/sizes.dart';
-import '../data/cubit/update_phone_controller.dart';
+import '../data/controllers/update_phone_controller.dart';
 
 class ChangePhone extends StatelessWidget {
   const ChangePhone({super.key});

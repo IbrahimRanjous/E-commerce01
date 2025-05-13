@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import '../../../core/utils/constants/sizes.dart';
-import '../data/cubit/update_name_controller.dart';
+import '../data/controllers/update_name_controller.dart';
 
 class ChangeName extends StatelessWidget {
   const ChangeName({super.key});

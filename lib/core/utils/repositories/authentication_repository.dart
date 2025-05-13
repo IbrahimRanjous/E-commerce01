@@ -140,6 +140,27 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [ReAuthenticate] - ReAuthenticate User
+  Future<void> reAuthenticateWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      // Create a credential
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
+
+      // ReAuthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   /// [Email Verification] - Mail Verification
   Future<void> sendEmailVerification() async {
@@ -223,7 +244,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [Facebook Authentication] - Facebook
-
+  ///////// Not Working //////////
   /// ====================== ./end Federated Identity & Social Sign-in ====================== ///
 
   /// [Logout User] - Valid for any authentication
@@ -246,23 +267,10 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Delete User - Remove user Auth and Firestore Account
-  Future<void> deleteFirebaseUser() async {
+  Future<void> deleteAccount() async {
     try {
-      // Get the current user.
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        // Delete the user.
-        await user.delete();
-        if (kDebugMode) {
-          print('User deleted successfully.');
-        }
-        // Optionally sign out the user from your app.
-        await FirebaseAuth.instance.signOut();
-      } else {
-        if (kDebugMode) {
-          print('No user is currently signed in.');
-        }
-      }
+      await UserRepository.instance.removeUserRecord();
+      await _auth.currentUser?.delete();
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

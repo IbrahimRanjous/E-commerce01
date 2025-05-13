@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:rjs_store/Features/Signin/view/signup_view.dart';
-import 'package:rjs_store/Features/login/data/cubit/login_controller.dart';
+import 'package:rjs_store/Features/login/data/controllers/login_controller.dart';
 import 'package:rjs_store/Features/login/views/forget_password_view.dart';
 import 'package:rjs_store/core/utils/validators/validation.dart';
 import '../../../../core/utils/constants/colors.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/Features/login/data/cubit/login_controller.dart';
+import 'package:rjs_store/Features/login/data/controllers/login_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
