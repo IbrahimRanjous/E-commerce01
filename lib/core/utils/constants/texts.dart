@@ -4,6 +4,7 @@ class TTexts {
   static const String kEmail = "REMEMBER_ME_EMAIL";
   static const String kPassword = "REMEMBER_ME_PASSWORD";
   static const String kIsFirstTime = "Is First Time";
+  static const String kCloudName = "dolast4ks";
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

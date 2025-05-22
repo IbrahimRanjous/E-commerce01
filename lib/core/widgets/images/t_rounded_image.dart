@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-import 'package:cloudinary_flutter/image/cld_image.dart';
+import 'package:rjs_store/core/utils/loaders/shimmer_effect.dart';
 import '../../utils/helpers/helper_functions.dart';
 
 class TRoundedImage extends StatelessWidget {
@@ -30,6 +30,11 @@ class TRoundedImage extends StatelessWidget {
   /// The border radius for rounding corners.
   final double borderRadius;
 
+//your_cloud_name
+  // final String cloudName;
+  // final String fileExtension;
+  // final String publicId;
+
   const TRoundedImage({
     super.key,
     required this.url,
@@ -42,7 +47,7 @@ class TRoundedImage extends StatelessWidget {
     this.imageHeight,
     this.onTap,
     this.border,
-    this.borderRadius = 16.0, // Default border radius value.
+    this.borderRadius = 16.0,
   });
 
   @override
@@ -63,27 +68,37 @@ class TRoundedImage extends StatelessWidget {
         ),
         // Adding clipBehavior ensures the child is clipped to the rounded shape.
         clipBehavior: Clip.antiAlias,
-        child: isNetworkImage
-            ? CldImageWidget(
-                publicId: 'trcksuit_parrotgreen_likjgj',
-                height: imageHeight,
-                width: imageWidth,
-                fit: fit,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  height: height * 0.2,
-                  color: Colors.grey.shade300,
-                  child: const Icon(Icons.broken_image, size: 48),
-                ),
-              )
-            : Image(
-                width: imageWidth,
-                height: imageHeight,
-                fit: fit,
-                color: overLayColor,
-                image: isNetworkImage
-                    ? NetworkImage(url)
-                    : AssetImage(url) as ImageProvider,
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: Center(
+            child: isNetworkImage
+                ? CachedNetworkImage(
+                    imageUrl: url,
+                    height: imageHeight,
+                    width: imageWidth,
+                    fit: fit,
+                    placeholder: (context, url) => const TShimmerEffect(
+                      width: 80,
+                      height: 80,
+                      radius: 80,
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      height: height * 0.2,
+                      color: Colors.grey.shade300,
+                      child: const Icon(Icons.broken_image, size: 48),
+                    ),
+                  )
+                : Image(
+                    width: imageWidth,
+                    height: imageHeight,
+                    fit: fit,
+                    color: overLayColor,
+                    image: isNetworkImage
+                        ? NetworkImage(url)
+                        : AssetImage(url) as ImageProvider,
+                  ),
+          ),
+        ),
       ),
     );
   }

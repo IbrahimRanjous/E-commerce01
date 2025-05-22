@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
@@ -18,6 +19,7 @@ class UserController extends GetxController {
 
   // obs means : it will observe this user and when data change it will redraw the UI
   final profileLoading = false.obs;
+  final imageUploading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
 
@@ -65,6 +67,8 @@ class UserController extends GetxController {
           phoneNumber: userCredentials.user!.phoneNumber ?? '',
           profilePicture: userCredentials.user!.photoURL ?? '',
           dateOfBirth: null,
+          // no need for it because I related it on the back4app site feature
+          products: [],
         );
 
         // Save user data
@@ -173,6 +177,39 @@ class UserController extends GetxController {
       // Handle any errors and show a warning snackbar
       TFullScreenLoader.stopLoading();
       TLoaders.warningSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
+  /// Upload Profile Image
+  Future<void> uploadUserProfilePicture() async {
+    try {
+      final image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 70,
+          maxHeight: 512,
+          maxWidth: 512);
+      if (image != null) {
+        imageUploading.value = true;
+        //////////////////////////////////// @@@@@@@@@@@@@ edit the url @@@@@@@@@@@@@@ ///////////////////////////
+        /// Upload Image
+        final imageUrl = await userRepository.uploadImage(
+            'https://res.cloudinary.com/dolast4ks/image/upload/v1745434543/',
+            image);
+
+        /// Update User Image Record
+        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        await userRepository.updateSingleField(json);
+        user.refresh();
+        user.value.profilePicture = imageUrl;
+        TLoaders.successSnackBar(
+            title: 'Congratulations',
+            message: 'Your profile image has been updated');
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(
+          title: 'Error', message: 'Something went wrong:$e');
+    } finally {
+      imageUploading.value = false;
     }
   }
 }

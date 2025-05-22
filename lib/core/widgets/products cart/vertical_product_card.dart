@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
-import '../../../Features/product details/view/product_detail_view.dart';
 import 'details_vertical_widget.dart';
 import 'thumbnail.dart';
 
@@ -52,9 +50,9 @@ class TVerticalProductCard extends StatelessWidget {
     THelperFunctions.isDarkMode(context);
     // Using Card for material elevation and rounded corners.
     return GestureDetector(
-      onTap: () {
-        Get.to(() => const ProductDetailView());
-      },
+      // onTap: () {
+      //   Get.to(() => const ProductDetailView());
+      // },
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

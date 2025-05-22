@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rjs_store/core/utils/constants/texts.dart';
 import 'package:rjs_store/firebase_options.dart';
 import 'package:cloudinary_flutter/cloudinary_context.dart';
 import 'package:cloudinary_url_gen/cloudinary.dart';
@@ -15,7 +16,7 @@ Future<void> main() async {
   // Create a Cloudinary instance and set your cloud name.
   // ignore: deprecated_member_use
   CloudinaryContext.cloudinary =
-      Cloudinary.fromCloudName(cloudName: "dolast4ks");
+      Cloudinary.fromCloudName(cloudName: TTexts.kCloudName);
 
   // Parse initialize
   const keyApplicationId = 'VNTR17VrnY5tumqG9BxhmdfFH8GBD7ZxMMUD8Ahr';

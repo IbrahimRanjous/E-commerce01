@@ -1,3 +1,6 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
+import '../../../../core/product_model.dart';
 import '../../../../core/utils/formatters/formatters.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -8,8 +11,9 @@ class UserModel {
   final String userName;
   final String email;
   String phoneNumber;
-  String profilePicture;
+  String? profilePicture;
   DateTime? dateOfBirth;
+  List<ProductModel> products;
 
   UserModel({
     required this.id,
@@ -20,6 +24,7 @@ class UserModel {
     required this.phoneNumber,
     required this.profilePicture,
     required this.dateOfBirth,
+    required this.products,
   });
 
   /// Helper function to get the full name.
@@ -53,6 +58,7 @@ class UserModel {
         phoneNumber: '',
         profilePicture: '',
         dateOfBirth: null,
+        products: [],
       );
 
   /// Convert model to JSON structure for storing data in Firebase.
@@ -70,8 +76,7 @@ class UserModel {
   }
 
   /// Factory method to create a UserModel from a Firebase document snapshot.
-  factory UserModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> document) {
+  factory UserModel.fromParse(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
     if (data != null) {
       return UserModel(
@@ -83,6 +88,7 @@ class UserModel {
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
         dateOfBirth: data['DateOfBirth'] ?? '',
+        products: data['products'],
       );
     } else {
       throw Exception("Document data is null");

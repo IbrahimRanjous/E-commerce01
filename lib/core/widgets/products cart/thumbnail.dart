@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../../Features/home/views/widgets/custom_image.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/sizes.dart';
@@ -54,7 +55,7 @@ class TThumbnail extends StatelessWidget {
           containerSize: 35.0,
           top: 2.0,
           right: 2.0,
-        )
+        ),
       ],
     );
   }

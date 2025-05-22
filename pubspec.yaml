@@ -62,13 +62,14 @@ dependencies:
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.1
   url_launcher: ^6.3.1
+  cached_network_image: ^3.4.1
+  image_picker: ^1.1.2
 
 #---------------------------------PACHAGES END------------------------------------#
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-  intl: ^0.20.2
   onbackground_shared_prefrences: ^0.0.2
 
 # For information on the generic Dart part of this file, see the

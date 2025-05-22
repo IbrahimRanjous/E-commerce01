@@ -14,8 +14,8 @@ class FavoriteIcon extends StatelessWidget {
   const FavoriteIcon({
     super.key,
     required this.isFavorite,
-    this.iconSize = 16.0,          // default small icon size
-    this.containerSize = 32.0,     // default small container size
+    this.iconSize = 16.0, // default small icon size
+    this.containerSize = 32.0, // default small container size
     this.top = 4.0,
     this.right = 4.0,
   });
@@ -29,7 +29,6 @@ class FavoriteIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-
     return Positioned(
       top: top,
       right: right,

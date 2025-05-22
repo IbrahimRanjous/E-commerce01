@@ -27,7 +27,7 @@ class VerifyEmailView extends StatelessWidget {
             onPressed: () {
               try {
                 AuthenticationRepository.Instance.logout();
-              } on Exception catch (e) {
+              } catch (e) {
                 TLoaders.errorSnackBar(
                     title: 'Error', message: 'Loggout problem');
               }

@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
+import '../../../../core/product_model.dart';
 import '../../../../core/utils/exceptions/platform_exceptions.dart';
 import '../../../../core/utils/popups/loaders.dart';
 import 'user_model.dart';
@@ -16,12 +18,13 @@ class UserRepository extends GetxController {
   // Provides a static way to access the UserRepository instance using Get.find().
   static UserRepository get instance => Get.find();
 
-  /// Function to save user data to Firestore.
+  /// Function to save user data to back4app.
   Future<void> saveUserRecord(UserModel user) async {
     try {
       if (kDebugMode) {
         print("Saaaaaaaaaaaaaaaaaaaaaavinggggggggggggggggggggggg");
       }
+
       var userData = ParseObject('Users')
         ..set('userData', user.toJson())
         ..set('accountID', user.id)
@@ -30,16 +33,36 @@ class UserRepository extends GetxController {
         ..set('userName', user.userName)
         ..set('phoneNumber', user.phoneNumber)
         ..set('email', user.email);
-      await userData.save();
-      if (kDebugMode) {
-        print("Finiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish");
-      }
-      if (userData.objectId == null) {
-        var response = await userData.saveEventually();
-        if (response.success == false) {
-          throw 'Data Not Saved';
+
+      //////////////// ADD PRODUCTS TO RELATION BEFORE SAVING /////////////////////
+
+      final QueryBuilder<ParseObject> productQuery =
+          QueryBuilder<ParseObject>(ParseObject('Products'));
+
+      final ParseResponse productsResponse = await productQuery.query();
+
+      if (productsResponse.success &&
+          productsResponse.results != null &&
+          productsResponse.results!.isNotEmpty) {
+        final relation = userData.getRelation('products');
+
+        for (var product in productsResponse.results!) {
+          relation.add(product as ParseObject);
         }
+
+        print("All products added to the user relation.");
+      } else {
+        print("No products found.");
       }
+
+      ///////////// FINAL SAVE (ONLY ONCE) /////////////////
+
+      final ParseResponse saveResponse = await userData.save();
+      if (!saveResponse.success) {
+        throw 'Data Not Saved';
+      }
+
+      print("User and products relation saved successfully.");
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Something Wrong', message: e.toString());
     }
@@ -98,8 +121,48 @@ class UserRepository extends GetxController {
               '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
           print('Fetched user: ${userObject.get<String>('userName')}');
         }
+        //////////////////////////////// TESTING /////////////////////////////////////////
+        // Now fetch the related products from the "products" relation.
+        // Option 1: Use whereRelatedTo
+        final QueryBuilder<ParseObject> productQuery =
+            QueryBuilder<ParseObject>(ParseObject('Products'))
+              ..whereRelatedTo('products', 'Users', userObject.objectId!);
 
-        // Build and return the UserModel using the data from the Parse object.
+        final ParseResponse productsResponse = await productQuery.query();
+        if (kDebugMode) {
+          print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+          print(productsResponse.results);
+        }
+
+        List<ProductModel> products = [];
+        if (productsResponse.success &&
+            productsResponse.results != null &&
+            productsResponse.results!.isNotEmpty) {
+          if (kDebugMode) {
+            print('111111111111111111111111111111');
+          }
+          for (var prodObj in productsResponse.results!) {
+            // Convert each ParseObject to your ProductModel.
+            products.add(ProductModel.fromParse(prodObj as ParseObject));
+            if (kDebugMode) {
+              print('00000000000000');
+            }
+          }
+          if (kDebugMode) {
+            print('22222222222222222222222222');
+          }
+        }
+        // final productPointer = ParseObject('Products')
+        //   ..objectId = 'existingProductObjectId';
+        // final relation = userObject.getRelation('products');
+        // relation.add(productPointer);
+        // await userObject.save();
+        if (kDebugMode) {
+          print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+          print(products.length);
+        }
+        // Build and return the UserModel using the data from the Parse object,
+        // including the list of related products.
         return UserModel(
           id: userObject.objectId!,
           userName: userObject.get<String>('userName') ?? '',
@@ -109,8 +172,10 @@ class UserRepository extends GetxController {
           email: userObject.get<String>('email') ?? '',
           profilePicture: userObject.get<String>('profilePicture') ?? '',
           dateOfBirth: userObject.get<DateTime?>('dateOfBirth'),
+          products: products, // Add the fetched related products here.
         );
       }
+//////////////////////////////// END OF TESTING /////////////////////////////////////////
 
       TLoaders.warningSnackBar(
           title: "Warning", message: 'The user data not fetched');
@@ -137,7 +202,7 @@ class UserRepository extends GetxController {
         ..set<String>('lastName', updatedUser.lastName)
         ..set<String>('phoneNumber', updatedUser.phoneNumber)
         ..set<String>('email', updatedUser.email)
-        ..set<String>('profilePicture', updatedUser.profilePicture)
+        ..set<String>('profilePicture', updatedUser.profilePicture ?? '')
         ..set<DateTime?>('dateOfBirth', updatedUser.dateOfBirth);
 
       // Update the object on Back4App
@@ -332,4 +397,19 @@ class UserRepository extends GetxController {
   }
 
   /// Upload any Image
+  Future<String> uploadImage(String path, XFile image) async {
+    try {
+      // final ref = FirebaseStorage.instance.ref(path).child(image.name);
+      // await ref.putFile(File(image.path));
+      // final url = await ref.getDownloadURL();
+      // return url;
+      return '';
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

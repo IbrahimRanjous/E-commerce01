@@ -97,6 +97,8 @@ class SignupController extends GetxController {
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
         dateOfBirth: null,
+        // no need for it because I related it on the back4app site feature
+        products: [],
       );
       if (kDebugMode) {
         print('Creating modelllllllllllllllllllllllllllllllllllllllllllllllll');

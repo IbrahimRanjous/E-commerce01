@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:rjs_store/Features/settings/view/change_email.dart';
 import 'package:rjs_store/Features/settings/view/change_phone.dart';
 import 'package:rjs_store/Features/settings/view/change_d_o_b.dart';
-import 'package:rjs_store/core/utils/constants/image_strings.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 import 'package:rjs_store/core/widgets/images/t_rounded_image.dart';
 import 'package:rjs_store/core/widgets/section_heading.dart';
+import '../../../core/utils/constants/texts.dart';
 import '../../../core/widgets/user/user_controller.dart';
 import 'change_name.dart';
 import 'widgets/t_profile_menu.dart';
@@ -35,14 +35,28 @@ class ProfileView extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const TRoundedImage(
-                      url: TImages.user,
-                      isNetworkImage: false,
-                      imageWidth: 100,
-                      imageHeight: 100,
-                    ),
+                    Obx(() {
+                      final networkImagePublicId =
+                          controller.user.value.profilePicture ??
+                              'v1745434543/user_img_pceizp';
+                      final cloudName = TTexts.kCloudName;
+                      final fileExtension = 'jpg';
+                      String url =
+                          'https://www.bing.com/images/search?q=image+for+404&id=A1710481D551857E93F0E6F8293074750B74F57D&FORM=IACFIR';
+                      // 'https://res.cloudinary.com/dolast4ks/image/upload/v1745434543/user_img_pceizp.jpg';
+                      // 'https://res.cloudinary.com/$cloudName/image/upload/$networkImagePublicId.$fileExtension';
+                      final checker = (networkImagePublicId!.isNotEmpty &&
+                          cloudName.isNotEmpty &&
+                          fileExtension.isNotEmpty);
+                      return TRoundedImage(
+                        url: url,
+                        isNetworkImage: true,
+                        imageWidth: 100,
+                        imageHeight: 100,
+                      );
+                    }),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.uploadUserProfilePicture(),
                       child: const Text('Change Profile Picture'),
                     ),
                   ],
