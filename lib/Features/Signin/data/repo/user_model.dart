@@ -1,5 +1,3 @@
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-
 import '../../../../core/product_model.dart';
 import '../../../../core/utils/formatters/formatters.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +12,7 @@ class UserModel {
   String? profilePicture;
   DateTime? dateOfBirth;
   List<ProductModel> products;
+  List<String>? favoriteList;
 
   UserModel({
     required this.id,
@@ -25,6 +24,7 @@ class UserModel {
     required this.profilePicture,
     required this.dateOfBirth,
     required this.products,
+    required this.favoriteList,
   });
 
   /// Helper function to get the full name.
@@ -59,6 +59,7 @@ class UserModel {
         profilePicture: '',
         dateOfBirth: null,
         products: [],
+        favoriteList: [],
       );
 
   /// Convert model to JSON structure for storing data in Firebase.
@@ -72,6 +73,7 @@ class UserModel {
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
       'DateOfBirth': dateOfBirth,
+      'FavoriteList': favoriteList
     };
   }
 
@@ -89,6 +91,7 @@ class UserModel {
         profilePicture: data['ProfilePicture'] ?? '',
         dateOfBirth: data['DateOfBirth'] ?? '',
         products: data['products'],
+        favoriteList: data['favoriteList'],
       );
     } else {
       throw Exception("Document data is null");

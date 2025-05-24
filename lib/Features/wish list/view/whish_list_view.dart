@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:rjs_store/Features/home/views/widgets/grid_view.dart';
+import 'package:rjs_store/Features/wish%20list/view/widgets/wish_list_view_body.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/Appbar/appbar.dart';
 
@@ -20,7 +20,7 @@ class WhishListView extends StatelessWidget {
       body: const SafeArea(
           child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: TSizes.sm),
-        child: TGridView(),
+        child: WishListViewBody(),
       )),
     );
   }

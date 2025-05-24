@@ -38,7 +38,6 @@ class TSubCategories extends StatelessWidget {
                 priceRange: product['priceRange']!,
                 discountText: '75%',
                 isVerified: true,
-                isFavorite: true,
                 // quantity: '5',
                 onFavoriteTap: () {},
               );

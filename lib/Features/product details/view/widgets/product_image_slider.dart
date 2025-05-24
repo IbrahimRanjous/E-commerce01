@@ -12,8 +12,9 @@ import '../../../../core/widgets/images/t_rounded_image.dart';
 class TProductImageSlider extends StatelessWidget {
   const TProductImageSlider({
     super.key,
+    this.onFavoriteTap,
   });
-
+  final void Function()? onFavoriteTap;
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
@@ -63,10 +64,11 @@ class TProductImageSlider extends StatelessWidget {
             ),
 
             /// Appbar Icons
-            const TAppbar(
+            TAppbar(
               showBackArrow: true,
               actions: [
                 TCircularIcon(
+                  onPressed: onFavoriteTap,
                   icon: Iconsax.heart5,
                   color: Colors.red,
                 ),

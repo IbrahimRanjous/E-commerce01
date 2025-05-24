@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
@@ -18,9 +19,11 @@ class FavoriteIcon extends StatelessWidget {
     this.containerSize = 32.0, // default small container size
     this.top = 4.0,
     this.right = 4.0,
+    this.onTap,
   });
 
-  final bool isFavorite;
+  final Rx<bool> isFavorite; // Use RxBool to track state dynamically
+  final void Function()? onTap;
   final double iconSize;
   final double containerSize;
   final double top;
@@ -32,16 +35,19 @@ class FavoriteIcon extends StatelessWidget {
     return Positioned(
       top: top,
       right: right,
-      child: TCircularIcon(
-        width: containerSize,
-        height: containerSize,
-        icon: isFavorite ? Iconsax.heart5 : Iconsax.heart,
-        size: iconSize,
-        color: isFavorite
-            ? Colors.red
-            : dark
-                ? TColors.light
-                : TColors.dark,
+      child: GestureDetector(
+        onTap: onTap,
+        child: TCircularIcon(
+          width: containerSize,
+          height: containerSize,
+          icon: isFavorite.value ? Iconsax.heart5 : Iconsax.heart,
+          size: iconSize,
+          color: isFavorite.value
+              ? Colors.red
+              : dark
+                  ? TColors.light
+                  : TColors.dark,
+        ),
       ),
     );
   }

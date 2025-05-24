@@ -8,6 +8,7 @@ import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/popups/loaders.dart';
 import '../../../Features/Signin/data/repo/user_model.dart';
+import '../../product_model.dart';
 import '../../utils/constants/image_strings.dart';
 import '../../utils/network/network_manager.dart';
 import '../../utils/popups/full_screen_loader.dart';
@@ -69,6 +70,7 @@ class UserController extends GetxController {
           dateOfBirth: null,
           // no need for it because I related it on the back4app site feature
           products: [],
+          favoriteList: [],
         );
 
         // Save user data
@@ -177,6 +179,18 @@ class UserController extends GetxController {
       // Handle any errors and show a warning snackbar
       TFullScreenLoader.stopLoading();
       TLoaders.warningSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
+  /// update favorite list / wishlist
+  Future<void> updateFavoriteList(ProductModel product) async {
+    try {
+      await userRepository.updateFavoriteProductDetails(
+          updatedProduct: product);
+      fetchUserRecord();
+    } catch (e) {
+      TLoaders.warningSnackBar(
+          title: 'Something went wrong', message: e.toString());
     }
   }
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import '../../../Features/product details/view/product_detail_view.dart'
+    show ProductDetailView;
 import 'details_vertical_widget.dart';
 import 'thumbnail.dart';
 
@@ -49,30 +52,31 @@ class TVerticalProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     THelperFunctions.isDarkMode(context);
     // Using Card for material elevation and rounded corners.
-    return GestureDetector(
-      // onTap: () {
-      //   Get.to(() => const ProductDetailView());
-      // },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /////// -- Thumbnail -- ///////
-            TThumbnail(
-                imageUrl: imageUrl,
-                discountText: discountText,
-                isFavorite: isFavorite),
-            /////// -- Details -- ///////
-            DetailsVerticalWidget(
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /////// -- Thumbnail -- ///////
+          TThumbnail(
+              onTap: onFavoriteTap,
+              imageUrl: imageUrl,
+              discountText: discountText,
+              isFavorite: isFavorite.obs),
+          /////// -- Details -- ///////
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const ProductDetailView());
+            },
+            child: DetailsVerticalWidget(
                 productTitle: productTitle,
                 brand: brand,
                 isVerified: isVerified,
                 priceRange: priceRange,
                 quantity: quantity),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

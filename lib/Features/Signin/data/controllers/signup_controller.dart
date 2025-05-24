@@ -99,7 +99,9 @@ class SignupController extends GetxController {
         dateOfBirth: null,
         // no need for it because I related it on the back4app site feature
         products: [],
+        favoriteList: [],
       );
+
       if (kDebugMode) {
         print('Creating modelllllllllllllllllllllllllllllllllllllllllllllllll');
       }

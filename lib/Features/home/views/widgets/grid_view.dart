@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
 import 'package:rjs_store/core/widgets/user/user_controller.dart';
 import '../../../../core/utils/constants/sizes.dart';
@@ -21,7 +20,7 @@ class TGridView extends StatelessWidget {
       final products = controller.user.value.products;
 
       // If the products list is null or empty, display a shimmer (or loading) widget.
-      if (products == null || products.isEmpty) {
+      if (products.isEmpty) {
         return const TShimmerGrid();
       } else {
         // Otherwise, display the grid with the Vertical Product Cards.
@@ -31,8 +30,10 @@ class TGridView extends StatelessWidget {
             // Use the length of the list for the grid
             itemCount: products.length,
             itemBuilder: (BuildContext context, int index) {
-              // Here you may choose to make each card reactive if its internal state is updated.
-              // In this example, we'll simply use the product's own properties.
+              bool isFavorite = controller.user.value.favoriteList
+                      ?.contains(products[index].objectId) ??
+                  false;
+
               return TVerticalProductCard(
                 imageUrl: products[index].image,
                 productTitle: products[index].title,
@@ -40,13 +41,9 @@ class TGridView extends StatelessWidget {
                 priceRange: products[index].priceRange,
                 discountText: products[index].discount,
                 isVerified: products[index].isVerified,
-                isFavorite: products[index].isFavorite,
+                isFavorite: isFavorite,
                 onFavoriteTap: () {
-                  // Toggle the isFavorite value locally for this product.
-                  products[index].isFavorite = !products[index].isFavorite;
-                  // Refresh the controller's user observable so that the UI rebuilds.
-                  UserRepository.instance.update();
-                  controller.user.refresh();
+                  controller.updateFavoriteList(products[index]);
                 },
               );
             },

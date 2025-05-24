@@ -79,7 +79,7 @@ class THorizontalProductCard extends StatelessWidget {
                 child: TThumbnail(
                     imageUrl: imageUrl,
                     discountText: discountText,
-                    isFavorite: isFavorite),
+                    isFavorite: isFavorite.obs),
               ),
               /////// -- Details -- ///////
               DetailsHorizontalWidget(

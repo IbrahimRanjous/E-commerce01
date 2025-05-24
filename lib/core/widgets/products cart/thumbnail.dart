@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import '../../../Features/home/views/widgets/custom_image.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/sizes.dart';
@@ -12,11 +12,13 @@ class TThumbnail extends StatelessWidget {
     required this.imageUrl,
     required this.discountText,
     required this.isFavorite,
+    this.onTap,
   });
 
   final String imageUrl;
   final String discountText;
-  final bool isFavorite;
+  final Rx<bool> isFavorite;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class TThumbnail extends StatelessWidget {
           ),
         /////// -- Favorite -- ///////
         FavoriteIcon(
+          onTap: onTap,
           isFavorite: isFavorite,
           iconSize: 30.0,
           containerSize: 35.0,
