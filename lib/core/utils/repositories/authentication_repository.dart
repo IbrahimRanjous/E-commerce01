@@ -61,9 +61,13 @@ class AuthenticationRepository extends GetxController {
             message: 'Something went wrong. Please try again');
       }
       if (user.emailVerified) {
-        TLoaders.successSnackBar(
-            title: 'Let\'s Go', message: 'You are logged in');
-        Get.offAll(() => const NavigationMenu());
+        deviceStorage.read(TTexts.kLoggedIn) != true
+            ? {Get.offAll(() => const NavigationMenu())}
+            : {
+                TLoaders.successSnackBar(
+                    title: 'Let\'s Go', message: 'You are logged in'),
+                Get.offAll(() => const NavigationMenu())
+              };
       } else {
         TLoaders.warningSnackBar(
             title: 'Ops!!!', message: 'user email is not verified !');

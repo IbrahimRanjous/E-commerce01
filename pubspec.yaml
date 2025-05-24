@@ -50,6 +50,7 @@ dependencies:
   get_storage: ^2.1.1
   google_sign_in: ^6.3.0
   http: ^1.4.0
+  shared_preferences: ^2.5.3
 
   iconsax: ^0.0.8
   image_picker: ^1.1.2
@@ -60,18 +61,17 @@ dependencies:
   lottie: ^3.2.0
   # product specific
   parse_server_sdk: ^7.0.1
+  provider: ^6.1.5
   readmore: ^3.0.0
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.1
   url_launcher: ^6.3.1
-  provider: ^6.1.5
 
 #---------------------------------PACHAGES END------------------------------------#
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-  onbackground_shared_prefrences: ^0.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

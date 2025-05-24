@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
@@ -10,6 +11,7 @@ import 'package:rjs_store/core/utils/popups/loaders.dart';
 import '../../../Features/Signin/data/repo/user_model.dart';
 import '../../product_model.dart';
 import '../../utils/constants/image_strings.dart';
+import '../../utils/constants/texts.dart';
 import '../../utils/network/network_manager.dart';
 import '../../utils/popups/full_screen_loader.dart';
 import '../../utils/repositories/authentication_repository.dart';
@@ -28,6 +30,7 @@ class UserController extends GetxController {
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
+  final userLocaleData = GetStorage();
 
   @override
   void onInit() {
@@ -39,11 +42,47 @@ class UserController extends GetxController {
   Future<void> fetchUserRecord() async {
     try {
       profileLoading.value = true;
-      final user = await userRepository.fetchUserDetails();
-      this.user(user);
+      // Attempt to fetch the user details from the remote server.
+      final fetchedUser = await userRepository.fetchUserDetails();
+
+      // Check if the fetched user looks valid.
+      // ignore: unrelated_type_equality_checks
+      if (fetchedUser != Null && fetchedUser.id.isNotEmpty) {
+        // Successfully fetched: update our reactive user and store its JSON representation offline.
+        user(fetchedUser);
+        userLocaleData.write(TTexts.kuserData, fetchedUser.toJson());
+      } else {
+        // Fetched data is null or invalid.
+        // Try to load offline stored data.
+        final storedData = userLocaleData.read(TTexts.kuserData);
+        if (storedData != null) {
+          try {
+            // Convert the stored map to a UserModel.
+            final offlineUser = UserModel.fromJson(storedData);
+            user(offlineUser);
+          } catch (e) {
+            // Parsing failed: show an empty user model.
+            user(UserModel.empty());
+          }
+        } else {
+          // No stored data available: set an empty user model.
+          user(UserModel.empty());
+        }
+      }
     } catch (e) {
       TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
-      user(UserModel.empty());
+      // In the event of an error, attempt to load offline stored data.
+      final storedData = userLocaleData.read(TTexts.kuserData);
+      if (storedData != null) {
+        try {
+          final offlineUser = UserModel.fromJson(storedData);
+          user(offlineUser);
+        } catch (e) {
+          user(UserModel.empty());
+        }
+      } else {
+        user(UserModel.empty());
+      }
     } finally {
       profileLoading.value = false;
     }

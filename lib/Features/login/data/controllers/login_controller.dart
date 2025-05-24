@@ -73,6 +73,7 @@ class LoginController extends GetxController {
       await AuthenticationRepository.Instance.loginWithEmailAndPassword(
           email.text.trim().toLowerCase(), password.text.trim());
 
+      localStorage.writeIfNull(TTexts.kLoggedIn, true);
       // Redirect
       AuthenticationRepository.Instance.screenRedirect();
       // // Remove Loader

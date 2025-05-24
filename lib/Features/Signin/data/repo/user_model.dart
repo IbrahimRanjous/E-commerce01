@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/product_model.dart';
 import '../../../../core/utils/formatters/formatters.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   final String id;
@@ -41,10 +41,8 @@ class UserModel {
     List<String> nameParts = fullName.split(" ");
     String firstName = nameParts[0].toLowerCase();
     String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
-
-    String camelCaseuserName =
-        "$firstName$lastName"; // Combine first and last name
-    String userNameWithPrefix = "cwt_$camelCaseuserName"; // Add "cwt_" prefix
+    String camelCaseuserName = "$firstName$lastName";
+    String userNameWithPrefix = "cwt_$camelCaseuserName";
     return userNameWithPrefix;
   }
 
@@ -62,7 +60,7 @@ class UserModel {
         favoriteList: [],
       );
 
-  /// Convert model to JSON structure for storing data in Firebase.
+  /// Convert model to JSON structure for storing data.
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -72,12 +70,34 @@ class UserModel {
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
-      'DateOfBirth': dateOfBirth,
-      'FavoriteList': favoriteList
+      'DateOfBirth':
+          dateOfBirth?.toIso8601String(), // converting DateTime to String
+      'FavoriteList': favoriteList,
     };
   }
 
-  /// Factory method to create a UserModel from a Firebase document snapshot.
+  /// Factory method to create a UserModel from a JSON object.
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'] ?? '',
+      firstName: json['FirstName'] ?? '',
+      lastName: json['LastName'] ?? '',
+      userName: json['UserName'] ?? '',
+      email: json['Email'] ?? '',
+      phoneNumber: json['PhoneNumber'] ?? '',
+      profilePicture: json['ProfilePicture'] ?? '',
+      dateOfBirth:
+          (json['DateOfBirth'] != null && json['DateOfBirth'] is String)
+              ? DateTime.tryParse(json['DateOfBirth'])
+              : null,
+      products: [], // Assuming you are not storing products here.
+      favoriteList: (json['FavoriteList'] != null)
+          ? List<String>.from(json['FavoriteList'] as List)
+          : [],
+    );
+  }
+
+  /// Factory method demonstrating parsing from a Firebase DocumentSnapshot.
   factory UserModel.fromParse(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
     if (data != null) {
@@ -89,9 +109,13 @@ class UserModel {
         email: data['Email'] ?? '',
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
-        dateOfBirth: data['DateOfBirth'] ?? '',
-        products: data['products'],
-        favoriteList: data['favoriteList'],
+        dateOfBirth: data['DateOfBirth'] is String
+            ? DateTime.tryParse(data['DateOfBirth'])
+            : null,
+        products: [], // Implement conversion if needed.
+        favoriteList: data['FavoriteList'] != null
+            ? List<String>.from(data['FavoriteList'] as List)
+            : [],
       );
     } else {
       throw Exception("Document data is null");

@@ -23,8 +23,13 @@ Future<void> main() async {
   const keyClientKey = 'jf05nCDvUWWETXyfC91X55Pv76vgnp3cdmwN5egN';
   const keyParseServerUrl = 'https://parseapi.back4app.com';
 
-  await Parse().initialize(keyApplicationId, keyParseServerUrl,
-      clientKey: keyClientKey, autoSendSessionId: true, debug: true);
+  await Parse().initialize(
+    keyApplicationId,
+    keyParseServerUrl,
+    clientKey: keyClientKey,
+    autoSendSessionId: true,
+    debug: true,
+  );
 
 ///////////////////////// Check if I am connected to the server ///////////////////////
 //   var firstObject = ParseObject('FirstClass')

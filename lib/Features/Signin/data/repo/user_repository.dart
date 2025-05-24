@@ -9,6 +9,7 @@ import 'package:rjs_store/core/utils/constants/texts.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
 import 'package:rjs_store/core/utils/exceptions/format_exceptions.dart';
 import 'package:rjs_store/core/utils/repositories/authentication_repository.dart';
+import 'package:rjs_store/core/widgets/user/user_controller.dart';
 import '../../../../core/product_model.dart';
 import '../../../../core/utils/exceptions/platform_exceptions.dart';
 import '../../../../core/utils/popups/loaders.dart';
@@ -160,6 +161,8 @@ class UserRepository extends GetxController {
   /// -- Function to fetch user details based on user ID
   Future<UserModel> fetchUserDetails() async {
     try {
+      /////////////////////////////// ONLINE //////////////////////////////////
+
       // Get the current authenticated user's uid, used as the accountID.
       final String key = AuthenticationRepository.Instance.authUser!.uid;
 
@@ -206,10 +209,13 @@ class UserRepository extends GetxController {
                   .toList() ??
               [],
         );
+      } else {
+        /////////////////////////////// OFFLINE //////////////////////////////////
+        TLoaders.warningSnackBar(title: "Warning", message: 'You Are Offline');
+        final ParseObject offlineUser =
+            UserController.instance.userLocaleData.read(TTexts.kuserData);
+        return offlineUser as UserModel;
       }
-      TLoaders.warningSnackBar(
-          title: "Warning", message: 'The user data not fetched');
-      return UserModel.empty();
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -357,6 +363,7 @@ class UserRepository extends GetxController {
       // 5. Update the user object with the new favorites array and save it.
       userObject.set("favorites", favorites);
       final ParseResponse saveResponse = await userObject.save();
+
       if (!saveResponse.success) {
         throw 'Failed to update favorites: ${saveResponse.error?.message}';
       }
