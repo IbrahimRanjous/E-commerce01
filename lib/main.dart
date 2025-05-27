@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -20,7 +21,7 @@ Future<void> main() async {
 
   // Parse initialize
   const keyApplicationId = 'VNTR17VrnY5tumqG9BxhmdfFH8GBD7ZxMMUD8Ahr';
-  const keyClientKey = 'jf05nCDvUWWETXyfC91X55Pv76vgnp3cdmwN5egN';
+  const keyClientKey = 'tZgRDmld3efbvz06U7HeDhTCn1GiT5HvAr49YudU';
   const keyParseServerUrl = 'https://parseapi.back4app.com';
 
   await Parse().initialize(
@@ -28,7 +29,7 @@ Future<void> main() async {
     keyParseServerUrl,
     clientKey: keyClientKey,
     autoSendSessionId: true,
-    debug: true,
+    debug: kDebugMode,
   );
 
 ///////////////////////// Check if I am connected to the server ///////////////////////
@@ -45,12 +46,11 @@ Future<void> main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
 
+  /// -- Await Native Splash
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // init local storage :
   /// -- GetX Local Storage
   await GetStorage.init();
-
-  /// -- Await Native Splash
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   /// -- Initialize Firebase & Authentication Repository
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)

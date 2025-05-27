@@ -1,15 +1,21 @@
 // This class contains all the App Text in String formats.
 class TTexts {
   // -- GLOBAL Texts
-  static const String kEmail = "REMEMBER_ME_EMAIL";
-  static const String kPassword = "REMEMBER_ME_PASSWORD";
-  static const String kIsFirstTime = "Is First Time";
-  static const String kLoggedIn = "LoggedIn";
   static const String kCloudName = "dolast4ks";
   static const String kFavorite = "Favorite";
   static const String kUsers = 'Users';
   static const String kProducts = "Products";
+
+  // -- Storage Texts
+  static const String kEmail = "REMEMBER_ME_EMAIL";
+  static const String kPassword = "REMEMBER_ME_PASSWORD";
+  static const String kIsFirstTime = "Is First Time";
+  static const String kLoggedIn = "LoggedIn";
   static const String kuserData = "userData";
+  static const String kisGeolocation = "isGeolocation";
+  static const String kisSafeMode = "isSafeMode";
+  static const String kisHDImageQuality = "isHDImageQuality";
+  static const String kProfileImage = "ProfileImage";
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

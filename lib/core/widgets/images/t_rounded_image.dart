@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rjs_store/core/utils/loaders/shimmer_effect.dart';
 import '../../utils/helpers/helper_functions.dart';
 
 class TRoundedImage extends StatelessWidget {
-  /// The image URL path.
+  /// The image URL or asset path.
   final String url;
 
   /// The width and height of the widget.
@@ -17,10 +16,10 @@ class TRoundedImage extends StatelessWidget {
   /// Optional override for background color.
   final Color? backgroundColor;
 
-  /// Optional override for overlay color.
+  /// Optional overlay color applied to the image.
   final Color? overLayColor;
 
-  /// Check if the image is from the internet or assets.
+  /// Whether the image is fetched from the network.
   final bool isNetworkImage;
 
   final BoxFit? fit;
@@ -29,11 +28,6 @@ class TRoundedImage extends StatelessWidget {
 
   /// The border radius for rounding corners.
   final double borderRadius;
-
-//your_cloud_name
-  // final String cloudName;
-  // final String fileExtension;
-  // final String publicId;
 
   const TRoundedImage({
     super.key,
@@ -63,39 +57,46 @@ class TRoundedImage extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           border: border,
-          // Use borderRadius to create rounded corners.
           borderRadius: BorderRadius.circular(borderRadius),
         ),
-        // Adding clipBehavior ensures the child is clipped to the rounded shape.
         clipBehavior: Clip.antiAlias,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius),
           child: Center(
             child: isNetworkImage
-                ? CachedNetworkImage(
-                    imageUrl: url,
-                    height: imageHeight,
+                ? Image.network(
+                    url,
                     width: imageWidth,
+                    height: imageHeight,
                     fit: fit,
-                    placeholder: (context, url) => const TShimmerEffect(
-                      width: 80,
-                      height: 80,
-                      radius: 80,
-                    ),
-                    errorWidget: (context, url, error) => Container(
+                    // Show a shimmer effect while the image is loading.
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const TShimmerEffect(
+                        width: 80,
+                        height: 80,
+                        radius: 80,
+                      );
+                    },
+                    // Display an error widget in case of failure.
+                    errorBuilder: (context, error, stackTrace) => Container(
                       height: height * 0.2,
                       color: Colors.grey.shade300,
                       child: const Icon(Icons.broken_image, size: 48),
                     ),
                   )
-                : Image(
+                : Image.asset(
+                    url,
                     width: imageWidth,
                     height: imageHeight,
                     fit: fit,
                     color: overLayColor,
-                    image: isNetworkImage
-                        ? NetworkImage(url)
-                        : AssetImage(url) as ImageProvider,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      height: height * 0.2,
+                      color: Colors.grey.shade300,
+                      child: const Icon(Icons.broken_image, size: 48),
+                    ),
                   ),
           ),
         ),

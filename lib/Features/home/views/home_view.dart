@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
- import 'package:rjs_store/core/utils/constants/sizes.dart';
+import 'package:rjs_store/core/utils/constants/sizes.dart';
 import '../../../core/widgets/section_heading.dart';
- import 'widgets/home_app_bar.dart';
+import '../../../core/widgets/user/user_controller.dart';
+import 'widgets/home_app_bar.dart';
 import 'widgets/home_body_heading.dart';
 import 'widgets/home_categories.dart';
 import 'widgets/grid_view.dart';
@@ -12,60 +13,57 @@ class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  @override
   Widget build(BuildContext context) {
-    // Get.put(UserController());
-    return const Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header
-            TPrimaryHeaderContainer(
-              child: Column(
-                children: [
-                  // -- Appbar
-                  THomeAppBar(),
-                  SizedBox(height: TSizes.defaultSpace),
-
-                  // -- Searchbar
-                  TSearchContainer(text: 'Search In Store'),
-                  SizedBox(height: TSizes.defaultSpace),
-
-                  // -- Categories
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: TSizes.defaultSpace,
+    return Scaffold(
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: () async {
+            // Call the fetch function to refresh user data.
+            final controller = UserController.instance;
+            await controller.fetchUserRecord();
+          },
+          child: CustomScrollView(
+            physics:
+                const AlwaysScrollableScrollPhysics(), // Ensures pull-to-refresh works
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    // -- Header Section
+                    TPrimaryHeaderContainer(
+                      child: Column(
+                        children: [
+                          THomeAppBar(),
+                          SizedBox(height: TSizes.defaultSpace),
+                          TSearchContainer(text: 'Search In Store'),
+                          SizedBox(height: TSizes.defaultSpace),
+                          Padding(
+                            padding: EdgeInsets.only(left: TSizes.defaultSpace),
+                            child: Column(
+                              children: [
+                                TSectionHeading(text: 'Popular Categories'),
+                                SizedBox(height: TSizes.spaceBtwItems),
+                                THomeCategories(),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: TSizes.spaceBtwSections),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        /// -- Heading
-                        TSectionHeading(
-                          text: 'Popular Categories',
-                        ),
-                        SizedBox(height: TSizes.spaceBtwItems),
-
-                        /// -- Categories
-                        THomeCategories(),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: TSizes.spaceBtwSections),
-                ],
+                    SizedBox(height: TSizes.spaceBtwSections),
+                    // -- Products Heading
+                    THomeBodyHeading(),
+                    SizedBox(height: TSizes.spaceBtwSections),
+                  ],
+                ),
               ),
-            ),
-
-////////////////////////// Body Home Screen ///////////////////////////
-            SizedBox(height: TSizes.spaceBtwSections),
-
-            // -- Products
-            THomeBodyHeading(),
-            SizedBox(height: TSizes.spaceBtwSections),
-
-            TGridView(),
-
-///////////////////////////////////////////////////////////////////////
-          ],
+              // Wrap TGridView with a SliverToBoxAdapter to integrate it into the scroll view.
+              SliverToBoxAdapter(
+                child: TGridView(),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
 import 'package:rjs_store/core/utils/exceptions/firebase_exceptions.dart';
@@ -567,19 +566,96 @@ class UserRepository extends GetxController {
   }
 
   /// -- Upload any Image
-  Future<String> uploadImage(String path, XFile image) async {
-    try {
-      // final ref = FirebaseStorage.instance.ref(path).child(image.name);
-      // await ref.putFile(File(image.path));
-      // final url = await ref.getDownloadURL();
-      // return url;
-      return '';
-    } on FormatException catch (_) {
-      throw const TFormatException();
-    } on PlatformException catch (e) {
-      throw TPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again';
-    }
-  }
+  /// Uploads image file to Back4app using Parse.
+
+  // Uploads the selected image to Back4app with authentication.
+  // Future<void> uploadImage(XFile image) async {
+  //   try {
+  //     final String key = AuthenticationRepository.Instance.authUser!.uid;
+  //     if (kDebugMode) {
+  //       print('@@@@@@@@@@@@@@@@ $key');
+  //     }
+  //     ParseFileBase? parseFile;
+  //     parseFile = ParseFile(File(image.path));
+  //     if (kDebugMode) {
+  //       print('@@@@@@@@@@@@@@@@ $image.path');
+  //     }
+  //     await parseFile.save();
+  //     if (kDebugMode) {
+  //       print('@@@@@@@@@@@@@@@@ parseFile Saved');
+  //     }
+  //     // final gallery = ParseObject(TTexts.kUsers)..set('image', parseFile);
+  //     // await gallery.save();
+  //     // if (kDebugMode) {
+  //     //   print("Starting uploadImage for user: $currentUserId");
+  //     // }
+  //     // // (Optionally) Get the currently authenticated user's uid—the session token will be automatically included.
+  //     // // In our case, we assume that currentUserId is the same as AuthenticationRepository.Instance.authUser!.uid
+  //     // Query for the user object using the current user's ID.
+  //     final QueryBuilder<ParseObject> userQuery = QueryBuilder<ParseObject>(
+  //       ParseObject(TTexts.kUsers),
+  //     )
+  //       ..whereEqualTo('accountID', key)
+  //       ..setLimit(1);
+  //     final ParseResponse userResponse = await userQuery.query();
+  //     if (kDebugMode) {
+  //       print('@@@@@@@@@@@@@@@@ userResponse Done');
+  //     }
+  //     if (kDebugMode) {
+  //       print("User query response: ${userResponse.success}");
+  //     }
+  //     if (!userResponse.success ||
+  //         userResponse.results == null ||
+  //         userResponse.results!.isEmpty) {
+  //       throw 'User record not found';
+  //     }
+  //     if (kDebugMode) {
+  //       print('@@@@@@@@@@@@@@@@ userResponse success');
+  //     }
+  //     // Get the first matching ParseObject.
+  //     final ParseObject userObject = userResponse.results!.first as ParseObject;
+  //     final loggedInUser = AuthenticationRepository.Instance.loginUser(
+  //         userObject.get<String>('userName') ?? '', ParseUser.keyEmailAddress);
+  //     userObject.set('image', parseFile);
+  //     if (kDebugMode) {
+  //       print('@@@@@@@@@@@@@@@@ parseFile set at image ');
+  //     }
+  //     // // Convert the XFile into a File.
+  //     // final file = File(image.path);
+  //     // if (kDebugMode) {
+  //     //   print("File created from image path: ${file.path}");
+  //     // }
+  //     // // Wrap the file into a ParseFile and save it. The session token attached with ParseUser.currentUser() will
+  //     // // automatically authorize this call.
+  //     // final parseFile = ParseFile(file);
+  //     // final ParseResponse fileUploadResponse = await parseFile.save();
+  //     // if (kDebugMode) {
+  //     //   print("Parse file upload response: ${fileUploadResponse.success}");
+  //     // }
+  //     // if (!fileUploadResponse.success) {
+  //     //   throw 'Failed to upload file: ${fileUploadResponse.error?.message}';
+  //     // }
+  //     // if (kDebugMode) {
+  //     //   print("File uploaded successfully. URL: ${parseFile.url}");
+  //    // }
+  //     // // Associate the uploaded file with the user object.
+  //     // userObject.set('image', parseFile);
+  //     final ParseResponse saveResponse = await userObject.save();
+  //     if (kDebugMode) {
+  //       print("User object save response: ${saveResponse.success}");
+  //     }
+  //     if (!saveResponse.success) {
+  //       throw 'Failed to update profile photo: ${saveResponse.error?.message}';
+  //     }
+  //     if (kDebugMode) {
+  //       print("Profile photo uploaded successfully for the user.");
+  //     }
+  //   } on FormatException catch (_) {
+  //     throw const TFormatException();
+  //   } on PlatformException catch (e) {
+  //     throw TPlatformException(e.code).message;
+  //   } catch (e) {
+  //     throw 'Something went wrong. Please try again: $e';
+  //   }
+  // }
 }
