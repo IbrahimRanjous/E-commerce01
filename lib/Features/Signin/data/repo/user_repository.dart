@@ -35,7 +35,7 @@ class UserRepository extends GetxController {
         ..set('phoneNumber', user.phoneNumber)
         ..set('email', user.email);
 
-      //////////////// ADD PRODUCTS TO RELATION BEFORE SAVING /////////////////////
+      ////////////TO RELATION BEFORE SAVING /////////////////////
 
       await createRelationToProducts(userData);
 
@@ -211,9 +211,13 @@ class UserRepository extends GetxController {
       } else {
         /////////////////////////////// OFFLINE //////////////////////////////////
         TLoaders.warningSnackBar(title: "Warning", message: 'You Are Offline');
-        final ParseObject offlineUser =
+        final storedData =
             UserController.instance.userLocaleData.read(TTexts.kuserData);
-        return offlineUser as UserModel;
+        if (storedData != null) {
+          return UserModel.fromJson(storedData);
+        } else {
+          return UserModel.empty();
+        }
       }
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
@@ -342,6 +346,8 @@ class UserRepository extends GetxController {
       if (favorites.contains(updatedProduct.objectId)) {
         // If it exists, remove it.
         favorites.remove(updatedProduct.objectId);
+        UserController.instance.localeFavoriteListProducts!
+            .remove(updatedProduct.objectId);
         if (kDebugMode) {
           print("Removed product ${updatedProduct.objectId} from favorites.");
         }
@@ -349,6 +355,9 @@ class UserRepository extends GetxController {
       } else {
         // Otherwise, add it.
         favorites.add(updatedProduct.objectId);
+        UserController.instance.localeFavoriteListProducts!
+            .add(updatedProduct.objectId);
+
         if (kDebugMode) {
           print("Added product ${updatedProduct.objectId} to favorites.");
         }

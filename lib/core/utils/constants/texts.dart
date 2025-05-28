@@ -16,6 +16,8 @@ class TTexts {
   static const String kisSafeMode = "isSafeMode";
   static const String kisHDImageQuality = "isHDImageQuality";
   static const String kProfileImage = "ProfileImage";
+  static const String kFavoriteList = "FavoriteList";
+  static const String kProductList = "ProductList";
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

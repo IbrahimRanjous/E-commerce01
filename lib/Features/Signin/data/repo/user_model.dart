@@ -72,6 +72,7 @@ class UserModel {
       'ProfilePicture': profilePicture,
       'DateOfBirth':
           dateOfBirth?.toIso8601String(), // converting DateTime to String
+      'Products': products,
       'FavoriteList': favoriteList,
     };
   }

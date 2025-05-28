@@ -33,12 +33,16 @@ class UserController extends GetxController {
   final userLocaleData = GetStorage();
   // Reactive variable for storing the profile image file path.
   var profileImagePath = ''.obs;
+  List<String>? localeFavoriteListProducts;
+  List<ProductModel>? localeProducts;
   @override
   void onInit() {
     super.onInit();
     fetchUserRecord();
     final localStorage = GetStorage();
     profileImagePath.value = localStorage.read(TTexts.kProfileImage) ?? '';
+    localeFavoriteListProducts = userLocaleData.read(TTexts.kFavoriteList);
+    localeProducts = userLocaleData.read(TTexts.kProductList);
   }
 
   /// Fetch user record
@@ -52,17 +56,17 @@ class UserController extends GetxController {
       if (fetchedUser.id.isNotEmpty) {
         // Successfully fetched: update our reactive user and store its JSON representation offline.
         user(fetchedUser);
-        user.refresh(); // This forces the UI to update
         userLocaleData.write(TTexts.kuserData, fetchedUser.toJson());
+        userLocaleData.write(TTexts.kFavoriteList, fetchedUser.favoriteList);
+        userLocaleData.write(TTexts.kFavoriteList, fetchedUser.products);
+        user.refresh(); // This forces the UI to update
       } else {
         // Fetched data is null or invalid.
         // Try to load offline stored data.
         final storedData = userLocaleData.read(TTexts.kuserData);
         if (storedData != null) {
           try {
-            // Convert the stored map to a UserModel.
-            final offlineUser = UserModel.fromJson(storedData);
-            user(offlineUser);
+            user(UserModel.fromJson(storedData));
             user.refresh(); // This forces the UI to update
           } catch (e) {
             // Parsing failed: show an empty user model.
@@ -81,8 +85,7 @@ class UserController extends GetxController {
       final storedData = userLocaleData.read(TTexts.kuserData);
       if (storedData != null) {
         try {
-          final offlineUser = UserModel.fromJson(storedData);
-          user(offlineUser);
+          user(UserModel.fromJson(storedData));
         } catch (e) {
           user(UserModel.empty());
           user.refresh(); // This forces the UI to update
@@ -234,6 +237,8 @@ class UserController extends GetxController {
     try {
       await userRepository.updateFavoriteProductDetails(
           updatedProduct: product);
+      userLocaleData.write(TTexts.kFavoriteList, localeFavoriteListProducts);
+
       fetchUserRecord();
     } catch (e) {
       TLoaders.warningSnackBar(
@@ -241,7 +246,7 @@ class UserController extends GetxController {
     }
   }
 
-// A helper to update the reactive variable and write to storage.
+  // A helper to update the reactive variable and write to storage.
   void updateProfileImagePath(String newPath) {
     profileImagePath.value = newPath;
     final localStorage = GetStorage();
