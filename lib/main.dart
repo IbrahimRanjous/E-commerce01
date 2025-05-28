@@ -35,11 +35,11 @@ Future<void> main() async {
 //   var firstObject = ParseObject('FirstClass')
 //     ..set('message', 'Hey, Parse is now connected!🙂');
 //   await firstObject.save();
-
+//
 //   if (kDebugMode) {
 //     print('done');
 //   }
-///////////////////////// END Check if I am connected to the server ///////////////////////
+///////////////////////// END Check if I am connected to the server ////////////////////
 
   /// Widget Binding
   final WidgetsBinding widgetsBinding =

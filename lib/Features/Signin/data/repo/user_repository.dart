@@ -213,7 +213,7 @@ class UserRepository extends GetxController {
         /////////////////////////////// OFFLINE //////////////////////////////////
         TLoaders.warningSnackBar(title: "Warning", message: 'You Are Offline');
         final storedData =
-            UserController.instance.userLocaleData.read(TTexts.kuserData);
+            UserController.instance.localeData.read(TTexts.kuserData);
         if (storedData != null) {
           return UserModel.fromJson(storedData);
         } else {
@@ -347,22 +347,16 @@ class UserRepository extends GetxController {
       if (favorites.contains(updatedProduct.objectId)) {
         // If it exists, remove it.
         favorites.remove(updatedProduct.objectId);
-        UserController.instance.localeFavoriteListProducts!
-            .remove(updatedProduct.objectId);
         if (kDebugMode) {
           print("Removed product ${updatedProduct.objectId} from favorites.");
         }
-        TLoaders.successSnackBar(title: "Removed From Wish List");
       } else {
         // Otherwise, add it.
         favorites.add(updatedProduct.objectId);
-        UserController.instance.localeFavoriteListProducts!
-            .add(updatedProduct.objectId);
 
         if (kDebugMode) {
           print("Added product ${updatedProduct.objectId} to favorites.");
         }
-        TLoaders.successSnackBar(title: "Added To Wish List");
       }
 
       if (kDebugMode) {

@@ -11,7 +11,7 @@ class UserModel {
   String phoneNumber;
   String? profilePicture;
   DateTime? dateOfBirth;
-  List<ProductModel> products;
+  List<ProductModel>? products;
   List<String>? favoriteList;
 
   UserModel({
@@ -72,7 +72,7 @@ class UserModel {
       'ProfilePicture': profilePicture,
       'DateOfBirth':
           dateOfBirth?.toIso8601String(), // converting DateTime to String
-      'Products': products,
+      'Products': products?.map((p) => p.toJson()).toList() ?? [],
       'FavoriteList': favoriteList,
     };
   }
@@ -91,7 +91,8 @@ class UserModel {
           (json['DateOfBirth'] != null && json['DateOfBirth'] is String)
               ? DateTime.tryParse(json['DateOfBirth'])
               : null,
-      products: [], // Assuming you are not storing products here.
+      products:
+          json['Products'] ?? [], // Assuming you are not storing products here.
       favoriteList: (json['FavoriteList'] != null)
           ? List<String>.from(json['FavoriteList'] as List)
           : [],

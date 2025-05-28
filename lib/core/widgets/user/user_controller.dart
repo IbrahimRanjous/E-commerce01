@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -30,12 +31,21 @@ class UserController extends GetxController {
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
-  final userLocaleData = GetStorage();
+  final localeData = GetStorage();
+  final Rxn<Map<String, dynamic>> storedDataRx = Rxn<Map<String, dynamic>>();
 
   @override
   void onInit() {
     super.onInit();
+    final data = GetStorage().read(TTexts.kuserData) as Map<String, dynamic>?;
+    storedDataRx.value = data;
+
     fetchUserRecord();
+  }
+
+  Future<void> loadStoredData() async {
+    final data = GetStorage().read(TTexts.kuserData) as Map<String, dynamic>?;
+    storedDataRx.value = data;
   }
 
   /// Fetch user record
@@ -50,14 +60,21 @@ class UserController extends GetxController {
       if (fetchedUser != Null && fetchedUser.id.isNotEmpty) {
         // Successfully fetched: update our reactive user and store its JSON representation offline.
         user(fetchedUser);
-        userLocaleData.write(TTexts.kuserData, fetchedUser.toJson());
-        userLocaleData.write(TTexts.kFavoriteList, fetchedUser.favoriteList);
-        userLocaleData.write(TTexts.kFavoriteList, fetchedUser.products);
+        localeData.write(TTexts.kuserData, fetchedUser.toJson());
         user.refresh(); // This forces the UI to update
+        if (kDebugMode) {
+          print(
+              '*************************************************************************');
+          print('User Data :');
+          print('products : ${fetchedUser.products?.length}');
+          print('favorites : ${fetchedUser.favoriteList?.length}');
+          print(
+              '*************************************************************************');
+        }
       } else {
         // Fetched data is null or invalid.
         // Try to load offline stored data.
-        final storedData = userLocaleData.read(TTexts.kuserData);
+        final storedData = localeData.read(TTexts.kuserData);
         if (storedData != null) {
           try {
             // Convert the stored map to a UserModel.
@@ -73,9 +90,11 @@ class UserController extends GetxController {
         }
       }
     } catch (e) {
-      TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
+      TLoaders.warningSnackBar(
+          title: 'Warning',
+          message: 'Leak in user data , or it is not updated data');
       // In the event of an error, attempt to load offline stored data.
-      final storedData = userLocaleData.read(TTexts.kuserData);
+      final storedData = localeData.read(TTexts.kuserData);
       if (storedData != null) {
         try {
           user(UserModel.fromJson(storedData));
@@ -226,11 +245,45 @@ class UserController extends GetxController {
   /// update favorite list / wishlist
   Future<void> updateFavoriteList(ProductModel product) async {
     try {
+      final storedData = localeData.read(TTexts.kuserData);
+      if (storedData == null) {
+        throw Exception("No stored user data available.");
+      }
+
+      // Get the favorite list stored locally.
+      final List<dynamic>? favListDynamic =
+          storedData['FavoriteList'] as List<dynamic>?;
+      final List<String> favoriteList =
+          favListDynamic != null ? List<String>.from(favListDynamic) : [];
+
+      // Toggle the favorite status for the product.
+      if (favoriteList.contains(product.objectId)) {
+        favoriteList.remove(product.objectId);
+      } else {
+        favoriteList.add(product.objectId);
+      }
+
+      // Update the storedData map with the new favorite list.
+      storedData['FavoriteList'] = favoriteList;
+
+      // Update the reactive user model.
+      user.update((userModel) {
+        userModel?.favoriteList = favoriteList;
+      });
+
+      // Trigger an update only for the card with this product.
+      update([product.objectId]);
+      user.refresh();
+      // Write the updated storedData  back to local storage.
+      localeData.write(TTexts.kuserData, storedData);
+      storedDataRx.value = storedData;
+
+      // Optionally: Update the favorite details on the remote repository.
       await userRepository.updateFavoriteProductDetails(
           updatedProduct: product);
-      userLocaleData.write(TTexts.kFavoriteList, localeFavoriteListProducts);
 
-      fetchUserRecord();
+      // Optionally: Fetch the user record to refresh the full user data.
+      await fetchUserRecord();
     } catch (e) {
       TLoaders.warningSnackBar(
           title: 'Something went wrong', message: e.toString());

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
 import 'package:rjs_store/core/widgets/text/my_text.dart';
 import 'package:rjs_store/core/widgets/user/user_controller.dart';
+import '../../../../core/product_model.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/network/network_manager.dart';
 import '../../../../core/widgets/products cart/vertical_product_card.dart';
@@ -17,23 +18,12 @@ class TGridView extends StatelessWidget {
     return FutureBuilder<bool>(
       future: NetworkManager.instance.isConnected(),
       builder: (context, snapshot) {
-        // While the connection is being checked, show a loader.
+        // Show a loader while connectivity status is being checked.
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        // If there’s an error, treat it as offline.
-        if (snapshot.hasError) {
-          return const Center(
-            child: Text(
-              "Offline",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          );
-        }
-
-        // Determine connection status.
-        final bool isConnected = snapshot.data ?? false;
-        if (!isConnected) {
+        // If there's an error or we're offline, show a message.
+        if (snapshot.hasError || !(snapshot.data ?? false)) {
           return const Center(
             child: Text(
               "Offline",
@@ -41,32 +31,50 @@ class TGridView extends StatelessWidget {
             ),
           );
         } else {
+          // Use Obx to rebuild when the reactive variable changes.
           return Obx(() {
-            // Retrieve the products list from the user's data.
-            final products = controller.user.value.products;
+            final storedData = controller.storedDataRx.value;
+            if (storedData == null) {
+              return Center(child: MyText(text: 'No data found.'));
+            }
+
+            // Convert stored products JSON list into a list of ProductModel objects.
+            final List<dynamic>? storedProductsList =
+                storedData['Products'] as List<dynamic>?;
+            final List<ProductModel> products = storedProductsList != null
+                ? storedProductsList
+                    .map(
+                        (e) => ProductModel.fromJson(e as Map<String, dynamic>))
+                    .toList()
+                : [];
+
+            // Get the favorite list stored locally.
+            final List<dynamic>? favListDynamic =
+                storedData['FavoriteList'] as List<dynamic>?;
+            final List<String> favoriteList =
+                favListDynamic != null ? List<String>.from(favListDynamic) : [];
+
             if (products.isEmpty) {
-              return Center(
-                child: MyText(text: 'No Products'),
-              );
+              return Center(child: MyText(text: 'No Products'));
             } else {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
                 child: TGridLayoutBody(
                   itemCount: products.length,
                   itemBuilder: (BuildContext context, int index) {
-                    bool isFavorite = controller.user.value.favoriteList
-                            ?.contains(products[index].objectId) ??
-                        false;
+                    final product = products[index];
+                    final bool isFavorite =
+                        favoriteList.contains(product.objectId);
                     return TVerticalProductCard(
-                      imageUrl: products[index].image,
-                      productTitle: products[index].title,
-                      brand: products[index].brand,
-                      priceRange: products[index].priceRange,
-                      discountText: products[index].discount,
-                      isVerified: products[index].isVerified,
+                      imageUrl: product.image,
+                      productTitle: product.title,
+                      brand: product.brand,
+                      priceRange: product.priceRange,
+                      discountText: product.discount,
+                      isVerified: product.isVerified,
                       isFavorite: isFavorite,
                       onFavoriteTap: () {
-                        controller.updateFavoriteList(products[index]);
+                        controller.updateFavoriteList(product);
                       },
                     );
                   },

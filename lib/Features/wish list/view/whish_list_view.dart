@@ -17,7 +17,7 @@ class WhishListView extends StatelessWidget {
         ),
         actions: const [Icon(Iconsax.add)],
       ),
-      body: const SafeArea(
+      body: SafeArea(
           child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: TSizes.sm),
         child: WishListViewBody(),
