@@ -94,7 +94,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:rjs_store/core/product_model.dart';
 import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/utils/constants/texts.dart';
@@ -102,6 +101,7 @@ import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
 import 'package:rjs_store/core/widgets/products%20cart/vertical_product_card.dart';
 import 'package:rjs_store/core/widgets/text/my_text.dart';
 import 'package:rjs_store/core/widgets/user/user_controller.dart';
+import 'package:rjs_store/core/utils/network/network_manager.dart';
 
 class WishListViewBody extends StatelessWidget {
   const WishListViewBody({super.key});
@@ -110,81 +110,68 @@ class WishListViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = UserController.instance;
 
-    return StreamBuilder<bool>(
-      initialData: true,
-      stream: Connectivity()
-          .onConnectivityChanged
-          .map<bool>((result) => result != ConnectivityResult.none),
+    return FutureBuilder<bool>(
+      future: NetworkManager.instance.isConnected(),
       builder: (context, snapshot) {
-        // Instead of discarding the content when offline, we grab the connectivity status.
-        final bool isConnected = snapshot.data ?? false;
-        return Obx(() {
-          // Retrieve data from local storage:
-          // Ensure that the data for products is in JSON format.
-          final storedUserData =
-              controller.userLocaleData.read(TTexts.kuserData) ?? {};
-          // Ensure that the 'Products' key exists and cast it accordingly.
-          final List<dynamic> productsJson =
-              storedUserData['Products'] ?? <dynamic>[];
-          // Convert each JSON map to a ProductModel.
-          final List<ProductModel> products = productsJson
-              .map(
-                  (json) => ProductModel.fromJson(json as Map<String, dynamic>))
-              .toList();
+        // While the connectivity check is in progress, show a loader.
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          // Retrieve the locally stored IDs for favorite products.
-          final List<dynamic> favoritesDynamic =
-              controller.userLocaleData.read(TTexts.kFavoriteList) ??
-                  <dynamic>[];
+        // If there's no connection or an error occurred, display "Offline".
+        if (!snapshot.hasData || snapshot.data == false) {
+          return const Center(
+            child: Text(
+              "Offline",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        }
+
+        // Otherwise, when there is connectivity, build the wishlist grid.
+        return Obx(() {
+          // Retrieve the full products list and the favorites list from the user.
+          final List<ProductModel> products = controller.user.value.products;
           final List<String> favoriteList =
               favoritesDynamic.map((e) => e.toString()).toList();
 
-          // Filter products based on the favorite IDs list.
+          // Filter to only favorite products.
           final List<ProductModel> favoriteProducts = products
               .where((product) => favoriteList.contains(product.objectId))
               .toList();
 
-          // Build the UI — show a small offline banner if not connected.
-          return Column(
-            children: [
-              if (!isConnected)
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  width: double.infinity,
-                  color: Colors.red,
-                  child: const Text(
-                    'Offline: Displaying locally stored favorites',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              Expanded(
-                child: favoriteProducts.isEmpty
-                    ? Center(child: MyText(text: 'No favorite products found.'))
-                    : Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: TSizes.sm),
-                        child: TGridLayoutBody(
-                          itemCount: favoriteProducts.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final product = favoriteProducts[index];
-                            return TVerticalProductCard(
-                              imageUrl: product.image,
-                              productTitle: product.title,
-                              brand: product.brand,
-                              priceRange: product.priceRange,
-                              discountText: product.discount,
-                              isVerified: product.isVerified,
-                              isFavorite: true,
-                              onFavoriteTap: () {
-                                controller.updateFavoriteList(product);
-                              },
-                            );
-                          },
-                        ),
-                      ),
-              )
-            ],
+          // If no favorites remain, show a placeholder message.
+          if (favoriteProducts.isEmpty) {
+            return Center(child: MyText(text: 'No favorite products found.'));
+          }
+
+          // Display the grid with favorite products.
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
+            child: TGridLayoutBody(
+              itemCount: favoriteProducts.length,
+              itemBuilder: (BuildContext context, int index) {
+                final product = favoriteProducts[index];
+                // We know it's a favorite, so isFavorite is true.
+                bool isFavorite = true;
+                return TVerticalProductCard(
+                  imageUrl: product.image,
+                  productTitle: product.title,
+                  brand: product.brand,
+                  priceRange: product.priceRange,
+                  discountText: product.discount,
+                  isVerified: product.isVerified,
+                  isFavorite: isFavorite,
+                  onFavoriteTap: () {
+                    // Toggle favorite status: this should update your controller.
+                    controller.updateFavoriteList(product);
+                  },
+                );
+              },
+            ),
           );
         });
       },

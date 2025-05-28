@@ -32,8 +32,6 @@ class LoginController extends GetxController {
   void onInit() {
     email.text = localStorage.read(TTexts.kEmail) ?? '';
     // password.text = localStorage.read(TTexts.kPassword) ?? '';
-    localStorage.writeIfNull(TTexts.kLoggedIn, true);
-
     super.onInit();
   }
 
@@ -75,6 +73,7 @@ class LoginController extends GetxController {
       await AuthenticationRepository.Instance.loginWithEmailAndPassword(
           email.text.trim().toLowerCase(), password.text.trim());
 
+      localStorage.writeIfNull(TTexts.kLoggedIn, true);
       // Redirect
       AuthenticationRepository.Instance.screenRedirect();
       // // Remove Loader

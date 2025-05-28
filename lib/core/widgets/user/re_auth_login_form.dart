@@ -26,10 +26,10 @@ class ReAuthLoginForm extends StatelessWidget {
               TextFormField(
                 controller: controller.verifyEmail,
                 validator: TValidator.validateEmail,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Iconsax.direct_right),
-                    labelText: TTexts.email,
-                    hintStyle: Theme.of(context).textTheme.titleSmall),
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Iconsax.direct_right),
+                  labelText: TTexts.email,
+                ),
               ),
               const SizedBox(height: TSizes.spaceBtwInputFields),
 
@@ -41,16 +41,16 @@ class ReAuthLoginForm extends StatelessWidget {
                   validator: (value) =>
                       TValidator.validateEmptyText('Password', value),
                   decoration: InputDecoration(
-                      labelText: TTexts.password,
-                      prefixIcon: const Icon(Iconsax.password_check),
-                      suffixIcon: IconButton(
-                        onPressed: () => controller.hidePassword.value =
-                            !controller.hidePassword.value,
-                        icon: controller.hidePassword.value
-                            ? const Icon(Iconsax.eye_slash)
-                            : const Icon(Iconsax.eye),
-                      ),
-                      hintStyle: Theme.of(context).textTheme.titleSmall),
+                    labelText: TTexts.password,
+                    prefixIcon: const Icon(Iconsax.password_check),
+                    suffixIcon: IconButton(
+                      onPressed: () => controller.hidePassword.value =
+                          !controller.hidePassword.value,
+                      icon: controller.hidePassword.value
+                          ? const Icon(Iconsax.eye_slash)
+                          : const Icon(Iconsax.eye),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: TSizes.spaceBtwSections),

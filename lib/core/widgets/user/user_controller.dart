@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rjs_store/Features/Signin/data/repo/user_repository.dart';
 import 'package:rjs_store/Features/login/views/login_view.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
@@ -14,7 +15,6 @@ import '../../utils/constants/texts.dart';
 import '../../utils/network/network_manager.dart';
 import '../../utils/popups/full_screen_loader.dart';
 import '../../utils/repositories/authentication_repository.dart';
-import '../images/profile_image_store_locally.dart';
 import 're_auth_login_form.dart';
 
 class UserController extends GetxController {
@@ -31,18 +31,11 @@ class UserController extends GetxController {
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
   final userLocaleData = GetStorage();
-  // Reactive variable for storing the profile image file path.
-  var profileImagePath = ''.obs;
-  List<String>? localeFavoriteListProducts;
-  List<ProductModel>? localeProducts;
+
   @override
   void onInit() {
     super.onInit();
     fetchUserRecord();
-    final localStorage = GetStorage();
-    profileImagePath.value = localStorage.read(TTexts.kProfileImage) ?? '';
-    localeFavoriteListProducts = userLocaleData.read(TTexts.kFavoriteList);
-    localeProducts = userLocaleData.read(TTexts.kProductList);
   }
 
   /// Fetch user record
@@ -53,7 +46,8 @@ class UserController extends GetxController {
       final fetchedUser = await userRepository.fetchUserDetails();
 
       // Check if the fetched user looks valid.
-      if (fetchedUser.id.isNotEmpty) {
+      // ignore: unrelated_type_equality_checks
+      if (fetchedUser != Null && fetchedUser.id.isNotEmpty) {
         // Successfully fetched: update our reactive user and store its JSON representation offline.
         user(fetchedUser);
         userLocaleData.write(TTexts.kuserData, fetchedUser.toJson());
@@ -66,21 +60,20 @@ class UserController extends GetxController {
         final storedData = userLocaleData.read(TTexts.kuserData);
         if (storedData != null) {
           try {
-            user(UserModel.fromJson(storedData));
-            user.refresh(); // This forces the UI to update
+            // Convert the stored map to a UserModel.
+            final offlineUser = UserModel.fromJson(storedData);
+            user(offlineUser);
           } catch (e) {
             // Parsing failed: show an empty user model.
             user(UserModel.empty());
-            user.refresh(); // This forces the UI to update
           }
         } else {
           // No stored data available: set an empty user model.
           user(UserModel.empty());
-          user.refresh(); // This forces the UI to update
         }
       }
     } catch (e) {
-      // TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
+      TLoaders.warningSnackBar(title: 'Warning', message: 'Leak in user data');
       // In the event of an error, attempt to load offline stored data.
       final storedData = userLocaleData.read(TTexts.kuserData);
       if (storedData != null) {
@@ -88,11 +81,9 @@ class UserController extends GetxController {
           user(UserModel.fromJson(storedData));
         } catch (e) {
           user(UserModel.empty());
-          user.refresh(); // This forces the UI to update
         }
       } else {
         user(UserModel.empty());
-        user.refresh(); // This forces the UI to update
       }
     } finally {
       profileLoading.value = false;
@@ -246,26 +237,36 @@ class UserController extends GetxController {
     }
   }
 
-  // A helper to update the reactive variable and write to storage.
-  void updateProfileImagePath(String newPath) {
-    profileImagePath.value = newPath;
-    final localStorage = GetStorage();
-    localStorage.write(TTexts.kProfileImage, newPath);
-  }
+  /// Upload Profile Image
+  Future<void> uploadUserProfilePicture() async {
+    try {
+      final image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 70,
+          maxHeight: 512,
+          maxWidth: 512);
+      if (image != null) {
+        imageUploading.value = true;
+        //////////////////////////////////// @@@@@@@@@@@@@ edit the url @@@@@@@@@@@@@@ ///////////////////////////
+        /// Upload Image
+        final imageUrl = await userRepository.uploadImage(
+            'https://res.cloudinary.com/dolast4ks/image/upload/v1745434543/',
+            image);
 
-  // This function will be called to update the profile image.
-  // It uses the helper class below to pick and save the image.
-  Future<void> updateLocalProfileImage() async {
-    // Create an instance of your storage helper
-    final storage = ProfileImageStoreLocally();
-    final pickedImage = await storage.pickImage();
-    if (pickedImage != null) {
-      // Save the image locally and get the file.
-      final savedFile = await storage.saveProfileImage(pickedImage);
-      if (savedFile != null) {
-        // Update the reactive variable with the new file path.
-        updateProfileImagePath(savedFile.path);
+        /// Update User Image Record
+        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        await userRepository.updateSingleField(json);
+        user.refresh();
+        user.value.profilePicture = imageUrl;
+        TLoaders.successSnackBar(
+            title: 'Congratulations',
+            message: 'Your profile image has been updated');
       }
+    } catch (e) {
+      TLoaders.errorSnackBar(
+          title: 'Error', message: 'Something went wrong:$e');
+    } finally {
+      imageUploading.value = false;
     }
   }
 }
