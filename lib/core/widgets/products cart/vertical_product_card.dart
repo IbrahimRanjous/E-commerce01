@@ -4,7 +4,7 @@ import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
 import '../../../Features/product details/view/product_detail_view.dart'
     show ProductDetailView;
 import 'details_vertical_widget.dart';
-import 'thumbnail.dart';
+import 'thumbnail_vertical_product.dart';
 
 class TVerticalProductCard extends StatelessWidget {
   /// URL for the product image.
@@ -59,7 +59,7 @@ class TVerticalProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /////// -- Thumbnail -- ///////
-          TThumbnail(
+          TThumbnailVerticalProduct(
               onTap: onFavoriteTap,
               imageUrl: imageUrl,
               discountText: discountText,
@@ -69,12 +69,14 @@ class TVerticalProductCard extends StatelessWidget {
             onTap: () {
               Get.to(() => const ProductDetailView());
             },
-            child: DetailsVerticalWidget(
-                productTitle: productTitle,
-                brand: brand,
-                isVerified: isVerified,
-                priceRange: priceRange,
-                quantity: quantity),
+            child: SizedBox(
+              child: DetailsVerticalWidget(
+                  productTitle: productTitle,
+                  brand: brand,
+                  isVerified: isVerified,
+                  priceRange: priceRange,
+                  quantity: quantity),
+            ),
           ),
         ],
       ),

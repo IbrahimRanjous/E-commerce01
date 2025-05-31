@@ -3,7 +3,6 @@ import '../../utils/constants/sizes.dart';
 import '../brand_widget.dart';
 import '../text/product_price_text.dart';
 import '../text/product_title_text.dart';
-import 'add_to_card_button.dart';
 import 'quantity_items.dart';
 
 class DetailsHorizontalWidget extends StatelessWidget {
@@ -48,10 +47,6 @@ class DetailsHorizontalWidget extends StatelessWidget {
                 Flexible(child: TProductPriceText(price: priceRange)),
 
                 const SizedBox(width: TSizes.xs),
-                if (quantity.isEmpty)
-
-                  /// Add to Cart Button
-                  const TAddToCardButton(),
 
                 // Display the quantity indicator if provided.
                 if (quantity.isNotEmpty) TQuantityItems(quantity: quantity),

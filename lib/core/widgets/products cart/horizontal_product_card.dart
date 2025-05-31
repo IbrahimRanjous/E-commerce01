@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
+import 'package:rjs_store/core/widgets/products%20cart/thumbnail_horizontal_product.dart';
 import '../../../Features/product details/view/product_detail_view.dart';
+import 'add_to_card_button.dart';
 import 'details_horizontal_widget.dart';
-import 'thumbnail.dart';
+import 'favorite_icon.dart';
 
 class THorizontalProductCard extends StatelessWidget {
   /// URL for the product image.
@@ -14,7 +16,7 @@ class THorizontalProductCard extends StatelessWidget {
   final String discountText;
 
   /// Whether the product is currently favorited.
-  final bool isFavorite;
+  final Rx<bool> isFavorite;
 
   /// Callback when the favorite icon is tapped.
   final VoidCallback? onFavoriteTap;
@@ -39,7 +41,7 @@ class THorizontalProductCard extends StatelessWidget {
     super.key,
     required this.imageUrl,
     this.discountText = '',
-    this.isFavorite = false,
+    required this.isFavorite,
     this.onFavoriteTap,
     required this.productTitle,
     required this.brand,
@@ -53,43 +55,78 @@ class THorizontalProductCard extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     final cardWidth = THelperFunctions.screenWidth() * 0.75;
 
-    // Define fixed dimensions for the left image area.
+    // Define fixed dimensions for the thumbnail image.
     const imageWidth = 100.0;
     const imageHeight = 100.0;
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const ProductDetailView());
-      },
-      child: SizedBox(
-        width: cardWidth,
-        child: Card(
-          color: dark ? TColors.darkerGrey : TColors.softGrey,
-          elevation: 4,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Left Section: Image with overlay elements.
-              SizedBox(
-                width: imageWidth,
-                height: imageHeight,
-                /////// -- Thumbnail -- ///////
 
-                child: TThumbnail(
-                    imageUrl: imageUrl,
-                    discountText: discountText,
-                    isFavorite: isFavorite.obs),
+    return SizedBox(
+      width: cardWidth,
+      child: Card(
+        color: dark ? TColors.darkerGrey : TColors.softGrey,
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Stack(
+          children: [
+            // Thumbnail image positioned at the left.
+            InkWell(
+              onTap: () => Get.to(() => const ProductDetailView()),
+              child: Row(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: SizedBox(
+                      width: imageWidth,
+                      height: imageHeight,
+                      child: TThumbnailHorizontalProduct(
+                        imageUrl: imageUrl,
+                        discountText: discountText,
+                      ),
+                    ),
+                  ),
+                  // Details widget positioned to start after the thumbnail.
+                  // This widget should have its internal Expanded removed so that it respects the given bounds.
+                  Positioned(
+                    left: imageWidth, // starts right after the thumbnail
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: DetailsHorizontalWidget(
+                      productTitle: productTitle,
+                      brand: brand,
+                      isVerified: isVerified,
+                      priceRange: priceRange,
+                      quantity: quantity,
+                    ),
+                  ),
+                ],
               ),
-              /////// -- Details -- ///////
-              DetailsHorizontalWidget(
-                  productTitle: productTitle,
-                  brand: brand,
-                  isVerified: isVerified,
-                  priceRange: priceRange,
-                  quantity: quantity),
-            ],
-          ),
+            ),
+            // Conditionally display the Add to Cart button.
+            if (quantity.isEmpty)
+              Positioned(
+                bottom: 5,
+                right: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const TAddToCardButton(),
+                ),
+              ),
+            // Favorite icon positioned at the top-right.
+            Positioned(
+              top: 5,
+              right: 8,
+              child: FavoriteIcon(
+                onTap: onFavoriteTap,
+                isFavorite: isFavorite,
+                iconSize: 30.0,
+                containerSize: 35.0,
+                top: 2.0,
+                right: 2.0,
+              ),
+            ),
+          ],
         ),
       ),
     );

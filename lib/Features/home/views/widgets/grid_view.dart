@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
+import 'package:rjs_store/core/widgets/stored_data_parse.dart';
 import 'package:rjs_store/core/widgets/text/my_text.dart';
 import 'package:rjs_store/core/widgets/user/user_controller.dart';
 import '../../../../core/product_model.dart';
@@ -38,21 +39,13 @@ class TGridView extends StatelessWidget {
               return Center(child: MyText(text: 'No data found.'));
             }
 
-            // Convert stored products JSON list into a list of ProductModel objects.
-            final List<dynamic>? storedProductsList =
-                storedData['Products'] as List<dynamic>?;
-            final List<ProductModel> products = storedProductsList != null
-                ? storedProductsList
-                    .map(
-                        (e) => ProductModel.fromJson(e as Map<String, dynamic>))
-                    .toList()
-                : [];
+            // Get the products list stored locally.
+            final List<ProductModel> products =
+                StoredDataParser.getProducts(storedData);
 
             // Get the favorite list stored locally.
-            final List<dynamic>? favListDynamic =
-                storedData['FavoriteList'] as List<dynamic>?;
             final List<String> favoriteList =
-                favListDynamic != null ? List<String>.from(favListDynamic) : [];
+                StoredDataParser.getFavoriteListOfObjectId(storedData);
 
             if (products.isEmpty) {
               return Center(child: MyText(text: 'No Products'));
@@ -73,6 +66,7 @@ class TGridView extends StatelessWidget {
                       discountText: product.discount,
                       isVerified: product.isVerified,
                       isFavorite: isFavorite,
+                      quantity: product.instock.toString(),
                       onFavoriteTap: () {
                         controller.updateFavoriteList(product);
                       },

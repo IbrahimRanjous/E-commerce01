@@ -6,6 +6,7 @@ import 'package:rjs_store/core/utils/constants/sizes.dart';
 import 'package:rjs_store/core/widgets/grid%20layout/t_grid_lay_out_body.dart';
 import 'package:rjs_store/core/widgets/products%20cart/vertical_product_card.dart';
 import 'package:rjs_store/core/widgets/text/my_text.dart';
+import '../../../../core/widgets/stored_data_parse.dart';
 import '../../../../core/widgets/user/user_controller.dart';
 
 class WishListViewBody extends StatelessWidget {
@@ -49,25 +50,10 @@ class WishListViewBody extends StatelessWidget {
               if (storedData == null) {
                 return Center(child: MyText(text: 'No user data found.'));
               }
-              // Convert stored products JSON to ProductModel objects.
-              final List<dynamic>? storedProductsList =
-                  storedData['Products'] as List<dynamic>?;
-              final List<ProductModel> products = storedProductsList != null
-                  ? storedProductsList
-                      .map((e) =>
-                          ProductModel.fromJson(e as Map<String, dynamic>))
-                      .toList()
-                  : [];
-              // Extract the favorite list.
-              final List<dynamic>? favListDynamic =
-                  storedData['FavoriteList'] as List<dynamic>?;
-              final List<String> favoriteList = favListDynamic != null
-                  ? List<String>.from(favListDynamic)
-                  : [];
+
               // Filter to include only favorite products.
-              final List<ProductModel> favoriteProducts = products
-                  .where((product) => favoriteList.contains(product.objectId))
-                  .toList();
+              final List<ProductModel> favoriteProducts =
+                  StoredDataParser.getFavoriteProducts(storedData);
               if (favoriteProducts.isEmpty) {
                 return Center(
                     child: MyText(text: 'No favorite products found.'));

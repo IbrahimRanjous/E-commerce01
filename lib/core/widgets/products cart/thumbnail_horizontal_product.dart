@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../Features/home/views/widgets/custom_image.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/sizes.dart';
 import '../text/my_text.dart';
-import 'favorite_icon.dart';
 
-class TThumbnail extends StatelessWidget {
-  const TThumbnail({
+class TThumbnailHorizontalProduct extends StatelessWidget {
+  const TThumbnailHorizontalProduct({
     super.key,
     required this.imageUrl,
     required this.discountText,
-    required this.isFavorite,
     this.onTap,
   });
 
   final String imageUrl;
   final String discountText;
-  final Rx<bool> isFavorite;
   final void Function()? onTap;
 
   @override
@@ -50,15 +46,6 @@ class TThumbnail extends StatelessWidget {
               ),
             ),
           ),
-        /////// -- Favorite -- ///////
-        FavoriteIcon(
-          onTap: onTap,
-          isFavorite: isFavorite,
-          iconSize: 30.0,
-          containerSize: 35.0,
-          top: 2.0,
-          right: 2.0,
-        ),
       ],
     );
   }

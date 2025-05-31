@@ -20,10 +20,10 @@ class THomeCategories extends StatelessWidget {
       height: listViewHeight,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: categories.length,
+        itemCount: Category.categories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) {
-          final category = categories[index];
+          Category category = Category.categories[index];
           return TVerticalListViewIconText(
             iconImage: category.icon,
             title: category.title,
@@ -42,17 +42,17 @@ class Category {
   final String title;
 
   Category({required this.icon, required this.title});
-}
 
-final List<Category> categories = [
-  Category(icon: TImages.sportIcon, title: 'Sports'),
-  Category(icon: TImages.clothIcon, title: 'Clothing'),
-  Category(icon: TImages.shoeIcon, title: 'Shoes'),
-  Category(icon: TImages.cosmeticsIcon, title: 'Cosmetics'),
-  Category(icon: TImages.animalIcon, title: 'Animals'),
-  Category(icon: TImages.toyIcon, title: 'Toys'),
-  Category(icon: TImages.furnitureIcon, title: 'Furnitures'),
-  Category(icon: TImages.jeweleryIcon, title: 'Fewelery'),
-  Category(icon: TImages.electronicsIcon, title: 'Electronics'),
-  // add more as needed...
-];
+  static List<Category> categories = [
+    Category(icon: TImages.sportIcon, title: 'Sports'),
+    Category(icon: TImages.clothIcon, title: 'Clothing'),
+    Category(icon: TImages.shoeIcon, title: 'Shoes'),
+    Category(icon: TImages.cosmeticsIcon, title: 'Cosmetics'),
+    Category(icon: TImages.animalIcon, title: 'Animals'),
+    Category(icon: TImages.toyIcon, title: 'Toys'),
+    Category(icon: TImages.furnitureIcon, title: 'Furnitures'),
+    Category(icon: TImages.jeweleryIcon, title: 'Fewelery'),
+    Category(icon: TImages.electronicsIcon, title: 'Electronics'),
+    // add more as needed...
+  ];
+}

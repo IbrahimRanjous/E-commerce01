@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:rjs_store/core/utils/loaders/shimmer_effect.dart';
 import '../../utils/helpers/helper_functions.dart';
+import 'timed_network_image.dart';
 
 class TRoundedImage extends StatelessWidget {
   /// The image URL path.
@@ -71,33 +70,25 @@ class TRoundedImage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius),
           child: Center(
-            child: isNetworkImage
-                ? CachedNetworkImage(
-                    imageUrl: url,
-                    height: imageHeight,
-                    width: imageWidth,
-                    fit: fit,
-                    placeholder: (context, url) => const TShimmerEffect(
-                      width: 80,
-                      height: 80,
-                      radius: 80,
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      height: height * 0.2,
-                      color: Colors.grey.shade300,
-                      child: const Icon(Icons.broken_image, size: 48),
-                    ),
-                  )
-                : Image(
-                    width: imageWidth,
-                    height: imageHeight,
-                    fit: fit,
-                    color: overLayColor,
-                    image: isNetworkImage
-                        ? NetworkImage(url)
-                        : AssetImage(url) as ImageProvider,
-                  ),
-          ),
+              child: isNetworkImage
+                  ? TimedNetworkImage(
+                      imageUrl: url,
+                      height: imageHeight ?? height * 0.18,
+                      width: imageWidth ?? double.infinity,
+                      fit: fit ?? BoxFit.contain,
+                    )
+                  : Image.asset(
+                      url,
+                      height: imageHeight,
+                      width: imageWidth,
+                      fit: fit,
+                      color: overLayColor,
+                      errorBuilder: (context, url, error) => Container(
+                        height: height * 0.2,
+                        color: Colors.grey.shade300,
+                        child: const Icon(Icons.broken_image, size: 48),
+                      ),
+                    )),
         ),
       ),
     );
