@@ -29,11 +29,6 @@ class TRoundedImage extends StatelessWidget {
   /// The border radius for rounding corners.
   final double borderRadius;
 
-//your_cloud_name
-  // final String cloudName;
-  // final String fileExtension;
-  // final String publicId;
-
   const TRoundedImage({
     super.key,
     required this.url,

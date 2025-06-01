@@ -1,3 +1,4 @@
+// details_horizontal_widget.dart
 import 'package:flutter/material.dart';
 import '../../utils/constants/sizes.dart';
 import '../brand_widget.dart';
@@ -24,31 +25,27 @@ class DetailsHorizontalWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      // Note: This Expanded is valid if DetailsHorizontalWidget is a direct child of a Row.
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /////// -- product title -- ///////
+            // Product Title
             TProductTitleText(
               title: productTitle,
               maxLines: 1,
             ),
-
             const SizedBox(height: 4),
-            /////// -- brand and verified check icon-- ///////
+            // Brand with verified icon
             TBrandWidget(brand: brand, isVerified: isVerified),
             const SizedBox(height: 8),
-            /////// -- Price Row -- ///////
+            // Price and quantity row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Display the price range.
                 Flexible(child: TProductPriceText(price: priceRange)),
-
                 const SizedBox(width: TSizes.xs),
-
-                // Display the quantity indicator if provided.
                 if (quantity.isNotEmpty) TQuantityItems(quantity: quantity),
               ],
             ),

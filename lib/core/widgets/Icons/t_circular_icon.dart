@@ -14,7 +14,6 @@ class TCircularIcon extends StatelessWidget {
     this.height = 32.0, // default height
     this.size = 16.0, // default icon size for compact usage
     this.color,
-    this.onPressed,
     this.backgroundColor,
   });
 
@@ -22,8 +21,6 @@ class TCircularIcon extends StatelessWidget {
   final IconData icon;
   final Color? color;
   final Color? backgroundColor;
-  final VoidCallback? onPressed;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,11 +34,10 @@ class TCircularIcon extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
       ),
       // Remove the button's default padding & constraints
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        constraints: const BoxConstraints(),
-        onPressed: onPressed,
-        icon: Icon(icon, color: color, size: size),
+      child: Icon(
+        icon,
+        color: color,
+        size: size,
       ),
     );
   }

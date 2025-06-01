@@ -63,10 +63,15 @@ class TGridView extends StatelessWidget {
                       productTitle: product.title,
                       brand: product.brand,
                       priceRange: product.priceRange,
-                      discountText: product.discount,
+                      price: product.price,
+                      discount: product.discount,
                       isVerified: product.isVerified,
                       isFavorite: isFavorite,
                       quantity: product.instock.toString(),
+                      rating: product.rating,
+                      reviews: product.reviews,
+                      status: product.status,
+                      description: product.description,
                       onFavoriteTap: () {
                         controller.updateFavoriteList(product);
                       },

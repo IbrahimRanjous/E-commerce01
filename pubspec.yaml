@@ -50,7 +50,8 @@ dependencies:
   get_storage: ^2.1.1
   google_sign_in: ^6.3.0
   http: ^1.4.0
-  shared_preferences: ^2.5.3
+  path_provider: ^2.1.5
+  share_plus: ^11.0.0
 
   iconsax: ^0.0.8
   image_picker: ^1.1.2
@@ -63,6 +64,7 @@ dependencies:
   parse_server_sdk: ^7.0.1
   provider: ^6.1.5
   readmore: ^3.0.0
+  shared_preferences: ^2.5.3
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.1
   url_launcher: ^6.3.1

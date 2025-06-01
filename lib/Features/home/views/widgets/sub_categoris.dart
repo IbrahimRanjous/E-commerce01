@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/product_model.dart';
-import '../../../../core/productsList.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/network/network_manager.dart';
@@ -81,10 +80,15 @@ class TSubCategories extends StatelessWidget {
                           productTitle: product.title,
                           brand: product.brand,
                           priceRange: product.priceRange,
-                          discountText: product.discount,
+                          price: product.price,
+                          discount: product.discount,
                           isVerified: product.isVerified,
-                          isFavorite: isFavorite.obs,
-                          // quantity: product.instock.toString(),
+                          isFavorite: isFavorite,
+                          quantity: product.instock.toString(),
+                          rating: product.rating,
+                          status: product.status,
+                          reviews: product.reviews,
+                          description: product.description,
                           onFavoriteTap: () {
                             controller.updateFavoriteList(product);
                           },

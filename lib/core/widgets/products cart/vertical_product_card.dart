@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
-import '../../../Features/product details/view/product_detail_view.dart'
-    show ProductDetailView;
+import '../../../Features/product details/view/product_detail_view.dart';
 import 'details_vertical_widget.dart';
+import 'favorite_icon.dart';
 import 'thumbnail_vertical_product.dart';
 
 class TVerticalProductCard extends StatelessWidget {
@@ -11,13 +11,13 @@ class TVerticalProductCard extends StatelessWidget {
   final String imageUrl;
 
   /// Discount text, for example "78%" or an empty string if not applicable.
-  final String discountText;
+  final int discount;
 
   /// Whether the product is currently favorited.
   final bool isFavorite;
 
   /// Callback when the favorite icon is tapped.
-  final VoidCallback? onFavoriteTap;
+  final void Function()? onFavoriteTap;
 
   /// The title of the product.
   final String productTitle;
@@ -30,15 +30,21 @@ class TVerticalProductCard extends StatelessWidget {
 
   /// The price range for the product.
   final String priceRange;
+  final String price;
 
   /// The quantity indicator (could show available stock, etc.)
   final String quantity;
+  final String description;
+
+  final double rating;
+  final bool status;
+  final int reviews;
 
   /// Creates a reusable product card widget.
   const TVerticalProductCard({
     super.key,
     required this.imageUrl,
-    this.discountText = '',
+    required this.discount,
     this.isFavorite = false,
     this.onFavoriteTap,
     required this.productTitle,
@@ -46,6 +52,11 @@ class TVerticalProductCard extends StatelessWidget {
     this.isVerified = false,
     required this.priceRange,
     this.quantity = '',
+    required this.rating,
+    required this.status,
+    required this.reviews,
+    required this.price,
+    required this.description,
   });
 
   @override
@@ -55,28 +66,57 @@ class TVerticalProductCard extends StatelessWidget {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          /////// -- Thumbnail -- ///////
-          TThumbnailVerticalProduct(
-              onTap: onFavoriteTap,
-              imageUrl: imageUrl,
-              discountText: discountText,
-              isFavorite: isFavorite.obs),
-          /////// -- Details -- ///////
           GestureDetector(
             onTap: () {
-              Get.to(() => const ProductDetailView());
+              Get.to(() => ProductDetailView(
+                    imageUrl: imageUrl,
+                    discount: discount,
+                    isFavorite: isFavorite,
+                    productTitle: productTitle,
+                    brand: brand,
+                    isVerified: isVerified,
+                    priceRange: priceRange,
+                    quantity: quantity,
+                    rating: rating,
+                    status: status,
+                    reviews: reviews,
+                    price: price,
+                    description: description,
+                    onFavoriteTap: onFavoriteTap,
+                  ));
             },
-            child: SizedBox(
-              child: DetailsVerticalWidget(
-                  productTitle: productTitle,
-                  brand: brand,
-                  isVerified: isVerified,
-                  priceRange: priceRange,
-                  quantity: quantity),
+            child: Container(
+              color: Colors.transparent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /////// -- Thumbnail -- ///////
+                  TThumbnailVerticalProduct(
+                      onTap: onFavoriteTap,
+                      imageUrl: imageUrl,
+                      discount: discount,
+                      isFavorite: isFavorite),
+                  /////// -- Details -- ///////
+                  DetailsVerticalWidget(
+                      productTitle: productTitle,
+                      brand: brand,
+                      isVerified: isVerified,
+                      priceRange: priceRange,
+                      quantity: quantity),
+                ],
+              ),
             ),
+          ),
+          /////// -- Favorite -- ///////
+          FavoriteIcon(
+            onTap: onFavoriteTap,
+            isFavorite: isFavorite,
+            iconSize: 30.0,
+            containerSize: 35.0,
+            top: 2.0,
+            right: 2.0,
           ),
         ],
       ),

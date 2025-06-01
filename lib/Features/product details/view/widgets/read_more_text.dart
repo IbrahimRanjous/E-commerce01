@@ -4,12 +4,14 @@ import 'package:readmore/readmore.dart';
 class TReadMoreText extends StatelessWidget {
   const TReadMoreText({
     super.key,
+    required this.description,
   });
+  final String description;
 
   @override
   Widget build(BuildContext context) {
-    return const ReadMoreText(
-      'This is a product description for blue nike seeve less vest.',
+    return ReadMoreText(
+      description,
       trimLines: 2,
       trimMode: TrimMode.Line,
       trimCollapsedText: 'Show more',

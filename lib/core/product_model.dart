@@ -11,7 +11,7 @@ class ProductModel {
   bool isVerified;
   String price;
   double rating;
-  String discount;
+  int discount;
   int instock;
   String description;
   int reviews;
@@ -54,7 +54,7 @@ class ProductModel {
       isVerified: parseObject.get<bool>('isVerified') ?? false,
       price: parseObject.get<String>('price') ?? '',
       rating: (parseObject.get<num>('rating') ?? 0).toDouble(),
-      discount: parseObject.get<String>('discount') ?? '',
+      discount: parseObject.get<int>('discount') ?? 0,
       instock: parseObject.get<int>('instock') ?? 0,
       description: parseObject.get<String>('description') ?? '',
       reviews: parseObject.get<int>('reviews') ?? 0,
@@ -78,7 +78,7 @@ class ProductModel {
       isVerified: json['isVerified'] as bool,
       price: json['price'] as String,
       rating: (json['rating'] as num).toDouble(),
-      discount: json['discount'] as String,
+      discount: (json['discount'] ?? 0) as int,
       instock: json['instock'] as int,
       description: json['description'] as String,
       reviews: json['reviews'] as int,
@@ -124,7 +124,7 @@ class ProductModel {
       isVerified: false,
       price: '',
       rating: 0.0,
-      discount: '',
+      discount: 0,
       instock: 0,
       description: '',
       reviews: 0,

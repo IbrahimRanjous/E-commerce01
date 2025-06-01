@@ -8,12 +8,12 @@ class TThumbnailHorizontalProduct extends StatelessWidget {
   const TThumbnailHorizontalProduct({
     super.key,
     required this.imageUrl,
-    required this.discountText,
+    required this.discount,
     this.onTap,
   });
 
   final String imageUrl;
-  final String discountText;
+  final int discount;
   final void Function()? onTap;
 
   @override
@@ -29,7 +29,7 @@ class TThumbnailHorizontalProduct extends StatelessWidget {
           ),
         ),
         /////// -- Discount -- ///////
-        if (discountText.isNotEmpty)
+        if (discount != 0)
           Positioned(
             top: 8,
             left: 8,
@@ -40,7 +40,7 @@ class TThumbnailHorizontalProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: MyText(
-                text: discountText,
+                text: '$discount',
                 fontWeight: FontWeight.bold,
                 color: TColors.black,
               ),

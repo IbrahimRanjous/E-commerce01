@@ -1,25 +1,26 @@
+// thorizontal_product_card.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rjs_store/core/utils/constants/colors.dart';
 import 'package:rjs_store/core/utils/helpers/helper_functions.dart';
-import 'package:rjs_store/core/widgets/products%20cart/thumbnail_horizontal_product.dart';
 import '../../../Features/product details/view/product_detail_view.dart';
 import 'add_to_card_button.dart';
 import 'details_horizontal_widget.dart';
 import 'favorite_icon.dart';
+import 'thumbnail_horizontal_product.dart';
 
 class THorizontalProductCard extends StatelessWidget {
   /// URL for the product image.
   final String imageUrl;
 
   /// Discount text (for example "78%") or an empty string if not applicable.
-  final String discountText;
+  final int discount;
 
   /// Whether the product is currently favorited.
-  final Rx<bool> isFavorite;
+  final bool isFavorite;
 
-  /// Callback when the favorite icon is tapped.
-  final VoidCallback? onFavoriteTap;
+  /// funciton when the favorite icon is tapped.
+  final void Function()? onFavoriteTap;
 
   /// The title of the product.
   final String productTitle;
@@ -32,22 +33,34 @@ class THorizontalProductCard extends StatelessWidget {
 
   /// The price range for the product.
   final String priceRange;
+  final String price;
 
   /// The quantity indicator (could show available stock, etc.)
   final String quantity;
+
+  final String description;
+
+  final double rating;
+  final bool status;
+  final int reviews;
 
   /// Creates a reusable horizontal product card widget.
   const THorizontalProductCard({
     super.key,
     required this.imageUrl,
-    this.discountText = '',
-    required this.isFavorite,
+    required this.discount,
+    this.isFavorite = false,
     this.onFavoriteTap,
     required this.productTitle,
     required this.brand,
     this.isVerified = false,
     required this.priceRange,
     this.quantity = '',
+    required this.rating,
+    required this.status,
+    required this.reviews,
+    this.price = 'N/A',
+    required this.description,
   });
 
   @override
@@ -67,64 +80,62 @@ class THorizontalProductCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Stack(
           children: [
-            // Thumbnail image positioned at the left.
+            // Main content arranged in a Row inside an InkWell.
             InkWell(
-              onTap: () => Get.to(() => const ProductDetailView()),
-              child: Row(
-                children: [
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: SizedBox(
-                      width: imageWidth,
-                      height: imageHeight,
-                      child: TThumbnailHorizontalProduct(
-                        imageUrl: imageUrl,
-                        discountText: discountText,
-                      ),
-                    ),
-                  ),
-                  // Details widget positioned to start after the thumbnail.
-                  // This widget should have its internal Expanded removed so that it respects the given bounds.
-                  Positioned(
-                    left: imageWidth, // starts right after the thumbnail
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: DetailsHorizontalWidget(
+              onTap: () {
+                Get.to(() => ProductDetailView(
+                      imageUrl: imageUrl,
+                      discount: discount,
+                      isFavorite: isFavorite,
                       productTitle: productTitle,
                       brand: brand,
                       isVerified: isVerified,
                       priceRange: priceRange,
                       quantity: quantity,
+                      rating: rating,
+                      status: status,
+                      reviews: reviews,
+                      price: price,
+                      description: description,
+                      onFavoriteTap: onFavoriteTap,
+                    ));
+              },
+              child: Row(
+                children: [
+                  // Thumbnail image on the left.
+                  SizedBox(
+                    width: imageWidth,
+                    height: imageHeight,
+                    child: TThumbnailHorizontalProduct(
+                      imageUrl: imageUrl,
+                      discount: discount,
                     ),
+                  ),
+                  // Details widget that uses Expanded internally.
+                  DetailsHorizontalWidget(
+                    productTitle: productTitle,
+                    brand: brand,
+                    isVerified: isVerified,
+                    priceRange: priceRange,
+                    quantity: quantity,
                   ),
                 ],
               ),
             ),
-            // Conditionally display the Add to Cart button.
+            // Overlay: Conditionally display the Add to Cart button.
             if (quantity.isEmpty)
-              Positioned(
-                bottom: 5,
-                right: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const TAddToCardButton(),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TAddToCardButton(),
               ),
-            // Favorite icon positioned at the top-right.
-            Positioned(
-              top: 5,
-              right: 8,
-              child: FavoriteIcon(
-                onTap: onFavoriteTap,
-                isFavorite: isFavorite,
-                iconSize: 30.0,
-                containerSize: 35.0,
-                top: 2.0,
-                right: 2.0,
-              ),
+            // Overlay: Favorite icon.
+            FavoriteIcon(
+              onTap: onFavoriteTap,
+              isFavorite: isFavorite,
+              iconSize: 30.0,
+              containerSize: 35.0,
+              top: 2.0,
+              right: 2.0,
             ),
           ],
         ),

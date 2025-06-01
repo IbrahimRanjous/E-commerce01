@@ -21,7 +21,7 @@ class SubCategoriesView extends StatelessWidget {
           children: [
             /// Banner
             TRoundedImage(
-              url: TImages.banner3,
+              url: TImages.banner1,
               isNetworkImage: false,
               borderRadius: TSizes.cardRadiusLg,
               fit: BoxFit.cover,

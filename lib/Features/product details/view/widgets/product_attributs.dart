@@ -9,23 +9,47 @@ import 'package:rjs_store/core/widgets/text/product_title_text.dart';
 import 'choice_chip.dart';
 
 class TProductAttributs extends StatefulWidget {
-  const TProductAttributs({super.key});
+  const TProductAttributs(
+      {super.key,
+      required this.discount,
+      required this.price,
+      required this.quantity,
+      required this.status,
+      required this.description});
 
+  /// Discount text, for example "78%" or an empty string if not applicable.
+  final int discount;
+
+  /// The price for the product.
+  final String price;
+
+  /// The quantity indicator (could show available stock, etc.)
+  final String quantity;
+  final String description;
+
+  final bool status;
   @override
   State<TProductAttributs> createState() => _TProductAttributsState();
 }
 
 class _TProductAttributsState extends State<TProductAttributs> {
   List<String> listColors = [];
+
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final cleanedPrice = widget.price.replaceAll(RegExp(r'[^0-9.]'), '');
+    final originalPrice = double.parse(cleanedPrice);
+    final discountedPrice =
+        originalPrice - (originalPrice * widget.discount / 100);
+
     return Column(
       children: [
         /// -- Selected Attribute Pricing & Description
         TRoundedContainer(
           backgroundColor: dark ? TColors.darkGrey : TColors.grey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// Title , Price and Stock Status
               Row(
@@ -35,16 +59,20 @@ class _TProductAttributsState extends State<TProductAttributs> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
                           TProductTitleText(title: 'Price : ', smallSize: true),
 
                           /// Actual Price
-                          TProductPriceText(price: '25', lineThrough: true),
-                          SizedBox(width: TSizes.spaceBtwItems),
+                          if (widget.discount != 0)
+                            TProductPriceText(
+                                price: originalPrice.toString(),
+                                lineThrough: true),
+                          if (widget.discount != 0)
+                            SizedBox(width: TSizes.spaceBtwItems),
 
                           /// Sale Price
-                          TProductPriceText(price: '20'),
+                          TProductPriceText(price: discountedPrice.toString()),
                         ],
                       ),
 
@@ -54,7 +82,7 @@ class _TProductAttributsState extends State<TProductAttributs> {
                           const TProductTitleText(
                               title: 'Stock : ', smallSize: true),
                           Text(
-                            'In Stock',
+                            widget.status ? 'In Stock' : 'Out Of Stock',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],
@@ -65,9 +93,8 @@ class _TProductAttributsState extends State<TProductAttributs> {
               ),
 
               /// Variation Description
-              const TProductTitleText(
-                title:
-                    'This is the Description of the Pruduct and it can go up to max tines.',
+              TProductTitleText(
+                title: widget.description,
                 smallSize: true,
                 maxLines: 4,
               ),

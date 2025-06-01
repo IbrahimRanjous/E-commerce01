@@ -37,10 +37,9 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchUserRecord();
     final data = GetStorage().read(TTexts.kuserData) as Map<String, dynamic>?;
     storedDataRx.value = data;
-
-    fetchUserRecord();
   }
 
   Future<void> loadStoredData() async {

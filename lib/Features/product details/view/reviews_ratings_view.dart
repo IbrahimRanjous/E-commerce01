@@ -7,7 +7,14 @@ import 'widgets/ratings_bar_chart.dart';
 import 'widgets/review_card.dart';
 
 class ReviewsRatingsView extends StatelessWidget {
-  const ReviewsRatingsView({super.key});
+  const ReviewsRatingsView(
+      {super.key,
+      required this.description,
+      required this.rating,
+      required this.reviews});
+  final String description;
+  final double rating;
+  final int reviews;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +41,9 @@ class ReviewsRatingsView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const OverallRatingWidget(
-                      rating: 3.7,
-                      reviewCount: 121160,
+                    OverallRatingWidget(
+                      rating: rating,
+                      reviewCount: reviews,
                     ),
                     SizedBox(width: THelperFunctions.screenWidth() * 0.02),
 

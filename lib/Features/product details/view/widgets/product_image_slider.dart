@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/utils/constants/colors.dart';
-import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../core/widgets/Appbar/appbar.dart';
@@ -13,8 +13,17 @@ class TProductImageSlider extends StatelessWidget {
   const TProductImageSlider({
     super.key,
     this.onFavoriteTap,
+    required this.imageUrl,
+    required this.isFavorite,
   });
   final void Function()? onFavoriteTap;
+
+  /// URL for the product image.
+  final String imageUrl;
+
+  /// Whether the product is currently favorited.
+  final RxBool isFavorite;
+
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
@@ -29,9 +38,10 @@ class TProductImageSlider extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(TSizes.productImageRadius),
               height: 400,
-              child: const Center(
+              child: Center(
                 child: Image(
-                  image: AssetImage(TImages.productImage5),
+                  image: NetworkImage(imageUrl),
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -49,16 +59,20 @@ class TProductImageSlider extends StatelessWidget {
                   itemCount: 6,
                   separatorBuilder: (_, __) =>
                       const SizedBox(width: TSizes.spaceBtwItems),
-                  itemBuilder: (BuildContext context, int index) =>
-                      TRoundedImage(
-                    url: TImages.productImage1,
-                    isNetworkImage: false,
-                    backgroundColor: isDark ? TColors.dark : TColors.light,
-                    border: Border.all(color: TColors.primary),
-                    padding: TSizes.sm,
-                    imageHeight: TSizes.imageThumbSize,
-                    imageWidth: TSizes.imageThumbSize,
-                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {},
+                      child: TRoundedImage(
+                        url: imageUrl,
+                        isNetworkImage: true,
+                        backgroundColor: isDark ? TColors.dark : TColors.light,
+                        border: Border.all(color: TColors.primary),
+                        padding: TSizes.sm,
+                        imageHeight: TSizes.imageThumbSize,
+                        imageWidth: TSizes.imageThumbSize,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -67,13 +81,24 @@ class TProductImageSlider extends StatelessWidget {
             TAppbar(
               showBackArrow: true,
               actions: [
-                TCircularIcon(
-                  onPressed: onFavoriteTap,
-                  icon: Iconsax.heart5,
-                  color: Colors.red,
+                Obx(
+                  () => GestureDetector(
+                    onTap: onFavoriteTap,
+                    child: TCircularIcon(
+                      icon: Iconsax.heart5,
+                      size: 28,
+                      width: 35,
+                      height: 35,
+                      color: isFavorite.value
+                          ? Colors.red
+                          : isDark
+                              ? TColors.white
+                              : TColors.darkerGrey,
+                    ),
+                  ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

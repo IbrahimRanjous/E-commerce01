@@ -11,45 +11,84 @@ import 'package:rjs_store/core/widgets/images/t_rounded_image.dart';
 import 'package:rjs_store/core/widgets/text/brand_title_with_verified_icon.dart';
 
 class TProductMetaData extends StatelessWidget {
-  const TProductMetaData({super.key});
+  const TProductMetaData(
+      {super.key,
+      required this.productTitle,
+      required this.brand,
+      required this.isVerified,
+      required this.price,
+      required this.quantity,
+      required this.status,
+      required this.discount});
+
+  /// Discount text, for example "78%" or an empty string if not applicable.
+  final int discount;
+
+  /// The title of the product.
+  final String productTitle;
+
+  /// The brand of the product.
+  final String brand;
+
+  /// Whether the brand is verified.
+  final bool isVerified;
+
+  /// The price for the product.
+  final String price;
+
+  /// The quantity indicator (could show available stock, etc.)
+  final String quantity;
+
+  final bool status;
 
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
+    final cleanedPrice = price.replaceAll(RegExp(r'[^0-9.]'), '');
+    final originalPrice = double.parse(cleanedPrice);
+    final discountedPrice = originalPrice - (originalPrice * discount / 100);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         /// Price & Sale price
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             /// Sale Tap
-            TRoundedContainer(
-              borderRadius: TSizes.sm,
-              backgroundColor: TColors.secondary.withValues(alpha: 0.8),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: TSizes.sm, vertical: TSizes.xs),
-              showBorder: true,
-              child: Text(
-                '25%',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .apply(color: TColors.black),
+            if (discount != 0)
+              TRoundedContainer(
+                borderRadius: TSizes.sm,
+                backgroundColor: TColors.secondary.withValues(alpha: 0.8),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: TSizes.sm, vertical: TSizes.xs),
+                showBorder: true,
+                child: Text(
+                  '$discount %',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .apply(color: TColors.black),
+                ),
               ),
-            ),
-            const SizedBox(width: TSizes.spaceBtwItems),
+            if (discount != 0) const SizedBox(width: TSizes.spaceBtwItems),
 
             /// Price
-            const TProductPriceText(price: '250', lineThrough: true),
-            const SizedBox(width: TSizes.spaceBtwItems),
+            if (discount != 0)
+              TProductPriceText(
+                price: originalPrice.toString(),
+                lineThrough: true,
+              ),
+            if (discount != 0) const SizedBox(width: TSizes.spaceBtwItems),
 
-            const TProductPriceText(price: '175', isLarge: true),
+            /// The Final price
+            TProductPriceText(price: discountedPrice.toString(), isLarge: true),
           ],
         ),
         const SizedBox(width: TSizes.spaceBtwItems / 2),
 
         /// Title
-        const TProductTitleText(title: 'Green Nike Sports Shirt'),
+        TProductTitleText(title: productTitle),
         const SizedBox(width: TSizes.spaceBtwItems / 1.5),
 
         /// Stock Status
@@ -58,7 +97,7 @@ class TProductMetaData extends StatelessWidget {
             const TProductTitleText(title: 'Status'),
             const SizedBox(width: TSizes.spaceBtwItems),
             Text(
-              'In Stock',
+              status ? 'In Stock' : 'Out Of Stock',
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -75,8 +114,9 @@ class TProductMetaData extends StatelessWidget {
               imageHeight: 32,
               overLayColor: darkMode ? TColors.white : TColors.black,
             ),
-            const TBrandTitleWithVerifiedIcon(
-              title: 'Nike',
+            TBrandTitleWithVerifiedIcon(
+              title: brand,
+              isVerified: isVerified,
               brandTextSize: TextSizes.medium,
             ),
           ],
