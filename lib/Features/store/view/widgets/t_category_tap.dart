@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/widgets/section_heading.dart';
-import 'brand_show_case.dart';
-import 'grid_view_filtered.dart';
+import 'grid_view_categories.dart';
 
 class TCategoryTap extends StatelessWidget {
   const TCategoryTap({
@@ -25,11 +23,11 @@ class TCategoryTap extends StatelessWidget {
                 child: Column(
                   children: [
                     /// -- Brands
-                    const TBrandShowCase(images: [
-                      TImages.productImage1,
-                      TImages.productImage3,
-                      TImages.productImage2
-                    ]),
+                    // const TBrandShowCase(images: [
+                    //   TImages.productImage1,
+                    //   TImages.productImage3,
+                    //   TImages.productImage2
+                    // ]),
 
                     /// -- Products
                     TSectionHeading(
@@ -39,7 +37,7 @@ class TCategoryTap extends StatelessWidget {
                   ],
                 ),
               ),
-              TGridViewFiltered(
+              TGridViewCategories(
                 categoryFilter: categoryFilter,
               ),
             ],

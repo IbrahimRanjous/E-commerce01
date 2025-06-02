@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rjs_store/core/product_model.dart';
 import '../../../../core/utils/constants/colors.dart';
-import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../core/widgets/brand_widget.dart';
@@ -13,11 +13,15 @@ class TBrandCard extends StatelessWidget {
     super.key,
     this.onTap,
     required this.showBorder,
-    this.url = TImages.clothIcon,
+    this.url,
+    this.brandName,
+    this.product,
   });
   final void Function()? onTap;
   final bool showBorder;
-  final String url;
+  final String? url;
+  final String? brandName;
+  final ProductModel? product;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,7 +37,7 @@ class TBrandCard extends StatelessWidget {
                 imageWidth: THelperFunctions.screenWidth() * 0.135,
                 imageHeight: THelperFunctions.screenWidth() * 0.135,
                 isNetworkImage: true,
-                url: url,
+                url: url ?? '',
                 overLayColor: THelperFunctions.isDarkMode(context)
                     ? TColors.light
                     : TColors.dark,
@@ -47,12 +51,11 @@ class TBrandCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TBrandWidget(
-                    brand: 'Nike',
-                    isVerified: true,
+                  TBrandWidget(
+                    brand: brandName ?? "No Found",
                   ),
                   MyText(
-                    text: '256 products',
+                    text: '${product?.instock ?? 0} products',
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],

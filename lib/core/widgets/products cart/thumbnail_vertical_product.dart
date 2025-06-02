@@ -3,7 +3,7 @@ import '../../../Features/home/views/widgets/custom_image.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/sizes.dart';
 import '../text/my_text.dart';
- 
+
 class TThumbnailVerticalProduct extends StatelessWidget {
   const TThumbnailVerticalProduct({
     super.key,
@@ -42,7 +42,7 @@ class TThumbnailVerticalProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: MyText(
-                text: '$discount',
+                text: '$discount%',
                 fontWeight: FontWeight.bold,
                 color: TColors.black,
               ),

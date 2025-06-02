@@ -10,9 +10,9 @@ import '../../../../core/utils/network/network_manager.dart';
 import '../../../../core/widgets/products cart/vertical_product_card.dart';
 
 class TGridViewFiltered extends StatefulWidget {
-  const TGridViewFiltered({super.key, required this.categoryFilter});
+  const TGridViewFiltered({super.key, required this.brandFilter});
 
-  final String categoryFilter;
+  final String brandFilter;
 
   @override
   State<TGridViewFiltered> createState() => _TGridViewFilteredState();
@@ -58,8 +58,7 @@ class _TGridViewFilteredState extends State<TGridViewFiltered> {
               return Center(child: MyText(text: 'No Products'));
             } else {
               List<ProductModel> filteredItems = products
-                  .where(
-                      (item) => item.category.contains(widget.categoryFilter))
+                  .where((item) => item.brand.contains(widget.brandFilter))
                   .toList();
 
               return Padding(

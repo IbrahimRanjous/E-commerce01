@@ -40,7 +40,7 @@ class TThumbnailHorizontalProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: MyText(
-                text: '$discount',
+                text: '$discount%',
                 fontWeight: FontWeight.bold,
                 color: TColors.black,
               ),
