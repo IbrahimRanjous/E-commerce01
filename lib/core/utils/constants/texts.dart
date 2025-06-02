@@ -10,6 +10,7 @@ class TTexts {
   static const String kUsers = 'Users';
   static const String kProducts = "Products";
   static const String kuserData = "userData";
+  static const String kProfileImage = 'ProfileImage';
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";

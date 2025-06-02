@@ -83,11 +83,21 @@ class StoreView extends StatelessWidget {
             },
             body: const TabBarView(
               children: [
-                TCategoryTap(),
-                TCategoryTap(),
-                TCategoryTap(),
-                TCategoryTap(),
-                TCategoryTap(),
+                TCategoryTap(
+                  categoryFilter: 'Sports',
+                ),
+                TCategoryTap(
+                  categoryFilter: 'Furniture',
+                ),
+                TCategoryTap(
+                  categoryFilter: 'Electronics',
+                ),
+                TCategoryTap(
+                  categoryFilter: 'Clothes',
+                ),
+                TCategoryTap(
+                  categoryFilter: 'Cosmetics',
+                ),
               ],
             ),
           ),

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:rjs_store/Features/home/views/widgets/grid_view.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../core/widgets/section_heading.dart';
 import 'brand_show_case.dart';
+import 'grid_view_filtered.dart';
 
 class TCategoryTap extends StatelessWidget {
   const TCategoryTap({
     super.key,
+    required this.categoryFilter,
   });
+  final String categoryFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +34,14 @@ class TCategoryTap extends StatelessWidget {
                     /// -- Products
                     TSectionHeading(
                       text: 'You might like',
-                      onPressed: () {},
                     ),
                     const SizedBox(height: TSizes.spaceBtwItems),
                   ],
                 ),
               ),
-              const TGridView(),
+              TGridViewFiltered(
+                categoryFilter: categoryFilter,
+              ),
             ],
           ),
         ]);
