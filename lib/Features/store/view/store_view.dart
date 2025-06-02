@@ -18,7 +18,7 @@ class StoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 8,
       child: Scaffold(
         /// -- AppBar -- //
         appBar: TAppbar(
@@ -75,7 +75,10 @@ class StoreView extends StatelessWidget {
                       Tab(child: Text('Furniture')),
                       Tab(child: Text('Electronics')),
                       Tab(child: Text('Clothes')),
+                      Tab(child: Text('Shoes')),
                       Tab(child: Text('Cosmetics')),
+                      Tab(child: Text('Toys')),
+                      Tab(child: Text('Fewelery')),
                     ],
                   ),
                 ),
@@ -89,14 +92,21 @@ class StoreView extends StatelessWidget {
                 TCategoryTap(
                   categoryFilter: 'Furniture',
                 ),
-                TCategoryTap(
-                  categoryFilter: 'Electronics',
-                ),
+                TCategoryTap(categoryFilter: 'Electronics'),
                 TCategoryTap(
                   categoryFilter: 'Clothes',
                 ),
                 TCategoryTap(
+                  categoryFilter: 'Shoes',
+                ),
+                TCategoryTap(
                   categoryFilter: 'Cosmetics',
+                ),
+                TCategoryTap(
+                  categoryFilter: 'Toys',
+                ),
+                TCategoryTap(
+                  categoryFilter: 'Fewelery',
                 ),
               ],
             ),

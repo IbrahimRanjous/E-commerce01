@@ -61,7 +61,7 @@ class AuthenticationRepository extends GetxController {
             message: 'Something went wrong. Please try again');
       }
       if (user.emailVerified) {
-        deviceStorage.read(TTexts.kLoggedIn) != true
+        deviceStorage.read(TTexts.kLoggedIn) == true
             ? {Get.offAll(() => const NavigationMenu())}
             : {
                 TLoaders.successSnackBar(

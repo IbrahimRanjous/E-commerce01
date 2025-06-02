@@ -47,7 +47,7 @@ class UserController extends GetxController {
     storedDataRx.value = data;
   }
 
-  /// Fetch user record
+  /// Fetch user data & products
   Future<void> fetchUserRecord() async {
     try {
       profileLoading.value = true;
@@ -88,6 +88,7 @@ class UserController extends GetxController {
           user(UserModel.empty());
         }
       }
+      loadStoredData();
     } catch (e) {
       TLoaders.warningSnackBar(
           title: 'Warning',
@@ -108,6 +109,7 @@ class UserController extends GetxController {
     }
   }
 
+  ///
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     try {
       if (userCredentials != null) {
@@ -290,6 +292,7 @@ class UserController extends GetxController {
   }
 
   /// Upload Profile Image
+  /// (((((((((((( NOT WORKING RIGHT NOW )))))))))))
   Future<void> uploadUserProfilePicture() async {
     try {
       final image = await ImagePicker().pickImage(

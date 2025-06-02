@@ -58,6 +58,7 @@ class TGridView extends StatelessWidget {
                     final product = products[index];
                     final bool isFavorite =
                         favoriteList.contains(product.objectId);
+
                     return TVerticalProductCard(
                       imageUrl: product.image,
                       productTitle: product.title,
